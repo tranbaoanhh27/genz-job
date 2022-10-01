@@ -17,3 +17,7 @@ npm start
 ```
 
 ## Project Structure
+
+### client (Front-end)
+
+### server (Back-end)
