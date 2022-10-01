@@ -17,7 +17,10 @@ module.exports = (app) => {
       const middlewareName = file.replace('.middleware', '').replace('.js', '');
       const middleware = require(filePath);
 
-      app.use(middleware());
+      if (typeof middleware === 'function') {
+        app.use(middleware());
+      } else
+        app.use(middleware);
 
       console.log('Middleware::Intergrated::%s', middlewareName);
     });

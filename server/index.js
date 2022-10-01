@@ -2,10 +2,16 @@
 
 const express = require('express');
 
-const middleware = require('./middleware');
+const middleware = require('./middlewares');
 const controller = require('./controllers');
 
 const app = express();
+
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 // load middlewares
 middleware(app);
