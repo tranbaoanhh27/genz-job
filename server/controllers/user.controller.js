@@ -3,6 +3,7 @@
 const express = require('express')
 const db = require("../models");
 const bcrypt = require("bcryptjs");
+const UserHelper = require("../utils/UserHelper");
 
 const router = express.Router()
 
@@ -28,58 +29,36 @@ router.post('/', async (req, res, next) => {
       
 });
 
-router.put('/', async (req, res, next) => {
-    var user = db.User.findOne({
+router.put('/', UserHelper.getUserByUserName, async (req, res, next) => {
+    db.User.update({
+        userName: req.user.username,
+        email: req.user.email,
+        password: bcrypt.hashSync(req.user.password, 8),
+        lastActivyDate: Date.now()
+    }, {
         where: {
-          userName: req.body.username
+            id: user.id
         }
     })
     .then(user => {
-        if (!user) {
-          return res.status(404).send({ message: "User Not found." });
-        }
-
-        db.User.update({
-            userName: req.body.username,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 8),
-            lastActivyDate: Date.now()
-        }, {
-            where: {
-                id: user.id
-            }
-        })
-        .then(user => {
-            res.send("User Updated");
-        })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
+        res.send("User Updated");
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
     });
 });
 
-router.delete('/', async (req, res, next) => {
-    var user = db.User.findOne({
+router.delete('/', UserHelper.getUserByUserName, async (req, res, next) => {
+    db.User.destroy({
         where: {
-          userName: req.body.username
+            id: user.id
         }
     })
     .then(user => {
-        if (!user) {
-          return res.status(404).send({ message: "User Not found." });
-        }
-
-        db.User.destroy({
-            where: {
-                id: user.id
-            }
-        })
-        .then(user => {
-            res.send("User Deleted");
-        })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
+        res.send("User Deleted");
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
     });
 });
 
