@@ -1,11 +1,14 @@
 {
     "development": {
         "db": {
-            "username": "root",
-            "password": null,
-            "database": "database_development",
-            "host": "127.0.0.1",
-            "dialect": "mssql"
+            "username": "sa",
+            "password": "123456",
+            "database": "CSC13002",
+            "host": "localhost",
+            "dialect": "mssql",
+            "dialectOptions": {
+                "instanceName": "SQLEXPRESS"
+            }
         }
         
     },
