@@ -9,6 +9,9 @@
             "dialectOptions": {
                 "instanceName": "SQLEXPRESS"
             }
+        },
+        "authencation": {
+            "secretKey": "80c1898d21f3c32be0b2f8820dfb125eaa658511"
         }
         
     },
@@ -19,6 +22,9 @@
             "database": "database_development",
             "host": "127.0.0.1",
             "dialect": "mssql"
+        },
+        "authencation": {
+            "secretKey": "80c1898d21f3c32be0b2f8820dfb125eaa658511"
         }
     }
 }

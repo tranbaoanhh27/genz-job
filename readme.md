@@ -21,7 +21,7 @@ npm start
 ## WorkFlow
 ### _Back-end_
 Back-end builds APIs that supports Front-end display UI
-![N|Solid](https://i.ibb.co/fYw6X6j/Backend.png)
+![N|Solid](https://i.ibb.co/xLh4Rtf/Backend.png)
 
 ## Project Structure
 
@@ -29,8 +29,8 @@ Back-end builds APIs that supports Front-end display UI
 - /config: Including server configuration
 - /controllers: Controller Layer
     * _controller_name.controller.js_ - controller file name must be followed by the principle
-- /middlewares: Middleware Layer
+- /middlewares: Global Middleware Layer
     * _middleware_name.middleware.js_ - middleware file name must be followed by the principle
 - /models: Model Layer
     * _model_name.model.js_ - model file name must be followed by the principle
-- /ultis: Including function helper
+- /ultis: Including middleware function for specify controller
