@@ -33,7 +33,7 @@ router.post('/signin', async (req, res) => {
         }
 
         var token = jwt.sign({ id: user.id }, config.authencation.secretKey, {
-            expiresIn: 86400 // 24 hours
+            expiresIn: config.authencation.expiration
         });
 
         res.status(200).send({
@@ -48,13 +48,17 @@ router.post('/signin', async (req, res) => {
     });
 });
 
-router.post('/isAuthenticated', AuthencationHelper.VerifyToken, (req, res) => {
-    if(!req.user) {
-        return res.status(401).send({
-            message: "Unauthorized!"
-          });
-    }
+router.get('/isAuthenticated', AuthencationHelper.VerifyToken, (req, res) => {
     res.status(200).send({"IsAuthenticated": true});
+})
+
+router.get('/logout', AuthencationHelper.VerifyToken, (req, res) => {
+
+    jwt.sign({ id: user.id }, config.authencation.secretKey, {
+        expiresIn: 0 // 24 hours
+    });
+
+    res.status(200).send({"successed": true});
 })
 
 module.exports = router;

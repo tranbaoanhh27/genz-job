@@ -5,8 +5,17 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = require("../models");
 const { Op } = require("sequelize");
+const { TokenExpiredError } = jwt;
 
 class AuthencationHelper {
+    catchError = (err, res) => {
+      if (err instanceof TokenExpiredError) {
+        return res.status(401).send({ message: "Unauthorized! Access Token was expired!" });
+      }
+    
+      return res.sendStatus(401).send({ message: "Unauthorized!" });
+    }
+
     static VerifyToken = (req, res, next) => {
         let token = req.headers["x-access-token"];
       
@@ -18,9 +27,7 @@ class AuthencationHelper {
       
         jwt.verify(token, config.authencation.secretKey, (err, decoded) => {
           if (err) {
-            return res.status(401).send({
-              message: "Unauthorized!"
-            });
+            return catchError(err, res);
           }
 
           db.User.findByPk(decoded.id).then(user => {

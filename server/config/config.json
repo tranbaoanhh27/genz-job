@@ -11,7 +11,8 @@
             }
         },
         "authencation": {
-            "secretKey": "80c1898d21f3c32be0b2f8820dfb125eaa658511"
+            "secretKey": "80c1898d21f3c32be0b2f8820dfb125eaa658511",
+            "expiration": 86400
         }
         
     },
