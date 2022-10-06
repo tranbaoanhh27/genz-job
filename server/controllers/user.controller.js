@@ -7,14 +7,21 @@ const UserHelper = require("../utils/UserHelper");
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-    console.log("GET::User");
     var users = await db.User.findAll();
     res.send(JSON.stringify(users, null, 2));
 });
 
-router.post('/', UserHelper.GetUser, UserHelper.CreateUser);
+router.get('/detail/:id', async (req, res, next) => {
+    var user = await db.User.findByPk(req.params.id);
+    if(user)
+        res.send(JSON.stringify(users, null, 2));
+    else
+        res.status(404).send({message: "User Not Found"});
+});
 
-router.put('/', UserHelper.GetUser, UserHelper.ValidateUser, async (req, res, next) => {
+router.post('/create', UserHelper.GetUser, UserHelper.CreateUser);
+
+router.put('/edit/:id(\d+)', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
     const user = req.user;
     db.User.update({
         userName: user.userName,
@@ -34,7 +41,7 @@ router.put('/', UserHelper.GetUser, UserHelper.ValidateUser, async (req, res, ne
     });
 });
 
-router.delete('/', UserHelper.GetUser, UserHelper.ValidateUser, async (req, res, next) => {
+router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
     const user = req.user;
     db.User.destroy({
         where: {

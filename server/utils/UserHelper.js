@@ -24,7 +24,7 @@ class UserHelper {
     }
 
     static GetUser = (req, res, next) => {
-        var user = db.User.findOne({
+        db.User.findOne({
             where: {
                 [Op.or]: [
                     { userName: req.body.userName },
@@ -32,6 +32,17 @@ class UserHelper {
                 ]
             }
         })
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => {
+            return res.status(500).send({ message: err.message });
+        });
+    }
+
+    static GetUserById = (req, res, next) => {
+        db.User.findByPk(req.params.id)
         .then(user => {
             req.user = user;
             next();

@@ -4,12 +4,13 @@ const jwt = require("jsonwebtoken");
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 const AuthencationHelper = require('../utils/AuthencationHelper');
+const UserHelper = require('../utils/UserHelper');
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 
 const router = express.Router()
 
-router.post('/signin', async (req, res) => {
+router.post('/login', async (req, res) => {
     await db.User.findOne({
         where: {
             userName: req.body.userName
@@ -47,6 +48,8 @@ router.post('/signin', async (req, res) => {
         res.status(500).send({ message: err.message });
     });
 });
+
+router.post('/signup', UserHelper.CreateUser)
 
 router.get('/isAuthenticated', AuthencationHelper.VerifyToken, (req, res) => {
     res.status(200).send({"IsAuthenticated": true});
