@@ -14,6 +14,7 @@ The project uses a number of open source projects to work properly:
 ## Installation
 
 The project requires [Node.js](https://nodejs.org/) v10+ to run.
+Configure Database connection in ./server/config/config.json
 
 ```
 npm start
