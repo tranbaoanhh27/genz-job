@@ -32,7 +32,7 @@ class  AuthApi {
     }
 
     GetCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));;
+        return JSON.parse(localStorage.getItem('user'));
     }
 }
 
