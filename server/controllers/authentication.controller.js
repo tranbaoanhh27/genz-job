@@ -12,8 +12,9 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
     await db.User.findOne({
+        include: { all: true },
         where: {
-            userName: req.body.userName
+            UserName: req.body.userName
         }
     })
     .then(user => {
@@ -23,7 +24,7 @@ router.post('/login', async (req, res) => {
 
         const validatePassword = bcrypt.compareSync(
             req.body.password,
-            user.password
+            user.Password
         );
 
         if(!validatePassword) {
@@ -38,10 +39,9 @@ router.post('/login', async (req, res) => {
         });
 
         res.status(200).send({
-            id: user.id,
-            username: user.userName,
-            email: user.email,
-            accessToken: token
+            data: user,
+            accessToken: token,
+            expiration: config.authencation.expiration, 
           });
     })
     .catch(err => {
