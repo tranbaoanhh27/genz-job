@@ -7,7 +7,7 @@
             "host": "localhost",
             "dialect": "mssql",
             "dialectOptions": {
-                "instanceName": "SQLEXPRESS"
+                "instanceName": "MSSQLSERVER"
             }
         },
         "authencation": {
