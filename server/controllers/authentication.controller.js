@@ -12,15 +12,27 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
     await db.User.findOne({
-        include: { all: true },
+        include: [{
+            model: db.Role,
+            attributes: ['Title'],
+            through: {
+                attributes: []
+            }        
+        }],
         where: {
             UserName: req.body.userName
         }
     })
-    .then(user => {
+    .then(user =>  {
         if(!user) {
             return res.status(404).send({ message: "User Not found." });
         }
+
+        var roles = [];
+        user.Roles.forEach(element => {
+            roles.push(element.Title);
+        });
+        user.dataValues.Roles = roles.toString();
 
         const validatePassword = bcrypt.compareSync(
             req.body.password,
@@ -42,7 +54,7 @@ router.post('/login', async (req, res) => {
             data: user,
             accessToken: token,
             expiration: config.authencation.expiration, 
-          });
+        });
     })
     .catch(err => {
         res.status(500).send({ message: err.message });

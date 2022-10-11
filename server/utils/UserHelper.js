@@ -42,7 +42,12 @@ class UserHelper {
     }
 
     static GetUserById = (req, res, next) => {
-        db.User.findByPk(req.params.id)
+        var userId = req.params.id;
+        
+        if(!userId)
+            userId = req.body.userId;
+            
+        db.User.findByPk(userId)
         .then(user => {
             req.user = user;
             next();

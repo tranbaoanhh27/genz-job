@@ -2,14 +2,17 @@
 const express = require('express');
 const db = require("../models");
 const RoleHelper = require("../utils/RoleHelper");
+const UserHelper = require("../utils/UserHelper");
 
 const router = express.Router();
 
+// Get list
 router.get('/', async (req, res) => {
     var roles = await db.Role.findAll();
     res.send(JSON.stringify(roles, null, 2));
 });
 
+// Get detail
 router.get('/detail/:id', async (req, res) => {
     var role = await db.Role.findByPk(req.params.id);
     if(role)
@@ -18,6 +21,7 @@ router.get('/detail/:id', async (req, res) => {
         res.status(404).send({message: "Role Not Found"});
 });
 
+// Get list by user
 router.get('/user/:id', async (req, res) => {
     var roles = await db.Role.findAll({
             include: UserRole,
@@ -32,8 +36,10 @@ router.get('/user/:id', async (req, res) => {
         res.status(404).send({message: "Roles Not Found"});
 });
 
+// Create 
 router.post('/create', RoleHelper.GetRole, RoleHelper.CreateRole);
 
+// Update 
 router.put('/edit/:id', RoleHelper.GetRoleById, RoleHelper.ValidateRole, async (req, res) => {
     const role = req.role;
     db.Role.update({
@@ -51,6 +57,7 @@ router.put('/edit/:id', RoleHelper.GetRoleById, RoleHelper.ValidateRole, async (
     });
 });
 
+// Delete
 router.delete('/delete/:id', RoleHelper.GetRoleById, RoleHelper.ValidateRole, async (req, res) => {
     const role = req.role;
     db.Role.destroy({
@@ -65,5 +72,9 @@ router.delete('/delete/:id', RoleHelper.GetRoleById, RoleHelper.ValidateRole, as
         res.status(500).send({ message: err.message });
     });
 });
+
+// Assign Role To User
+router.post('/assign', UserHelper.GetUserById, UserHelper.ValidateUser, RoleHelper.GetRoleById, RoleHelper.ValidateRole, RoleHelper.AssignRoleToUser);
+router.post('/unassign', UserHelper.GetUserById, UserHelper.ValidateUser, RoleHelper.GetRoleById, RoleHelper.ValidateRole, RoleHelper.UnassignRoleForUser);
 
 module.exports = router;
