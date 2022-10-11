@@ -9,11 +9,11 @@ class UserHelper {
             return res.status(400).send({ message: "User Already Exist." });
         }
         await db.User.create({
-            userName: req.body.userName,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 8),
-            createdDate: Date.now(),
-            lastActivyDate: Date.now()
+            UserName: req.body.userName,
+            Email: req.body.email,
+            Password: bcrypt.hashSync(req.body.password, 8),
+            CreatedDate: Date.now(),
+            LastActivyDate: Date.now()
           })
           .then(user => {
             return res.send({ message: "User Created" });
@@ -27,8 +27,8 @@ class UserHelper {
         db.User.findOne({
             where: {
                 [Op.or]: [
-                    { userName: req.body.userName },
-                    { email: req.body.email}
+                    { UserName: req.body.userName },
+                    { Email: req.body.email}
                 ]
             }
         })

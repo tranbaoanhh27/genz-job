@@ -1,18 +1,19 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var UserRole = sequelize.define('UserRole', {
-    userGuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4 // Or DataTypes.UUIDV1
+    UserId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
     },
-    roleGuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4 
+    RoleId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
     }
-  }, {});
+  }, {
+    timestamps: false
+  });
   UserRole.associate = function(models) {
-    UserRole.belongsTo(models.User);
-    UserRole.belongsTo(models.Role);
+    // associations can be defined here
   };
   return UserRole;
 };

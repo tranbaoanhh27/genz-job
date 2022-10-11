@@ -8,7 +8,7 @@ const UserHelper = require('../utils/UserHelper');
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/login', async (req, res) => {
     await db.User.findOne({

@@ -4,7 +4,7 @@ const express = require('express')
 const db = require("../models");
 const UserHelper = require("../utils/UserHelper");
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     var users = await db.User.findAll();
@@ -21,13 +21,13 @@ router.get('/detail/:id', async (req, res, next) => {
 
 router.post('/create', UserHelper.GetUser, UserHelper.CreateUser);
 
-router.put('/edit/:id(\d+)', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
+router.put('/edit/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
     const user = req.user;
     db.User.update({
-        userName: user.userName,
-        email: user.email,
-        password: bcrypt.hashSync(user.password, 8),
-        lastActivyDate: Date.now()
+        UserName: user.userName,
+        Email: user.email,
+        Password: bcrypt.hashSync(user.password, 8),
+        LastActivyDate: Date.now()
     }, {
         where: {
             id: user.id
@@ -56,4 +56,4 @@ router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, as
     });
 });
 
-module.exports = router
+module.exports = router;
