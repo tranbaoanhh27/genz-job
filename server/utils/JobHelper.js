@@ -11,7 +11,7 @@ class JobHelper {
             salary: req.body.salary,
             datePosted: new Date(req.body.datePosted),
             closingDate: new Date(req.body.closingDate),
-            recruiterId: req.user.id
+            authorId: req.user.id
         })
         .then(job => {
             return res.send({ message: "Job posted"});

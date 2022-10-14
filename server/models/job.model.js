@@ -12,17 +12,15 @@ module.exports = (sequelize, DataTypes) => {
         datePosted: DataTypes.DATE,
         closingDate: DataTypes.DATE,
         salary: DataTypes.INTEGER,
-        recruiterGuid: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4
-        },
-        guid: {
+        JobGuid: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         }
     }, {});
     Job.associate = function(models) {
-        Job.belongsTo(models.User);
+        Job.belongsTo(models.User, {
+            foreignKey: 'authorId'
+        });
     };
     return Job;
 }

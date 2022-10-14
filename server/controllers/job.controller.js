@@ -8,7 +8,11 @@ const UserHelper = require('../utils/UserHelper');
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-    var jobs = await db.Job.findAll();
+    var jobs = await db.Job.findAll({
+        include: {
+            model: db.User
+        }
+    });
     res.send(JSON.stringify(jobs, null, 2));
 });
 
