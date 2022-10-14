@@ -21,5 +21,8 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: DataTypes.UUIDV4
         }
     }, {});
+    Job.associate = function(models) {
+
+    };
     return Job;
 }
