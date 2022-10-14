@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
     Job.associate = function(models) {
-
+        Job.belongsTo(models.User);
     };
     return Job;
 }
