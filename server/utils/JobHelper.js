@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 
 class JobHelper {
     static CreateJob = async (req, res, next) => {
+        if (!req.user) return false;
         await db.Job.create({
             title: req.body.title,
             description: req.body.description,
