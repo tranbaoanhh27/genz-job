@@ -3,6 +3,7 @@
 const express = require('express');
 const db = require('../models');
 const JobHelper = require('../utils/JobHelper');
+const UserHelper = require('../utils/UserHelper');
 
 const router = express.Router()
 
@@ -19,6 +20,6 @@ router.get('/detail/:id', async (req, res, next) => {
         res.status(404).send({message: "Job Not Found"});
 });
 
-router.post('/create', JobHelper.CreateJob);
+router.post('/create', UserHelper.GetUser ,JobHelper.CreateJob);
 
 module.exports = router;
