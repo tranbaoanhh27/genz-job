@@ -20,6 +20,6 @@ router.get('/detail/:id', async (req, res, next) => {
         res.status(404).send({message: "Job Not Found"});
 });
 
-router.post('/create', UserHelper.GetUser ,JobHelper.CreateJob);
+router.post('/:id/create', UserHelper.GetUserById ,JobHelper.CreateJob);
 
 module.exports = router;
