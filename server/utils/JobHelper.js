@@ -4,15 +4,13 @@ const { Op } = require("sequelize");
 
 class JobHelper {
     static CreateJob = async (req, res, next) => {
-
-        // Do not need to check duplicate
         await db.Job.create({
             title: req.body.title,
             description: req.body.description,
             salary: req.body.salary,
             datePosted: new Date(req.body.datePosted),
             closingDate: new Date(req.body.closingDate),
-            recruiterId: req.user
+            recruiterId: req.user.id
         })
         .then(job => {
             return res.send({ message: "Job posted"});
