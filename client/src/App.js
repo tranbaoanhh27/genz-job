@@ -72,8 +72,12 @@ function SignInSignUpSelection({ division, setDivision }) {
           <h2 className="text-center fw-normal mb-5">Bạn muốn?</h2>
 
           <div className="d-grid gap-5 col-6 mx-auto">
-              <button className="btn btn-primary shadow" style={{backgroundColor:"#545ABE"}} type="sumbmit" onClick={ handleClickButton1 }>{division === "SelectTypeSignUp" ? "Đăng ký tìm việc" : "Đăng ký"}</button>
-              <button className="btn btn-primary shadow" style={{backgroundColor:"#545ABE"}} type="sumbmit" onClick={ handleClickButton2 }>{division === "SelectTypeSignUp" ? "Đăng ký tìm người" : "Đăng nhập"}</button>
+              <button className="btn btn-primary shadow" style={{backgroundColor:"#545ABE"}} type="sumbmit" onClick={ handleClickButton1 }>
+                {division === "SelectTypeSignUp" ? "Đăng ký tìm việc" : "Đăng ký"}
+              </button>
+              <button className="btn btn-primary shadow" style={{backgroundColor:"#545ABE"}} type="sumbmit" onClick={ handleClickButton2 }>
+                {division === "SelectTypeSignUp" ? "Đăng ký tìm người" : "Đăng nhập"}
+              </button>
           </div>  
 
       </div>
@@ -166,6 +170,10 @@ function SignUpRecruiter({ setDivision }) {
   )
 }
 
+const onSignInSubmitButtonClicked = (event) => {
+  event.preventDefault();
+}
+
 function LogIn({ setDivision }) {
   return (
     <div class="col-lg-7 d-flex align-items-center h-100 shadow-lg border" style= {{backgroundColor: "white", borderRadius: "50px 0px 0px 50px"}}>
@@ -176,25 +184,50 @@ function LogIn({ setDivision }) {
           <h2 class="text-center fw-normal mb-4">Đăng nhập</h2>
 
           <form class="w-50 mx-auto">
+
               <div class="mb-4">
-                  <input class="form-control" type="tel" id="phoneNum" placeholder="Số điện thoại" name="phoneNum" />
+                  <input
+                    class="form-control"
+                    type="tel"
+                    id="phoneNum"
+                    placeholder="Số điện thoại"
+                    name="phoneNum" />
               </div>
+
               <div class="mb-4">
-                  <input class="form-control" type="password" id="password" placeholder="Nhập mật khẩu" name="pswd" />
+                  <input 
+                    class="form-control" 
+                    type="password" 
+                    id="password" 
+                    placeholder="Nhập mật khẩu" 
+                    name="pswd" />
               </div>
+
               <div class="d-flex form-check mb-5">
                   <label class="form-check-label">
                       <input class="form-check-input" type="checkbox" name="remember" /> Nhớ mật khẩu
                   </label>
                   <a href="#!" class="text-body ms-auto">Quên mật khẩu?</a> 
               </div>
+
               <div class="text-center">
-                  <button class="btn btn-primary shadow" style={{backgroundColor:"#545ABE"}} type="sumbmit">Đăng nhập</button>
+                  <button 
+                    class="btn btn-primary shadow" 
+                    style={{backgroundColor:"#545ABE"}} 
+                    type="sumbmit">
+                      Đăng nhập
+                  </button>
               </div>  
 
               <hr class="solid mt-5" />
 
-              <p class="small fw-bold mt-0">Chưa có tài khoản? <a href="#!" class="link-danger" onClick={ () => setDivision("SelectTypeSignUp")}>Đăng ký</a> </p> 
+              <p class="small fw-bold mt-0">
+                Chưa có tài khoản?
+                <a href="#!" class="link-danger" onClick={ () => setDivision("SelectTypeSignUp")}>
+                  Đăng ký
+                </a>
+              </p>
+
           </form>
 
       </div>
