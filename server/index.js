@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-
 const middleware = require('./middlewares');
 const controller = require('./controllers');
 

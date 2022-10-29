@@ -15,6 +15,7 @@ module.exports = (app) => {
     .forEach(file => {
         const filePath = path.join(__dirname, file);
         const controllerName = file.replace('.controller', '').replace('.js', '');
+        console.log('filepath: %s', filePath);
         const controller = require(filePath);
     
         app.use('/' + controllerName, controller);

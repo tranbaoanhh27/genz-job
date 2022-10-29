@@ -10,10 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     email: {
-        type: DataTypes.STRING,
-        validate: {
-            isEmail: true
+      type: DataTypes.STRING,
+      validate: {
+          isEmail: true
       }
+    },
+    guid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4 
     },
     lastActivyDate: DataTypes.DATE,
     createdDate: DataTypes.DATE

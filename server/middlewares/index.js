@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
 
 module.exports = (app) => {
     fs
@@ -17,10 +16,7 @@ module.exports = (app) => {
       const middlewareName = file.replace('.middleware', '').replace('.js', '');
       const middleware = require(filePath);
 
-      if (typeof middleware === 'function') {
-        app.use(middleware());
-      } else
-        app.use(middleware);
+      app.use(middleware);
 
       console.log('Middleware::Intergrated::%s', middlewareName);
     });
