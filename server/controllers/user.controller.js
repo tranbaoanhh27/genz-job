@@ -4,30 +4,39 @@ const express = require('express')
 const db = require("../models");
 const UserHelper = require("../utils/UserHelper");
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+// Get list of user
+router.get('/', async (req, res) => {
     var users = await db.User.findAll();
     res.send(JSON.stringify(users, null, 2));
 });
 
-router.get('/detail/:id', async (req, res, next) => {
-    var user = await db.User.findByPk(req.params.id);
-    if(user)
-        res.send(JSON.stringify(users, null, 2));
-    else
-        res.status(404).send({message: "User Not Found"});
+// Get detail user
+router.get('/detail/:id', async (req, res) => {
+    db.User.findByPk(req.params.id)
+    .then(user => {
+        if(user)
+            res.send(JSON.stringify(user, null, 2));
+        else
+            res.status(404).send({message: "User Not Found"});
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
 });
 
+//Create
 router.post('/create', UserHelper.GetUser, UserHelper.CreateUser);
 
-router.put('/edit/:id(\d+)', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
+//Update
+router.put('/edit/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
     const user = req.user;
     db.User.update({
-        userName: user.userName,
-        email: user.email,
-        password: bcrypt.hashSync(user.password, 8),
-        lastActivyDate: Date.now()
+        UserName: user.userName,
+        Email: user.email,
+        Password: bcrypt.hashSync(user.password, 8),
+        LastActivyDate: Date.now()
     }, {
         where: {
             id: user.id
@@ -41,6 +50,7 @@ router.put('/edit/:id(\d+)', UserHelper.GetUserById, UserHelper.ValidateUser, as
     });
 });
 
+//Delete
 router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
     const user = req.user;
     db.User.destroy({
@@ -55,5 +65,4 @@ router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, as
         res.status(500).send({ message: err.message });
     });
 });
-
-module.exports = router
+module.exports = router;

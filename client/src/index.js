@@ -1,17 +1,29 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App";
 import reportWebVitals from './reportWebVitals';
+
+import AuthVerify from "./common/AuthVerify";
+import AdminCP from "./AdminCP";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
+  <>
   <BrowserRouter>
-    <App />
+    <Routes>       
+        {/* Homepage */}
+        <Route path="/*" element={<App />}/> 
+
+        {/* Admin Control Panel */}
+        <Route path="AdminCP/*" element={<AdminCP />}/> 
+    </Routes>
+    <AuthVerify />
   </BrowserRouter>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function

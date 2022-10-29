@@ -8,22 +8,35 @@ const UserHelper = require('../utils/UserHelper');
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/login', async (req, res) => {
     await db.User.findOne({
+        include: [{
+            model: db.Role,
+            attributes: ['Title'],
+            through: {
+                attributes: []
+            }        
+        }],
         where: {
-            userName: req.body.userName
+            UserName: req.body.userName
         }
     })
-    .then(user => {
+    .then(user =>  {
         if(!user) {
             return res.status(404).send({ message: "User Not found." });
         }
 
+        var roles = [];
+        user.Roles.forEach(element => {
+            roles.push(element.Title);
+        });
+        user.dataValues.Roles = roles.toString();
+
         const validatePassword = bcrypt.compareSync(
             req.body.password,
-            user.password
+            user.Password
         );
 
         if(!validatePassword) {
@@ -38,11 +51,10 @@ router.post('/login', async (req, res) => {
         });
 
         res.status(200).send({
-            id: user.id,
-            username: user.userName,
-            email: user.email,
-            accessToken: token
-          });
+            data: user,
+            accessToken: token,
+            expiration: config.authencation.expiration, 
+        });
     })
     .catch(err => {
         res.status(500).send({ message: err.message });

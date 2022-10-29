@@ -1,29 +1,32 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
-    userName: {
+    UserName: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    Password: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    email: {
+    Email: {
       type: DataTypes.STRING,
       validate: {
           isEmail: true
       }
     },
-    guid: {
+    UserGuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4 
     },
-    lastActivyDate: DataTypes.DATE,
-    createdDate: DataTypes.DATE
-  }, {});
+    LastActivyDate: DataTypes.DATE,
+    CreatedDate: DataTypes.DATE
+  }, {
+    timestamps: false
+  });
   User.associate = function(models) {
-    
+    // associations can be defined here
+    User.belongsToMany(models.Role, { through: models.UserRole});
   };
   return User;
 };

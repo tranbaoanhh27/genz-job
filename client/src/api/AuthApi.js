@@ -1,14 +1,15 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_API_URL + '/authentication/';
 
-class  AuthApi {
+class AuthApi {
+    static apiUrl = process.env.REACT_APP_API_URL + '/authentication/';
+
     Login(userName, password) {
         const config = {
             userName,
             password
         }
-        return axios.post(apiUrl + 'login', config)
+        return axios.post(this.apiUrl + 'login', config)
         .then(response => {
             if(response.data.accessToken) {
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -28,7 +29,7 @@ class  AuthApi {
             password
         };
 
-        return axios.post(apiUrl + "signup", config);
+        return axios.post(this.apiUrl + "signup", config);
     }
 
     GetCurrentUser() {
