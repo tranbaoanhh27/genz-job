@@ -20,7 +20,7 @@ class CompanyHelper {
             createDate: Date()
         })
         .then(company => {
-            return res.send({ message: "Company posted"});
+            return res.send({ message: "Company created"});
         })
         .catch(err => {
             return res.status(500).send({ message: err.message });
