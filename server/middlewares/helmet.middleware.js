@@ -1,4 +1,5 @@
 'use strict';
 
+const helmet = require('helmet');
 // Set security HTTP headers
-module.exports = require('helmet');
+module.exports = helmet();
