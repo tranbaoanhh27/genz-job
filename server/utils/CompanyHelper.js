@@ -4,8 +4,10 @@ const { Op } = require("sequelize");
 
 class CompanyHelper {
     static CreateCompany = async (req, res, next) => {
-        if (!req.company) return false;
-        await db.Job.create({
+        if (req.company) {
+            return res.status(400).send({message: "Company Already Exist. "});
+        }
+        await db.Company.create({
             companyId: req.body.companyId,
             companyName: req.body.companyName,
             field: req.body.field,
@@ -14,16 +16,56 @@ class CompanyHelper {
             website: req.body.website,
             description: req.body.description,
             type: req.body.type,
-            lastActivityDate: None,
+            lastActivityDate: null,
             createDate: Date()
         })
-        .then(job => {
+        .then(company => {
             return res.send({ message: "Company posted"});
         })
         .catch(err => {
-            return res.status(600).send({ message: err.message });
+            return res.status(500).send({ message: err.message });
         });
     }
+
+    static getCompanyById = (req, res, next) => {
+        db.Company.findOne({
+            where: {
+                [Op.or]: [
+                    {companyId: req.body.companyId}
+                ]
+            }
+        })
+        .then(company => {
+            req.company = company;
+            next();
+        })
+        .catch(err => {
+            return res.status(500).send({message: err.message});
+        });
+    }
+
+    // static getCompanyByName = (req, res, next) => {
+    //     db.Companies.findAll({
+    //         where: {
+    //             companyName: req.body.companyName
+    //         }
+    //     })
+    //     .then(companies => {
+    //         req.companies = companies;
+    //         next();
+    //     })
+    //     .catch(err => {
+    //         return res.status(500).send({message: err.message})
+    //     })
+    // }
+
+    // static getCompanyByFielf(req, res, next) => {
+
+    // }
+
+    // static getCompanyByType(req, res, next) => {
+
+    // }
 }
 
 module.exports = CompanyHelper;

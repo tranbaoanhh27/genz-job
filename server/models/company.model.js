@@ -1,8 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Company = sequelize.define('Company', {
-    companyID: {
-        type: DataTypes.STRING,
+    companyId: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     companyName: {
