@@ -25,15 +25,7 @@ router.get('/detail/:id', async(req, res, next) => {
         res.status(404).send({message: "Company not found"})
 })
 
-// router.get('/field', )
-
-// router.get('/type', async (req, res, next) => {
-//     var companies = await db.Company.findAll(
-//         where: {
-//             type: type
-//         }
-//     )
-// })
+// router.get('/')
 
 router.post('/create', CompanyHelper.getCompanyById, CompanyHelper.CreateCompany);
 

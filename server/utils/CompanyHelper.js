@@ -44,28 +44,50 @@ class CompanyHelper {
         });
     }
 
-    // static getCompanyByName = (req, res, next) => {
-    //     db.Companies.findAll({
-    //         where: {
-    //             companyName: req.body.companyName
-    //         }
-    //     })
-    //     .then(companies => {
-    //         req.companies = companies;
-    //         next();
-    //     })
-    //     .catch(err => {
-    //         return res.status(500).send({message: err.message})
-    //     })
-    // }
+    static getCompanyByName = (req, res, next) => {
+        db.Companies.findAll({
+            where: {
+                companyName: req.body.companyName
+            }
+        })
+        .then(companies => {
+            req.companies = companies;
+            next();
+        })
+        .catch(err => {
+            return res.status(500).send({message: err.message})
+        })
+    }
 
-    // static getCompanyByFielf(req, res, next) => {
+    static getCompanyByField = (req, res, next) => {
+        db.Companies.findAll({
+            where: {
+                field: req.body.field
+            }
+        })
+        .then(companies => {
+            req.companies = companies;
+            next();
+        })
+        .catch(err => {
+            return res.status(500).send({message: err.message});
+        })
+    }
 
-    // }
-
-    // static getCompanyByType(req, res, next) => {
-
-    // }
+    static getCompanyByType = (req, res, next) => {
+        db.Companies.findAll({
+            where: {
+                type: req.body.type
+            }
+        })
+        .then(companies => {
+            req.companies = companies;
+            next();
+        })
+        .catch(err => {
+            return res.status(500).send({message: err.message});
+        })
+    }
 }
 
 module.exports = CompanyHelper;
