@@ -1,8 +1,8 @@
-import logo from "./logo.svg";
-import "./App.css";
+import "./assets/css/App.css";
 import { useState } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "./constants/apiConstants";
+import React from "react";
 
 function Logo({ setDivision }) {
     return (
