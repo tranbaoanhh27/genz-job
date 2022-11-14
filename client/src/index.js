@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 import AuthVerify from "./common/AuthVerify";
 import AdminCP from "./AdminCP";
+import Recruiter from './pages/Recruiter/Recruiter';
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -20,6 +21,8 @@ root.render(
 
         {/* Admin Control Panel */}
         <Route path="AdminCP/*" element={<AdminCP />}/> 
+
+        <Route path='/recruiter' element={ < Recruiter/> } />
     </Routes>
     <AuthVerify />
   </BrowserRouter>

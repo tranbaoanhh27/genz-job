@@ -1,5 +1,6 @@
 import "./assets/css/App.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "./constants/apiConstants";
 import React from "react";
@@ -310,29 +311,32 @@ function SignUpRecruiter({ setDivision }) {
 function LogIn({ setDivision }) {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const onSignInSubmitButtonClicked = (event) => {
         event.preventDefault();
         console.log("Login Submit Button Clicked!");
 
         // Send Request to Back-end
-        const requestBody = {
-            userName: userName,
-            password: password,
-        };
-        axios
-            .post(API_BASE_URL + "/authentication/login", requestBody)
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log(
-                        "Received response for Log in POST request: ",
-                        response.data
-                    );
-                }
-            })
-            .catch((error) => {
-                console.log("Log In POST request error: " + error);
-            });
+        // const requestBody = {
+        //     userName: userName,
+        //     password: password,
+        // };
+        // axios
+        //     .post(API_BASE_URL + "/authentication/login", requestBody)
+        //     .then((response) => {
+        //         if (response.status === 200) {
+        //             console.log(
+        //                 "Received response for Log in POST request: ",
+        //                 response.data
+        //             );
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log("Log In POST request error: " + error);
+        //     });
+
+        navigate('recruiter');
     };
 
     return (
