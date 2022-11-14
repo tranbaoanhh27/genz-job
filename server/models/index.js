@@ -24,6 +24,7 @@ fs
   .forEach(file => {
     const filePath = path.join(__dirname, file);
     const model = require(filePath)(sequelize, Sequelize.DataTypes);
+    console.log('Models::Intergrating::%s', filePath);
     db[model.name] = model;
 
     console.log('Models::Intergrated::%s', model.name);

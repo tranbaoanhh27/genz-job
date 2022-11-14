@@ -10,4 +10,5 @@ module.exports = (sequelize, DataTypes) => {
     JobProperty.associate = function(models) {
         JobProperty.belongsTo(models.User);
     }
+    return JobProperty;
 }
