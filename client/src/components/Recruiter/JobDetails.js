@@ -71,7 +71,7 @@ class RecruiterJobDetails extends React.Component {
                         <label className="col">Danh sách ứng viên</label>
                         <button className="col text-end btn btn-link">Các ứng viên tiềm năng</button>
                     </div>
-                    <div className="row container" style={{ height: "300px", overflowY: "scroll", overflowX:"hidden" }}>
+                    <div className="row" style={{ height: "300px", overflowY: "scroll", overflowX:"hidden" }}>
                         <div className="list-group">{itemList}</div>
                     </div>
                 </div>

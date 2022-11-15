@@ -34,6 +34,22 @@ const exampleJobs = [
         <p className="mb-1">Some placeholder content in a paragraph.</p>
         <small className="text-muted">And some muted small print.</small>
     </a>,
+    <a href="#" className="list-group-item list-group-item-action" aria-current="true">
+        <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">List group item heading</h5>
+            <small>3 days ago</small>
+        </div>
+        <p className="mb-1">Some placeholder content in a paragraph.</p>
+        <small>And some small print.</small>
+    </a>,
+    <a href="#" className="list-group-item list-group-item-action">
+        <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">List group item heading</h5>
+            <small className="text-muted">3 days ago</small>
+        </div>
+        <p className="mb-1">Some placeholder content in a paragraph.</p>
+        <small className="text-muted">And some muted small print.</small>
+    </a>,
 ];
 
 export default function RecruiterJobs() {
@@ -66,7 +82,7 @@ export default function RecruiterJobs() {
                                     <option value="byNewCandidate">Sắp xếp theo ứng viên mới</option>
                                 </select>
                             </div>
-                            <div className="container row mt-3" style={{ height: "422px", overflowY: "scroll", overflowX:"hidden" }}>
+                            <div className="row mt-3" style={{ height: "422px", overflowY: "scroll", overflowX:"hidden" }}>
                                 <div className="list-group">{exampleJobs}</div>
                             </div>
                         </div>
