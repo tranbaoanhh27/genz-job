@@ -41,14 +41,16 @@ export default function RecruiterJobs() {
         <>
             <div className="container-fluid">
                 <div className="row mt-4">
-                    <div className="col-7 ms-5" style={{border:"1px solid gray", borderRadius:"16px"}}>
+                    <div className="col-7 ms-5" style={{ border: "1px solid gray", borderRadius: "16px" }}>
                         <RecruiterJobDetails />
                     </div>
                     <div className="col">
                         <div className="container">
                             <button className="row btn btn-block btn-primary">Thêm tin tuyển dụng</button>
                             <div className="input-group row mt-3">
-                                <input className="col input-group-text text-start" placeholder="Tìm tin tuyển dụng..."></input>
+                                <input
+                                    className="col input-group-text text-start"
+                                    placeholder="Tìm tin tuyển dụng..."></input>
                                 <button className="btn btn-secondary col-3">Tìm kiếm</button>
                             </div>
                             <div className="row mt-3">
@@ -64,8 +66,8 @@ export default function RecruiterJobs() {
                                     <option value="byNewCandidate">Sắp xếp theo ứng viên mới</option>
                                 </select>
                             </div>
-                            <div className="list-group row mt-3" style={{ height: "400px", overflowY: "scroll" }}>
-                                {exampleJobs}
+                            <div className="container row mt-3" style={{ height: "422px", overflowY: "scroll", overflowX:"hidden" }}>
+                                <div className="list-group">{exampleJobs}</div>
                             </div>
                         </div>
                     </div>

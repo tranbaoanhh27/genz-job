@@ -46,9 +46,7 @@ class RecruiterJobDetails extends React.Component {
                     <div className="row">
                         <div className="col-3">
                             <img className="rounded row" width={"100"} height={"100"} src={LOGO_URL} />
-                            <button className="btn btn-primary row mt-1">
-                                Thay đổi ảnh
-                            </button>
+                            <button className="btn btn-primary row mt-1">Thay đổi ảnh</button>
                         </div>
                         <div className="col container">
                             <div className="row">
@@ -73,8 +71,8 @@ class RecruiterJobDetails extends React.Component {
                         <label className="col">Danh sách ứng viên</label>
                         <button className="col text-end btn btn-link">Các ứng viên tiềm năng</button>
                     </div>
-                    <div className="list-group row" style={{ height: "300px", overflowY: "scroll" }}>
-                        {itemList}
+                    <div className="row container" style={{ height: "300px", overflowY: "scroll", overflowX:"hidden" }}>
+                        <div className="list-group">{itemList}</div>
                     </div>
                 </div>
             </>
