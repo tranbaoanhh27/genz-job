@@ -12,6 +12,16 @@ export default function RecruiterNavbar() {
                             height="45"
                         />
                     </a>
+                    <form className="d-flex">
+                        <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Tìm kiếm người dùng..."
+                            aria-label="Search"/>
+                        <button className="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
+                    </form>
                     <button
                         type="button"
                         data-bs-toggle="collapse"
@@ -36,7 +46,7 @@ export default function RecruiterNavbar() {
                             </li>
                             <li className="nav-item ms-3">
                                 <a href="#" className="nav-link">
-                                    Nhắn tin
+                                    Tin nhắn
                                 </a>
                             </li>
                             <li className="nav-item ms-3">
