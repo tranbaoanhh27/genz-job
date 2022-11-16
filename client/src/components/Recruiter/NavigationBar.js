@@ -2,8 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function RecruiterNavbar() {
+    function onPageSelect(id) {
+        for (let i = 0; i < 5; i++) {
+            document.getElementsByClassName("nav-item").item(i).style.borderBottom = "";
+            document.getElementsByClassName("nav-item").item(i).style.color = "";
+        }
+        document.getElementById(id).style.borderBottom = "3px solid blue";
+        document.getElementById(id).style.color = "blue";
+    }
     return (
-        <nav className="navbar static-top navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar static-top navbar-expand-lg navbar-light" style={{ background: "#e3f2fd" }}>
             <div className="container">
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img
@@ -19,10 +27,7 @@ export default function RecruiterNavbar() {
                         placeholder="Tìm kiếm người dùng..."
                         aria-label="Search"
                     />
-                    <button
-                        className="btn btn-outline-success"
-                        style={{ width: "130px" }}
-                        type="submit">
+                    <button className="btn btn-outline-primary" style={{ width: "130px" }} type="submit">
                         Tìm kiếm
                     </button>
                 </form>
@@ -38,27 +43,34 @@ export default function RecruiterNavbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
-                        <li className="nav-item ms-3">
+                        <li
+                            id="navJobs"
+                            className="nav-item ms-3"
+                            style={{ borderBottom: "3px solid blue" }}
+                            onClick={() => onPageSelect("navJobs")}>
                             <Link to="jobs" className="nav-link">
                                 Tin tuyển dụng
                             </Link>
                         </li>
-                        <li className="nav-item ms-3">
+                        <li id="navArticles" className="nav-item ms-3" onClick={() => onPageSelect("navArticles")}>
                             <Link to="articles" className="nav-link">
                                 Bài viết
                             </Link>
                         </li>
-                        <li className="nav-item ms-3">
+                        <li id="navMessages" className="nav-item ms-3" onClick={() => onPageSelect("navMessages")}>
                             <Link to="messages" className="nav-link">
                                 Tin nhắn
                             </Link>
                         </li>
-                        <li className="nav-item ms-3">
+                        <li
+                            id="navNotifications"
+                            className="nav-item ms-3"
+                            onClick={() => onPageSelect("navNotifications")}>
                             <Link to="notifications" className="nav-link">
                                 Thông báo
                             </Link>
                         </li>
-                        <li className="nav-item ms-3">
+                        <li id="navProfile" className="nav-item ms-3" onClick={() => onPageSelect("navProfile")}>
                             <Link to="profile" className="nav-link">
                                 Hồ sơ
                             </Link>

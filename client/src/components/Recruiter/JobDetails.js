@@ -1,48 +1,87 @@
 import React from "react";
+import { useState } from "react";
 
 const LOGO_URL =
     "https://raw.githubusercontent.com/theanhbr01/CSC13002/0ff1c72d43a53cfae8dad2d5c9e9ae70dcc1634f/client/src/assets/images/logo.svg";
 
+function CandidateListGroup(candidateItems) {
+    return <div className="list-group">{candidateItems}</div>;
+}
+
+function CandidateListGroupItem(props) {
+    const [name, setName] = useState(props.candidateName);
+    const [status, setStatus] = useState(props.applyStatus);
+    const [exp, setExp] = useState(props.experienceLevel);
+    const [date, setDate] = useState(props.applyDate);
+
+    return (
+        <a href="#" className="list-group-item list-group-item-action" aria-current="true">
+            <div className="d-flex w-100 justify-content-between row mt-1">
+                <h4 className="col">{name}</h4>
+                <span
+                    className={`badge rounded-pill col ${
+                        status === "accepted"
+                            ? "badge-success"
+                            : status === "declined"
+                            ? "badge-danger"
+                            : "badge-secondary"
+                    }`}
+                    style={{ maxWidth: "110px", maxHeight: "22px" }}>
+                    {status === "accepted" ? "Đã chấp nhận" : status === "declined" ? "Đã từ chối" : "Đang xem xét"}
+                </span>
+            </div>
+            <div className="mt-2 row">
+                <p className="col">{`Mức kinh nghiệm: ${exp}`}</p>
+                <small className="col text-end">{`Ngày ứng tuyển: ${date}`}</small>
+            </div>
+        </a>
+    );
+}
+
 const itemList = [
-    <a href="#" className="list-group-item list-group-item-action" aria-current="true">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small className="text-muted">3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small className="text-muted">And some muted small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action" aria-current="true">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small className="text-muted">3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small className="text-muted">And some muted small print.</small>
-    </a>,
+    <CandidateListGroupItem
+        candidateName="Mark Zuckerberg"
+        applyStatus="accepted"
+        experienceLevel="Senior"
+        applyDate="11 Tháng 1, 2011 11:11"
+    />,
+    <CandidateListGroupItem
+        candidateName="Mark Zuckerberg"
+        applyStatus="declined"
+        experienceLevel="Senior"
+        applyDate="11 Tháng 1, 2011 11:11"
+    />,
+    <CandidateListGroupItem
+        candidateName="Mark Zuckerberg"
+        applyStatus="reviewing"
+        experienceLevel="Senior"
+        applyDate="11 Tháng 1, 2011 11:11"
+    />,
+    <CandidateListGroupItem
+        candidateName="Mark Zuckerberg"
+        applyStatus="accepted"
+        experienceLevel="Senior"
+        applyDate="11 Tháng 1, 2011 11:11"
+    />,
+    <CandidateListGroupItem
+        candidateName="Mark Zuckerberg"
+        applyStatus="accepted"
+        experienceLevel="Senior"
+        applyDate="11 Tháng 1, 2011 11:11"
+    />,
+    <CandidateListGroupItem
+        candidateName="Mark Zuckerberg"
+        applyStatus="accepted"
+        experienceLevel="Senior"
+        applyDate="11 Tháng 1, 2011 11:11"
+    />,
 ];
 
 class RecruiterJobDetails extends React.Component {
     render() {
         return (
             <>
-                <div className="container ms-3 mt-3 mb-3 me-3">
+                <div className="container">
                     <div className="row">
                         <div className="col-3">
                             <img className="rounded row" width={"100"} height={"100"} src={LOGO_URL} />
@@ -71,8 +110,8 @@ class RecruiterJobDetails extends React.Component {
                         <label className="col">Danh sách ứng viên</label>
                         <button className="col text-end btn btn-link">Các ứng viên tiềm năng</button>
                     </div>
-                    <div className="row" style={{ height: "300px", overflowY: "scroll", overflowX:"hidden" }}>
-                        <div className="list-group">{itemList}</div>
+                    <div className="row" style={{ height: "300px", overflowY: "scroll", overflowX: "hidden" }}>
+                        {CandidateListGroup(itemList)}
                     </div>
                 </div>
             </>

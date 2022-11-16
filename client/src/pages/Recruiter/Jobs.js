@@ -1,55 +1,42 @@
 import React from "react";
 import RecruiterJobDetails from "../../components/Recruiter/JobDetails";
 
+class JobListGroupItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isActive: props.isActive,
+            title: props.title,
+            createDate: props.createDate,
+        };
+    }
+    render() {
+        return (
+            <a
+                href="#"
+                className={`list-group-item list-group-item-action ${this.state.isActive ? "active" : ""}`}
+                aria-current="true"
+                style={{ padding: "20px" }}>
+                <div className="d-flex w-100 justify-content-between">
+                    <h5 className="mb-1">{this.state.title}</h5>
+                </div>
+                <small>{`Ngày tạo: ${this.state.createDate}`}</small>
+            </a>
+        );
+    }
+}
+
 const exampleJobs = [
-    <a href="#" className="list-group-item list-group-item-action active" aria-current="true">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small className="text-muted">3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small className="text-muted">And some muted small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action" aria-current="true">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small className="text-muted">3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small className="text-muted">And some muted small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action" aria-current="true">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-    </a>,
-    <a href="#" className="list-group-item list-group-item-action">
-        <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">List group item heading</h5>
-            <small className="text-muted">3 days ago</small>
-        </div>
-        <p className="mb-1">Some placeholder content in a paragraph.</p>
-        <small className="text-muted">And some muted small print.</small>
-    </a>,
+    <JobListGroupItem
+        isActive={true}
+        title="Thực tập Lập trình viên Android (Java/Kotlin)"
+        createDate="11 Tháng 01, 2021 11:11"
+    />,
+    <JobListGroupItem title="Thực tập Lập trình viên Android (Java/Kotlin)" createDate="11 Tháng 01, 2021 11:11" />,
+    <JobListGroupItem title="Thực tập Lập trình viên Android (Java/Kotlin)" createDate="11 Tháng 01, 2021 11:11" />,
+    <JobListGroupItem title="Thực tập Lập trình viên Android (Java/Kotlin)" createDate="11 Tháng 01, 2021 11:11" />,
+    <JobListGroupItem title="Thực tập Lập trình viên Android (Java/Kotlin)" createDate="11 Tháng 01, 2021 11:11" />,
+    <JobListGroupItem title="Thực tập Lập trình viên Android (Java/Kotlin)" createDate="11 Tháng 01, 2021 11:11" />,
 ];
 
 export default function RecruiterJobs() {
@@ -57,20 +44,24 @@ export default function RecruiterJobs() {
         <>
             <div className="container-fluid">
                 <div className="row mt-4">
-                    <div className="col-7 ms-5" style={{ border: "1px solid gray", borderRadius: "16px" }}>
+                    <div
+                        className="col-7 ms-5"
+                        style={{ border: "1px solid gray", borderRadius: "20px", padding: "20px" }}>
                         <RecruiterJobDetails />
                     </div>
                     <div className="col">
                         <div className="container">
-                            <button className="row btn btn-block btn-primary">Thêm tin tuyển dụng</button>
-                            <div className="input-group row mt-3">
+                            <button className="row btn btn-block btn-primary" style={{ width: "425px" }}>
+                                Thêm tin tuyển dụng
+                            </button>
+                            <div className="input-group row mt-3" style={{ width: "425px" }}>
                                 <input
                                     className="col input-group-text text-start"
                                     placeholder="Tìm tin tuyển dụng..."></input>
                                 <button className="btn btn-secondary col-3">Tìm kiếm</button>
                             </div>
-                            <div className="row mt-3">
-                                <label className="col text-start" style={{ fontSize: "16px" }}>
+                            <div className="row mt-3" style={{ width: "425px" }}>
+                                <label className="col text-start" style={{ fontSize: "15px" }}>
                                     Các tin tuyển dụng đã tạo
                                 </label>
                                 <select
@@ -82,7 +73,9 @@ export default function RecruiterJobs() {
                                     <option value="byNewCandidate">Sắp xếp theo ứng viên mới</option>
                                 </select>
                             </div>
-                            <div className="row mt-3" style={{ height: "422px", overflowY: "scroll", overflowX:"hidden" }}>
+                            <div
+                                className="row mt-3"
+                                style={{ width: "425px", height: "422px", overflowY: "scroll", overflowX: "hidden" }}>
                                 <div className="list-group">{exampleJobs}</div>
                             </div>
                         </div>
