@@ -22,10 +22,40 @@ router.get('/detail/:id', async(req, res, next) => {
     if (company)
         res.send(JSON.stringify(company, null, 2));
     else
-        res.status(404).send({message: "Company not found"})
+        res.status(404).send({message: "Company not found"});
 })
 
-// router.get('/')
+router.get('/:field', async(req, res, next) => {
+    var companies = await db.Company.findAll({
+        where: {
+            field: req.body.field
+        }  
+    });
+
+    if (company) {
+        res.send(JSON.stringify(company, null, 2));
+    }
+    else {
+        res.status(404).send({message: "Company not found"});
+    }
+})
+
+router.get('/:type', async(req, res, next) => {
+    var companies = await db.Company.findAll({
+        where: {
+            type: req.body.type
+        }
+    });
+
+    if (companies) {
+        res.send(JSON.stringify(company, null, 2));
+    }
+    else {
+        res.status(404).send({message: "company not found"});
+    }
+})
+
+router.put('/edit/:id', CompanyHelper.getCompanyById, CompanyHelper.get)
 
 router.post('/create', CompanyHelper.getCompanyById, CompanyHelper.CreateCompany);
 

@@ -88,6 +88,12 @@ class CompanyHelper {
             return res.status(500).send({message: err.message});
         })
     }
+
+    // static validateCompany = (req, res, next) => {
+    //     var companyId = req.companyId;
+
+        
+    // }
 }
 
 module.exports = CompanyHelper;
