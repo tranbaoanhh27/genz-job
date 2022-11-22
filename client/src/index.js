@@ -9,6 +9,7 @@ import AuthVerify from "./common/AuthVerify";
 import AdminCP from "./AdminCP";
 
 import RecruiterPage from "./pages/Recruiter/Recruiter";
+import JobseekerPage from "./pages/JobSeeker/JobseekerPage";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -25,6 +26,9 @@ root.render(
 
                 {/* Recruiter Pages */}
                 <Route path="recruiter/*" element={<RecruiterPage />} />
+
+                {/* Job Seeker Pages */}
+                <Route path="jobseeker/*" element={<JobseekerPage />} />
             </Routes>
             <AuthVerify />
         </BrowserRouter>
