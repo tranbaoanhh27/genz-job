@@ -1,5 +1,12 @@
 import React from "react";
+import { Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function JobseekerJobs() {
-    return <h1>This is Jobseeker Jobs page.</h1>;
+    const navigator = useNavigate();
+    return (
+        <>
+            <button onClick={() => navigator('jobdetails')}>Click me to go to job details</button>
+        </>
+    );
 }
