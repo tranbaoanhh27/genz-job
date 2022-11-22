@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 export default function RecruiterNavbar() {
     function onPageSelect(id) {
         for (let i = 0; i < 5; i++) {
-            document.getElementsByClassName("nav-item").item(i).style.borderBottom = "";
-            document.getElementsByClassName("nav-item").item(i).style.color = "";
+            let element = document.getElementsByClassName("nav-item").item(i);
+            element.style.borderBottom = "";
+            element.style.color = "";
+            element.classList.remove("fw-bold");
         }
-        document.getElementById(id).style.borderBottom = "3px solid blue";
-        document.getElementById(id).style.color = "blue";
+        let selectedElement = document.getElementById(id);
+        selectedElement.style.borderBottom = "3px solid blue";
+        selectedElement.style.color = "blue";
+        selectedElement.classList.add("fw-bold");
     }
     return (
         <nav className="navbar static-top navbar-expand-lg navbar-light" style={{ background: "#e3f2fd" }}>

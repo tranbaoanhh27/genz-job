@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const LOGO_URL =
@@ -8,37 +8,57 @@ const LOGO_URL =
 const JOB_DESCRIPTION_SAMPLE =
     "Review business requirements working with team members\nPerform a technical analysis of requirements\nProduce a solid, detailed technical design\nWrite clean, modular, robust code to implement the desired requirements with little or no supervision\nWork with the other partners to triage and fix bugs with rapid turnaround\nContribute ideas for making the application better and easier to use\nDevelop and maintain mobile application using Android, React Native or Flutter framework\nActive participation in customer/partner design meetings and general engagements\nEnsure on time, on budget, and the quality of the product.\nReview business requirements working with team members\nPerform a technical analysis of requirements\nProduce a solid, detailed technical design\nWrite clean, modular, robust code to implement the desired requirements with little or no supervision\nWork with the other partners to triage and fix bugs with rapid turnaround\nContribute ideas for making the application better and easier to use\nDevelop and maintain mobile application using Android, React Native or Flutter framework\nActive participation in customer/partner design meetings and general engagements\nEnsure on time, on budget, and the quality of the product.";
 
+const statusBadge = {
+    open: "badge-success",
+    closed: "badge-danger",
+};
+
+const statusLabel = {
+    open: "Đang tuyển",
+    closed: "Đã đóng",
+};
+
 function JobInfo() {
     return (
         <div className="container">
             <div className="row">
-                <h3 className="text-center">Chi tiết công việc</h3>
+                <h3 className="text-center fw-bold">Chi tiết công việc</h3>
             </div>
-            <div className="row" style={{ border: "1px solid gray", borderRadius: "5px", padding: "10px" }}>
+            <div
+                className="row"
+                style={{ border: "1px solid gray", borderRadius: "5px", padding: "10px", background: "#e3f2fe51" }}>
                 <div className="row">
                     <img className="col-3" src={LOGO_URL} width="100" height="100"></img>
                     <div className="col">
                         <div className="row">
                             <label className="col-3">Trạng thái:</label>
-                            <span className="col badge badge-success" style={{ maxWidth: "80px", maxHeight: "20px" }}>
+                            <span
+                                className="col badge badge-success"
+                                style={{ maxWidth: "80px", maxHeight: "20px", borderRadius: "15px" }}>
                                 Đang tuyển
                             </span>
                         </div>
                         <div className="row">
                             <label className="col-3">Tên công việc:</label>
-                            <label className="col" style={{ border: "1px solid gray", borderRadius: "5px" }}>
+                            <label
+                                className="col"
+                                style={{ border: "1px solid gray", borderRadius: "5px", background: "#ffffff" }}>
                                 Thực tập Android Developer (Java/Kotlin)
                             </label>
                         </div>
                         <div className="row">
                             <label className="col-3">Địa chỉ:</label>
-                            <label className="col" style={{ border: "1px solid gray", borderRadius: "5px" }}>
+                            <label
+                                className="col"
+                                style={{ border: "1px solid gray", borderRadius: "5px", background: "#ffffff" }}>
                                 12/21 Ngô Văn Khoai, Phường 2, Quận 6, TP.HCM
                             </label>
                         </div>
                         <div className="row">
                             <label className="col-3">Công ty:</label>
-                            <label className="col" style={{ border: "1px solid gray", borderRadius: "5px" }}>
+                            <label
+                                className="col"
+                                style={{ border: "1px solid gray", borderRadius: "5px", background: "#ffffff" }}>
                                 Vip Technology - Chi nhánh Hồ Chí Minh
                             </label>
                         </div>
@@ -46,7 +66,9 @@ function JobInfo() {
                 </div>
                 <div className="row">
                     <label className="col-3">Một số thông tin:</label>
-                    <label className="col" style={{ border: "1px solid gray", borderRadius: "5px" }}>
+                    <label
+                        className="col"
+                        style={{ border: "1px solid gray", borderRadius: "5px", background: "#ffffff" }}>
                         Thông tin là thông tin gì nhỉ?
                     </label>
                 </div>
@@ -59,6 +81,7 @@ function JobInfo() {
                             borderRadius: "5px",
                             height: "200px",
                             overflowY: "scroll",
+                            background: "#ffffff",
                         }}>
                         {JOB_DESCRIPTION_SAMPLE}
                     </text>
@@ -75,47 +98,47 @@ function JobInfo() {
     );
 }
 
-function JobListGroup() {
+function JobListGroupItem(props) {
+    const [title, setTitle] = useState(props.jobTitle);
+    const [date, setDate] = useState(props.createdDate);
+    const [status, setStatus] = useState(props.jobStatus);
+
     return (
-        <div className="list-group" style={{height: "450px", overflowY: "scroll"}}>
-            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1">List group item heading</h5>
-                    <small>3 days ago</small>
-                </div>
-                <p className="mb-1">
-                    Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-                </p>
-                <small>Donec id elit non mi porta.</small>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1">List group item heading</h5>
-                    <small className="text-muted">3 days ago</small>
-                </div>
-                <p className="mb-1">
-                    Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-                </p>
-                <small className="text-muted">Donec id elit non mi porta.</small>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1">List group item heading</h5>
-                    <small className="text-muted">3 days ago</small>
-                </div>
-                <p className="mb-1">
-                    Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
-                </p>
-                <small className="text-muted">Donec id elit non mi porta.</small>
-            </a>
-        </div>
+        <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+            <div className="d-flex w-100 justify-content-between">
+                <h5 className="mb-1">{title}</h5>
+                <span
+                    className={`badge ${statusBadge[status]}`}
+                    style={{ borderRadius: "15px", maxHeight: "22px", paddingInline: "10px" }}>
+                    {statusLabel[status]}
+                </span>
+            </div>
+            <small>{`Ngày đăng: ${date}`}</small>
+        </a>
     );
+}
+
+const sampleItemList = Array.from([
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="open" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="open" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="open" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="closed" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="open" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="closed" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="open" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="closed" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="open" />,
+    <JobListGroupItem jobTitle="Xe ôm Grab Bike" createdDate="11/11/2011 11:11" jobStatus="closed" />,
+]);
+
+function JobListGroup(jobItems) {
+    return <div className="list-group">{jobItems}</div>;
 }
 
 export default function JobseekerJobDetails() {
     const navigator = useNavigate();
     return (
-        <div className="container-fluid row mt-2">
+        <div className="container-fluid row" style={{ backgroundColor: "#e3f2fe31", padding: "10px" }}>
             <div className="col-8 ms-4">
                 <JobInfo />
             </div>
@@ -139,8 +162,8 @@ export default function JobseekerJobDetails() {
                     </div>
                 </div>
                 <label className="row text-start mt-1 ms-1">Có thể bạn cũng quan tâm</label>
-                <div className="row">
-                    <JobListGroup />
+                <div className="row" style={{ height: "450px", overflowY: "scroll" }}>
+                    {JobListGroup(sampleItemList)}
                 </div>
             </div>
         </div>
