@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import JobseekerNavbar from "../../components/JobSeeker/NavigationBar";
+import NavigationBar from '../../components/UI/NavigationBar'
 
 import JobseekerJobs from "./Jobs";
 import JobseekerJobDetails from "../../components/JobSeeker/JobDetails";
@@ -10,10 +10,38 @@ import JobseekerMessages from "./Messages";
 import JobseekerNotifications from "./Notifications";
 import JobseekerProfile from "./Profile";
 
+const NAV_ITEMS = [
+    {
+        id: "navJobs",
+        title: "Săn việc làm",
+        linkTo: "jobs"
+    },
+    {
+        id: "navArticles",
+        title: "Bảng tin",
+        linkTo: "articles"
+    },
+    {
+        id: "navMessages",
+        title: "Tin nhắn",
+        linkTo: "messages"
+    },
+    {
+        id: "navNotifications",
+        title: "Thông báo",
+        linkTo: "notifications"
+    },
+    {
+        id: "navProfile",
+        title: "Hồ sơ",
+        linkTo: "profile"
+    },
+]
+
 export default function JobseekerPage() {
     return (
         <>
-            <JobseekerNavbar />
+            <NavigationBar items={NAV_ITEMS}/>
             <Routes>
                 <Route index element={<JobseekerJobs />} />
                 <Route path="jobs" element={<JobseekerJobs />} />
