@@ -1,13 +1,14 @@
 {
     "development": {
         "db": {
-            "username": "sa",
-            "password": "123456",
+            "username": "csc13002",
+            "password": "z3K&@R14F1#E",
             "database": "CSC13002",
-            "host": "localhost",
+            "host": "103.90.227.153",
+            "port": "1433",
             "dialect": "mssql",
             "dialectOptions": {
-                "instanceName": "MSSQLSERVER"
+                "instanceName": "SQLEXPRESS"
             }
         },
         "authencation": {
