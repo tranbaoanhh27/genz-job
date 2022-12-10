@@ -5,10 +5,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        value: DataTypes.STRING
+        value: DataTypes.STRING,
     }, {});
     JobProperty.associate = function(models) {
-        JobProperty.belongsTo(models.User);
+        JobProperty.belongsTo(models.Job, {
+            foreignKey: 'jobId'
+        });
     }
     return JobProperty;
 }

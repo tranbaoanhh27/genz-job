@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Job Search Website Application Project",
   "scripts": {
-    "server": "cd server && node index.js",
+    "server": "cd server && nodemon index.js",
     "client": "npm run start --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
