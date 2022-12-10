@@ -21,7 +21,7 @@ const Article = (props) => {
         }
     */
     return (
-        <Card>
+        <Card style={{marginBottom: "2rem"}}>
             <div
                 className="row justify-content-between"
                 style={{ width: "41rem", height: "50px" }}>

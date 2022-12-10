@@ -45,7 +45,7 @@ const Articles = (props) => {
     };
 
     return (
-        <div>
+        <div style={{marginTop: "3rem"}}>
             <ArticlesFilter
                 filterMode={filterMode}
                 sortMode={sortMode}

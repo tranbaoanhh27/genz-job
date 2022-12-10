@@ -10,6 +10,8 @@ import AdminCP from "./AdminCP";
 
 import RecruiterPage from "./pages/Recruiter/Recruiter";
 import JobseekerPage from "./pages/JobSeeker/JobseekerPage";
+import LoginPanel from "./components/LoginPanel/LoginPanel";
+import SignupPanel from "./components/SignupPanel/SignupPanel"
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -20,6 +22,8 @@ root.render(
             <Routes>
                 {/* Homepage */}
                 <Route path="/*" element={<App />} />
+                <Route path="/testsignin" element={<LoginPanel />} />
+                <Route path='/testsignup' element={<SignupPanel />} />
 
                 {/* Admin Control Panel */}
                 <Route path="AdminCP/*" element={<AdminCP />} />
