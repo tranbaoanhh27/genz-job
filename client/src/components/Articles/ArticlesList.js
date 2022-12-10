@@ -7,11 +7,17 @@ const ArticlesList = (props) => {
             articles = []
         }
     */
-    return(
+    return (
         <div>
-            {props.articles.map(article => <Article key={article.id} article={article}/>)}
+            {props.articles.map((article) => (
+                <Article
+                    key={article.id}
+                    article={article}
+                    mode={props.filter}
+                />
+            ))}
         </div>
     );
-}
+};
 
 export default ArticlesList;

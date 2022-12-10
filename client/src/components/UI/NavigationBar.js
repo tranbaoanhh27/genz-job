@@ -16,7 +16,7 @@ export default function NavigationBar(props) {
     */
     return (
         <nav
-            className="navbar static-top navbar-expand-lg navbar-light"
+            className="navbar fixed-top navbar-expand-lg navbar-light"
             style={{ background: "#e3f2fd" }}>
             <div className="container">
                 <a href="#" className="navbar-brand mb-0 h1">

@@ -42,7 +42,7 @@ const exampleJobs = [
 export default function RecruiterJobs() {
     return (
         <>
-            <div className="container-fluid">
+            <div className="container-fluid" style={{paddingTop: "5rem"}}>
                 <div className="row mt-4">
                     <div
                         className="col-7 ms-5"
