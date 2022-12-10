@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { Logo } from "./Logo";
-import { Button } from "../../components/ui/Button"
+import { Button } from "../../components/UI/Button"
 
 export function SignInSignUpSelection({ component, setComponent }) {
 

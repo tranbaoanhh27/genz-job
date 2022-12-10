@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import { Logo } from "./Logo"
-import { Button } from "../../components/ui/Button"
-import { InputTextField } from "../../components/ui/InputTextField"
+import { Button } from "../../components/UI/Button"
+import { InputTextField } from "../../components/UI/InputTextField"
 
 export function SignUpJobSearch({ setComponent }) {
     return (

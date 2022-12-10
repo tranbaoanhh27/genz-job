@@ -12,8 +12,6 @@ import AdminCP from "./AdminCP";
 
 import RecruiterPage from "./pages/Recruiter/Recruiter";
 import JobseekerPage from "./pages/JobSeeker/JobseekerPage";
-import LoginPanel from "./components/LoginPanel/LoginPanel";
-import SignupPanel from "./components/SignupPanel/SignupPanel"
 
 const container = document.getElementById("root");
 const root = createRoot(container);
