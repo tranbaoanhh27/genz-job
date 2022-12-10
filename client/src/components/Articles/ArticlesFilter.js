@@ -1,5 +1,5 @@
 import React from "react";
-import "./ArticlesFilter.css";
+import "../../assets/css/ArticlesFilter.css";
 
 const ArticlesFilter = (props) => {
     /*

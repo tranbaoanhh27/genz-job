@@ -33,8 +33,8 @@ export function LogIn({ setComponent }) {
         //         console.log("Log In POST request error: " + error);
         //     });
 
-        // navigate('recruiter');
-        navigate('jobseeker');
+        navigate('recruiter');
+        // navigate('jobseeker');
     };
 
     return (

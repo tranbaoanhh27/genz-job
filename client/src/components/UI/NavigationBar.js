@@ -22,7 +22,7 @@ export default function NavigationBar(props) {
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img
                         className="d-inline-block align-top"
-                        src="https://raw.githubusercontent.com/theanhbr01/CSC13002/front-end-recruiter-jobs-management/client/src/assets/images/landscape-logo.png"
+                        src="https://raw.githubusercontent.com/theanhbr01/CSC13002/master/client/src/assets/images/landscape-logo.png"
                         height="45"
                     />
                 </a>
