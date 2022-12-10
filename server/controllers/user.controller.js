@@ -3,6 +3,7 @@
 const express = require('express')
 const db = require("../models");
 const UserHelper = require("../utils/UserHelper");
+const { Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -14,7 +15,11 @@ router.get('/', async (req, res) => {
 
 // Get detail user
 router.get('/detail/:id', async (req, res) => {
-    db.User.findByPk(req.params.id)
+    db.User.findByPk(req.params.id, {
+        include: [
+            db.UserProperty
+        ]
+    })
     .then(user => {
         if(user)
             res.send(JSON.stringify(user, null, 2));
@@ -49,6 +54,70 @@ router.put('/edit/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (
         res.status(500).send({ message: err.message });
     });
 });
+
+//Add property
+router.post('/:id/property/new', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
+    const user = req.user;
+    const title = req.body.title;
+    const value = req.body.value;
+    db.UserProperty.create({
+        UserId: user.id,
+        Title: title,
+        Value: value
+    })
+    .then(userProperty => {
+        res.send({ message: "Successfully added new property"});
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+});
+
+//Delete property
+router.delete('/:id/property/delete/:propertyId', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
+    const user = req.user;
+    const title = req.body.title;
+    const value = req.body.value;
+    db.UserProperty.destroy({
+        where: {
+            [Op.and]: [
+                { id: req.params.propertyId },
+                { UserId: req.params.id }
+            ]
+        }
+    })
+    .then(userProperty => {
+        res.send({ message: "Successfully deleted a property"});
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+});
+
+//Update property
+router.put('/:id/property/edit/:propertyId', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
+    const user = req.user;
+    const title = req.body.title;
+    const value = req.body.value;
+    db.UserProperty.update({
+            Title: title,
+            Value: value
+        }, {
+        where: {
+            [Op.and]: [
+                { id: req.params.propertyId },
+                { UserId: req.params.id }
+            ]
+        }
+    })
+    .then(userProperty => {
+        res.send({ message: "Successfully updated a property"});
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+});
+
 
 //Delete
 router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {

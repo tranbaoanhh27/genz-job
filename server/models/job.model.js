@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         });
         Job.hasMany(models.JobProperty, {
             foreignKey: 'jobId'
-        })
+        });
+        Job.belongsToMany(models.User, { through: models.Bookmark });
+        Job.belongsToMany(models.User, { through: models.JobApplication });
     };
     return Job;
 }

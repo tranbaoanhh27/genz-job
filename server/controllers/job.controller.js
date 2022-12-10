@@ -4,6 +4,7 @@ const express = require("express");
 const db = require("../models");
 const JobHelper = require("../utils/JobHelper");
 const UserHelper = require("../utils/UserHelper");
+const AuthencationHelper = require("../utils/AuthencationHelper");
 const { Op } = require("sequelize");
 
 const router = express.Router();
@@ -40,9 +41,12 @@ router.post("/:authorId/create",
 		req.params.id = req.params.authorId;
 		next();
 	},
+	AuthencationHelper.VerifyToken,
 	UserHelper.GetUserById,
 	JobHelper.CreateJob
 );
+
+router.put("/edit", AuthencationHelper.VerifyToken, JobHelper.EditJob);
 
 router.post("/:jobId/newProperty", 
 	async (req, res, next) => {
