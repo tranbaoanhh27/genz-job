@@ -1,6 +1,5 @@
 import React from "react";
-import Card from "../UI/Card";
-import "./Article.css";
+import MyCard from "../UI/MyCard";
 import ArticleAuthor from "./ArticleAuthor";
 import ArticleMediaContent from "./ArticleMediaContent";
 import ArticleLikeCommentShareReport from "./ArticleLikeCommentShareReport";
@@ -21,7 +20,7 @@ const Article = (props) => {
         }
     */
     return (
-        <Card style={{marginBottom: "2rem"}}>
+        <MyCard style={{marginBottom: "2rem"}}>
             <div
                 className="row justify-content-between"
                 style={{ width: "41rem", height: "50px" }}>
@@ -58,14 +57,14 @@ const Article = (props) => {
                     </textarea>
                 )}
             </div>
-            <div className="row" style={{ marginTop: "1rem" }}>
+            <div className="row" style={{ marginTop: "0.5rem" }}>
                 <ArticleMediaContent
                     contentURL={props.article.mediaContentURL}
                 />
             </div>
             {props.mode === "allPosts" && <ArticleLikeCommentShareReport />}
             {props.mode === "myPosts" && <ArticleEditDelete />}
-        </Card>
+        </MyCard>
     );
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import './ArticleAuthor.css'
+import '../../assets/css/ArticleAuthor.css'
 
 const ArticleAuthor = (props) => {
     // props = { authorName, createDate, avatarURL }

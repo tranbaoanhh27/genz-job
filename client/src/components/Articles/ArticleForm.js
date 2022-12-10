@@ -1,5 +1,5 @@
 import React from "react";
-import "./ArticleForm.css";
+import "../../assets/css/ArticleForm.css";
 
 const ArticleForm = (props) => {
     const cancelHandler = (event) => {

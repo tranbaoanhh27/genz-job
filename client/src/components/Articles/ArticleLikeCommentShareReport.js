@@ -1,5 +1,5 @@
 import React from "react";
-import './ArticleButtons.css'
+import '../../assets/css/ArticleButtons.css'
 
 const ArticleLikeCommentShareReport = (props) => {
     return(

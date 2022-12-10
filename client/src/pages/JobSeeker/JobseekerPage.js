@@ -40,7 +40,7 @@ const NAV_ITEMS = [
 
 export default function JobseekerPage() {
     return (
-        <>
+        <div style={{marginTop: "5rem"}}>
             <NavigationBar items={NAV_ITEMS}/>
             <Routes>
                 <Route index element={<JobseekerJobs />} />
@@ -51,6 +51,6 @@ export default function JobseekerPage() {
                 <Route path="notifications" element={<JobseekerNotifications />} />
                 <Route path="profile" element={<Profile />} />
             </Routes>
-        </>
+        </div>
     );
 }

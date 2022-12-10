@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./NewArticle.css";
+import "../../assets/css/NewArticle.css";
 import ArticleForm from "./ArticleForm";
-import Card from "../UI/Card";
+import MyCard from "../UI/MyCard";
 
 const NewArticle = (props) => {
     const [isEditting, setIsEditting] = useState(false);
@@ -51,7 +51,7 @@ const NewArticle = (props) => {
         component = <ArticleForm onArticleReturn={articleFormReturnHandler}/>;
     }
 
-    return <Card>{component}</Card>;
+    return <MyCard>{component}</MyCard>;
 };
 
 export default NewArticle;

@@ -41,8 +41,8 @@ const exampleJobs = [
 
 export default function RecruiterJobs() {
     return (
-        <>
-            <div className="container-fluid" style={{paddingTop: "5rem"}}>
+        <div style={{marginTop: "5rem"}}>
+            <div className="container-fluid">
                 <div className="row mt-4">
                     <div
                         className="col-7 ms-5"
@@ -82,6 +82,6 @@ export default function RecruiterJobs() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
