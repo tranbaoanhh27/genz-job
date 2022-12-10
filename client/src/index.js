@@ -1,7 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";
+import { SignInAndSignUp } from "./pages/SignInSignUp/index";
+import { Admin } from "./pages/Admin/index"
+import "./assets/css/App.css"
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -19,10 +21,10 @@ root.render(
         <BrowserRouter>
             <Routes>
                 {/* Homepage */}
-                <Route path="/*" element={<App />} />
+                <Route path="/*" element={<SignInAndSignUp />} />
 
                 {/* Admin Control Panel */}
-                <Route path="AdminCP/*" element={<AdminCP />} />
+                <Route path="AdminCP/*" element={<Admin />} />
 
                 {/* Recruiter Pages */}
                 <Route path="recruiter/*" element={<RecruiterPage />} />

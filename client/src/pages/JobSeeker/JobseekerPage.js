@@ -8,7 +8,7 @@ import JobseekerJobDetails from "../../components/JobSeeker/JobDetails";
 import JobseekerArticles from "./Articles";
 import JobseekerMessages from "./Messages";
 import JobseekerNotifications from "./Notifications";
-import JobseekerProfile from "./Profile";
+import Profile from "./Profile/index";
 
 export default function JobseekerPage() {
     return (
@@ -21,7 +21,7 @@ export default function JobseekerPage() {
                 <Route path="articles" element={<JobseekerArticles />} />
                 <Route path="messages" element={<JobseekerMessages />} />
                 <Route path="notifications" element={<JobseekerNotifications />} />
-                <Route path="profile" element={<JobseekerProfile />} />
+                <Route path="profile" element={<Profile />} />
             </Routes>
         </>
     );
