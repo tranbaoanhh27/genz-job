@@ -8,7 +8,7 @@ export default function NavigationBar(props) {
             items = [
                 {
                     id: string
-                    title: string,
+                    title: string
                     linkTo: string
                 }
             ]
