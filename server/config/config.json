@@ -1,4 +1,21 @@
 {
+    "localdevelopment": {
+        "db": {
+            "username": "sa",
+            "password": "123456",
+            "database": "CSC13002",
+            "host": "localhost",
+            "dialect": "mssql",
+            "dialectOptions": {
+                "instanceName": "MSSQLSERVER"
+            }
+        },
+        "authencation": {
+            "secretKey": "80c1898d21f3c32be0b2f8820dfb125eaa658511",
+            "expiration": 86400
+        }
+        
+    },
     "development": {
         "db": {
             "username": "csc13002",
