@@ -1,10 +1,6 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
     var SkillBadge = sequelize.define('SkillBadge', {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false

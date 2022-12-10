@@ -1,9 +1,12 @@
 import React from "react";
+import Articles from "../../components/Articles/Articles";
+import NewArticle from '../../components/Articles/NewArticle'
 
 export default function RecruiterArticles() {
     return (
-        <>
-            <h1>This is Articles Page</h1>
-        </>
+        <div style={{paddingTop: "5rem"}}>
+            <NewArticle />
+            <Articles />
+        </div>
     );
 }

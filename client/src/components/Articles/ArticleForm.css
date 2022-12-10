@@ -1,0 +1,32 @@
+.article-form {
+    padding-top: 1rem;
+}
+
+.article-form textarea {
+    padding: 1rem;
+    border-radius: 15px;
+    width: 40rem;
+}
+
+.article-form__add-attachments-buttons-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.article-form__add-attachments-buttons-area button {
+    border-radius: 10px;
+    padding-inline: 2rem;
+}
+
+.article-form__submit-buttons-area {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.article-form__submit-buttons-area button {
+    border-radius: 10px;
+    padding-inline: 2rem;
+    margin-inline-start: 1rem;
+}

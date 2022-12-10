@@ -3,7 +3,9 @@ module.exports = (sequelize, DateTypes) => {
     var ArticleComment = sequelize.define('ArticleComment', {
         id: {
             type: DateTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true
         },
         articleId: {
             type: DateTypes.INTEGER,

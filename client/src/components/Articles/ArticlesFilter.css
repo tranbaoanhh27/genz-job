@@ -1,0 +1,15 @@
+.articles-filter {
+    display: flex;
+    margin: 1rem auto;
+    width: 46rem;
+    justify-content: space-between;
+}
+
+.articles-filter select {
+    background-color: #e3f2fd;
+    border-radius: 15px;
+    padding-inline: 1rem;
+    color: black;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
