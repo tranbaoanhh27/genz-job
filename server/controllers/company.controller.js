@@ -55,7 +55,7 @@ router.get('/:type', async(req, res, next) => {
     }
 })
 
-router.put('/edit/:id', CompanyHelper.getCompanyById, CompanyHelper.get)
+// router.put('/edit/:id', CompanyHelper.getCompanyById, CompanyHelper.get)
 
 router.post('/create', CompanyHelper.getCompanyById, CompanyHelper.CreateCompany);
 

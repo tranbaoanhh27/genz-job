@@ -19,7 +19,21 @@ class JobHelper {
         .catch(err => {
             return res.status(500).send({ message: err.message });
         });
-    }
+    };
+
+    static AddJobProperty = async (req, res, next) => {
+        await db.JobProperty.create({
+            title: req.body.title,
+            value: req.body.value,
+            jobId: req.jobId
+        }).
+        then(jobProperty => {
+            return res.send({ message: "Add new job property successfully"});
+        })
+        .catch(err => {
+            return res.status(500).send({ message: err.message });
+        });
+    };
 }
 
 module.exports = JobHelper;

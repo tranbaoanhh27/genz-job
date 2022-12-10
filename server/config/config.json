@@ -1,5 +1,5 @@
 {
-    "development": {
+    "localdevelopment": {
         "db": {
             "username": "sa",
             "password": "123456",
@@ -8,6 +8,24 @@
             "dialect": "mssql",
             "dialectOptions": {
                 "instanceName": "MSSQLSERVER"
+            }
+        },
+        "authencation": {
+            "secretKey": "80c1898d21f3c32be0b2f8820dfb125eaa658511",
+            "expiration": 86400
+        }
+        
+    },
+    "development": {
+        "db": {
+            "username": "csc13002",
+            "password": "z3K&@R14F1#E",
+            "database": "CSC13002",
+            "host": "103.90.227.153",
+            "port": "1433",
+            "dialect": "mssql",
+            "dialectOptions": {
+                "instanceName": "SQLEXPRESS"
             }
         },
         "authencation": {
