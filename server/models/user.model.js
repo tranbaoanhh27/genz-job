@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Job, { through: models.Bookmark });
     User.belongsToMany(models.Job, { through: models.JobApplication });
     User.hasMany(models.UserProperty)
+    // User.hasMany(models.Article, { as: "authorId", foreignKey: "UserId"});
     User.belongsToMany(User,{ through: models.Following, as: "FollowerId", foreignKey: "FollowerId" });
     User.belongsToMany(User, { through: models.Following, as: "UserId", foreignKey: "UserId" });
   };
