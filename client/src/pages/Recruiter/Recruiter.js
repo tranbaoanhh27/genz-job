@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import RecruiterNavbar from "../../components/UI/NavigationBar";
+import Navbar from "../../components/UI/NavigationBar";
 
 import RecruiterJobs from "./Jobs";
 import RecruiterArticles from "./Articles";
@@ -38,9 +38,10 @@ const NAV_ITEMS = [
 ]
 
 export default function RecruiterPage() {
+    document.body.style.background = '#18191a'
     return (
-        <>
-            <RecruiterNavbar items={NAV_ITEMS}/>
+        <div style={{fontSize: "90%", color: "white"}}>
+            <Navbar items={NAV_ITEMS} />
             <Routes>
                 <Route index element={<RecruiterJobs />} />
                 <Route path="jobs" element={<RecruiterJobs />} />
@@ -49,6 +50,6 @@ export default function RecruiterPage() {
                 <Route path="notifications" element={<RecruiterNotifications />} />
                 <Route path="profile" element={<RecruiterProfile />} />
             </Routes>
-        </>
+        </div>
     );
 }

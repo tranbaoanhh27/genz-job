@@ -2,13 +2,12 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
-import { Admin } from "./pages/Admin/index"
-import "./assets/css/App.css"
+import { Admin } from "./pages/Admin/index";
+import "./assets/css/App.css";
 
 import reportWebVitals from "./reportWebVitals";
 
 import AuthVerify from "./common/AuthVerify";
-import AdminCP from "./AdminCP";
 
 import RecruiterPage from "./pages/Recruiter/Recruiter";
 import JobseekerPage from "./pages/JobSeeker/JobseekerPage";

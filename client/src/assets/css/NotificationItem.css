@@ -1,0 +1,13 @@
+.notification-image {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+}
+
+.notification-state-badge {
+    border-radius: 5px;
+    height: 1rem;
+    width: fit-content;
+    color: white;
+    background: #2e89ff
+}

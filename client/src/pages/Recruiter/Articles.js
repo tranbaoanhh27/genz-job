@@ -4,7 +4,7 @@ import NewArticle from '../../components/Articles/NewArticle'
 
 export default function RecruiterArticles() {
     return (
-        <div style={{marginTop: "5rem"}}>
+        <div>
             <NewArticle />
             <Articles />
         </div>

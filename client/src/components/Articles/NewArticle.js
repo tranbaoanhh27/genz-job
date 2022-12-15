@@ -51,7 +51,7 @@ const NewArticle = (props) => {
         component = <ArticleForm onArticleReturn={articleFormReturnHandler}/>;
     }
 
-    return <MyCard>{component}</MyCard>;
+    return <MyCard style={{background: "#242526"}}>{component}</MyCard>;
 };
 
 export default NewArticle;

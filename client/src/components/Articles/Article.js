@@ -20,7 +20,7 @@ const Article = (props) => {
         }
     */
     return (
-        <MyCard style={{marginBottom: "2rem"}}>
+        <MyCard style={{marginBottom: "2rem", background: "#242526"}}>
             <div
                 className="row justify-content-between"
                 style={{ width: "41rem", height: "50px" }}>
@@ -42,7 +42,7 @@ const Article = (props) => {
             </div>
             <div className="row" style={{ marginTop: "1rem" }}>
                 {props.mode === "allPosts" && (
-                    <p style={{ textAlign: "start", color: "black" }}>
+                    <p style={{ textAlign: "start", color: "white" }}>
                         {props.article.textContent}
                     </p>
                 )}
@@ -50,7 +50,8 @@ const Article = (props) => {
                     <textarea
                         style={{
                             textAlign: "start",
-                            color: "black",
+                            background: "#3b3c3d",
+                            color: "white",
                             borderRadius: "15px",
                         }}>
                         {props.article.textContent}

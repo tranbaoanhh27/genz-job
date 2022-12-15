@@ -10,10 +10,11 @@
     justify-content: space-around;
     text-align: start;
     height: 90%;
+    margin-inline-start: 1rem;
 }
 
 .article-author-name-date label {
-    color: black
+    color: white
 }
 
 .article-author {

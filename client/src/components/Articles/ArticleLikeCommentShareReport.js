@@ -4,9 +4,9 @@ import '../../assets/css/ArticleButtons.css'
 const ArticleLikeCommentShareReport = (props) => {
     return(
         <div className={`article-buttons ${props.className}`}>
-            <button className="btn btn-secondary">Thích</button>
-            <button className="btn btn-secondary">Bình luận</button>
-            <button className="btn btn-secondary">Chia sẻ</button>
+            <button className="btn">Thích</button>
+            <button className="btn">Bình luận</button>
+            <button className="btn">Chia sẻ</button>
             <button className="btn btn-danger">Báo cáo</button>
         </div>
     );

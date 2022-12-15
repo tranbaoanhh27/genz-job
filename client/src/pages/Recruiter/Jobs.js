@@ -41,7 +41,7 @@ const exampleJobs = [
 
 export default function RecruiterJobs() {
     return (
-        <div style={{marginTop: "5rem"}}>
+        <div>
             <div className="container-fluid">
                 <div className="row mt-4">
                     <div
