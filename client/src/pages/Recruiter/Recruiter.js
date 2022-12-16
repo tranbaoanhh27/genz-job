@@ -3,8 +3,8 @@ import { Route, Routes } from "react-router-dom";
 
 import Navbar from "../../components/UI/NavigationBar";
 
-import RecruiterJobs from "./Jobs";
 import RecruiterArticles from "./Articles";
+import RecruiterJobPage from "./Jobs";
 import RecruiterMessages from "./Messages";
 import RecruiterNotifications from "./Notifications";
 import RecruiterProfile from "./Profile";
@@ -43,8 +43,8 @@ export default function RecruiterPage() {
         <div style={{fontSize: "90%", color: "white"}}>
             <Navbar items={NAV_ITEMS} />
             <Routes>
-                <Route index element={<RecruiterJobs />} />
-                <Route path="jobs" element={<RecruiterJobs />} />
+                <Route index element={<RecruiterJobPage />} />
+                <Route path="jobs" element={<RecruiterJobPage />} />
                 <Route path="articles" element={<RecruiterArticles />} />
                 <Route path="messages" element={<RecruiterMessages />} />
                 <Route path="notifications" element={<RecruiterNotifications />} />

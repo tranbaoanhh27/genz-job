@@ -9,7 +9,7 @@
     background: #242526 !important;
     border-radius: 15px;
     padding-inline: 1rem;
-    color: white;
+    color: white !important;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
     text-align: center;
 }

@@ -14,12 +14,12 @@ export default function NavigationBar(props) {
             ]
         }
     */
-    document.body.style.paddingTop = '5rem'
+    document.body.style.paddingTop = "5rem";
     return (
         <nav
             className="navbar fixed-top navbar-expand-lg"
-            style={{background: "#242526"}}>
-            <div  className="container">
+            style={{ background: "#242526" }}>
+            <div className="container">
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img
                         className="d-inline-block align-top"
@@ -35,7 +35,8 @@ export default function NavigationBar(props) {
                     className="navbar-toggler"
                     aria-controls="navbarNav"
                     aria-expanded="false"
-                    aria-label="Ẩn/Hiện bảng điều hướng">
+                    aria-label="Ẩn/Hiện bảng điều hướng"
+                    style={{ background: "#18191a", color: "white" }}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
