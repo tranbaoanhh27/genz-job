@@ -7,9 +7,23 @@ const ArticlesList = (props) => {
             articles = []
         }
     */
+    let sortedList = [...props.articles];
+
+    if (props.sortMode === "byTime") {
+        sortedList = sortedList.sort(
+            (firstArticle, secondArticle) =>
+                secondArticle.createDate - firstArticle.createDate
+        );
+    } else if (props.sortMode === "byLikes") {
+        sortedList = sortedList.sort(
+            (firstArticle, secondArticle) =>
+                secondArticle.numLikes - firstArticle.numLikes
+        );
+    }
+
     return (
         <div>
-            {props.articles.map((article) => (
+            {sortedList.map((article) => (
                 <Article
                     key={article.id}
                     article={article}

@@ -1,5 +1,5 @@
 import React from "react";
-import MyCard from "../UI/MyCard";
+import MyCard from "../../UI/MyCard";
 import RecruiterJobImage from "./JobImage";
 import RecruiterJobInfo from "./JobInfo";
 

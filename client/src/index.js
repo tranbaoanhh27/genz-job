@@ -26,7 +26,7 @@ root.render(
                 <Route path="AdminCP/*" element={<Admin />} />
 
                 {/* Recruiter Pages */}
-                <Route path="recruiter/*" element={<RecruiterPage />} />
+                <Route path="recruiter/*" element={<RecruiterPage userId="1"/>} />
 
                 {/* Job Seeker Pages */}
                 <Route path="jobseeker/*" element={<JobseekerPage />} />

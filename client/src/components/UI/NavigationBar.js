@@ -35,8 +35,7 @@ export default function NavigationBar(props) {
                     className="navbar-toggler"
                     aria-controls="navbarNav"
                     aria-expanded="false"
-                    aria-label="Ẩn/Hiện bảng điều hướng"
-                    style={{ background: "#18191a", color: "white" }}>
+                    aria-label="Ẩn/Hiện bảng điều hướng">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">

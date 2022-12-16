@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../../assets/css/NewArticle.css";
 import ArticleForm from "./ArticleForm";
 import MyCard from "../UI/MyCard";
+import axios from "axios";
+import { API_BASE_URL } from "../../Data/apiConstants";
 
 const NewArticle = (props) => {
     const [isEditting, setIsEditting] = useState(false);
@@ -12,9 +14,22 @@ const NewArticle = (props) => {
     };
 
     const articleFormReturnHandler = (enteredArticle) => {
-        // TODO: POST the enteredArticle if it's not null
+        // Create body for API post request
+        const body = {
+            ...enteredArticle,
+            authorId: props.userId,
+        };
+
+        // Send POST request to create new article
+        axios.post(API_BASE_URL + "/article/create", body).then((response) => {
+            if (response.status == 200) {
+                // If request executed successfully, update the article list
+                props.onPostNewArticle();
+            }
+        });
+
         setIsEditting(false);
-    }
+    };
 
     let component = (
         <div>
@@ -48,10 +63,10 @@ const NewArticle = (props) => {
     );
 
     if (isEditting) {
-        component = <ArticleForm onArticleReturn={articleFormReturnHandler}/>;
+        component = <ArticleForm onArticleReturn={articleFormReturnHandler} />;
     }
 
-    return <MyCard style={{background: "#242526"}}>{component}</MyCard>;
+    return <MyCard style={{ background: "#242526" }}>{component}</MyCard>;
 };
 
 export default NewArticle;

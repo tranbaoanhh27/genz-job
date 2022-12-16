@@ -37,7 +37,7 @@ const NAV_ITEMS = [
     }
 ]
 
-export default function RecruiterPage() {
+export default function RecruiterPage(props) {
     document.body.style.background = '#18191a'
     return (
         <div style={{fontSize: "90%", color: "white"}}>
@@ -45,7 +45,7 @@ export default function RecruiterPage() {
             <Routes>
                 <Route index element={<RecruiterJobPage />} />
                 <Route path="jobs" element={<RecruiterJobPage />} />
-                <Route path="articles" element={<RecruiterArticles />} />
+                <Route path="articles" element={<RecruiterArticles userId={props.userId}/>} />
                 <Route path="messages" element={<RecruiterMessages />} />
                 <Route path="notifications" element={<RecruiterNotifications />} />
                 <Route path="profile" element={<RecruiterProfile />} />

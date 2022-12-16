@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import RecruiterJobDetails from "../../components/Recruiter/JobDetails";
-import RecruiterJobs from "../../components/Recruiter/Jobs";
+import RecruiterJobDetails from "../../components/Recruiter/Job/JobDetails";
+import RecruiterJobs from "../../components/Recruiter/Job/Jobs";
 
 const JOBS = [
     {

@@ -5,7 +5,7 @@ const ArticlesFilter = (props) => {
     /*
         props = {
             filterMode: "myPosts" or "allPosts"
-            sortMode: "byTime" or "byNewActivities"
+            sortMode: "byTime" or "byLikes"
             onSelectFilter: a function
             onSelectSortMode: a function
         }
@@ -32,8 +32,8 @@ const ArticlesFilter = (props) => {
                 value={props.sortMode}
                 onChange={sortModeSelectHandler}>
                 <option value="byTime">Sắp xếp theo thời gian</option>
-                <option value="byNewActivities">
-                    Sắp xếp theo hoạt động mới
+                <option value="byLikes">
+                    Sắp xếp theo số lượt thích
                 </option>
             </select>
         </div>
