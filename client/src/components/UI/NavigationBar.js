@@ -14,10 +14,11 @@ export default function NavigationBar(props) {
             ]
         }
     */
+    document.body.style.paddingTop = "5rem";
     return (
         <nav
-            className="navbar fixed-top navbar-expand-lg navbar-light"
-            style={{ background: "#e3f2fd" }}>
+            className="navbar fixed-top navbar-expand-lg"
+            style={{ background: "#242526" }}>
             <div className="container">
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img

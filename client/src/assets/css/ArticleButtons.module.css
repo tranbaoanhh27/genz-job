@@ -7,5 +7,8 @@
 
 .article-buttons button {
     border-radius: 30px;
-    padding-inline: 1rem;
+    padding-inline: 1.5rem;
+    background: #3b3c3d;
+    border: 0px;
+    color: white;
 }

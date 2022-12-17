@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import RecruiterNavbar from "../../components/UI/NavigationBar";
+import Navbar from "../../components/UI/NavigationBar";
 
-import RecruiterJobs from "./Jobs";
 import RecruiterArticles from "./Articles";
+import RecruiterJobPage from "./Jobs";
 import RecruiterMessages from "./Messages";
 import RecruiterNotifications from "./Notifications";
 import RecruiterProfile from "./Profile";
@@ -37,18 +37,19 @@ const NAV_ITEMS = [
     }
 ]
 
-export default function RecruiterPage() {
+export default function RecruiterPage(props) {
+    document.body.style.background = '#18191a'
     return (
-        <>
-            <RecruiterNavbar items={NAV_ITEMS}/>
+        <div style={{fontSize: "90%", color: "white"}}>
+            <Navbar items={NAV_ITEMS} />
             <Routes>
-                <Route index element={<RecruiterJobs />} />
-                <Route path="jobs" element={<RecruiterJobs />} />
-                <Route path="articles" element={<RecruiterArticles />} />
+                <Route index element={<RecruiterJobPage />} />
+                <Route path="jobs" element={<RecruiterJobPage />} />
+                <Route path="articles" element={<RecruiterArticles userId={props.userId}/>} />
                 <Route path="messages" element={<RecruiterMessages />} />
                 <Route path="notifications" element={<RecruiterNotifications />} />
                 <Route path="profile" element={<RecruiterProfile />} />
             </Routes>
-        </>
+        </div>
     );
 }

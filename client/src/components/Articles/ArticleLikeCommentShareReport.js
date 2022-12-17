@@ -1,12 +1,12 @@
 import React from "react";
-import '../../assets/css/ArticleButtons.css'
+import css from '../../assets/css/ArticleButtons.module.css'
 
 const ArticleLikeCommentShareReport = (props) => {
     return(
-        <div className={`article-buttons ${props.className}`}>
-            <button className="btn btn-secondary">Thích</button>
-            <button className="btn btn-secondary">Bình luận</button>
-            <button className="btn btn-secondary">Chia sẻ</button>
+        <div className={`${css['article-buttons']} ${props.className}`}>
+            <button className="btn">{`Thích: ${props.numLikes}`}</button>
+            <button className="btn">Bình luận</button>
+            <button className="btn">Chia sẻ</button>
             <button className="btn btn-danger">Báo cáo</button>
         </div>
     );

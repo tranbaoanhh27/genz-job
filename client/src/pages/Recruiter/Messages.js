@@ -2,7 +2,7 @@ import React from "react";
 
 export default function RecruiterMessages() {
     return (
-        <div style={{marginTop: "5rem"}}>
+        <div>
             <h1>This is Messages Page</h1>
         </div>
     );

@@ -6,7 +6,7 @@ const NavigationItem = (props) => {
         <li
             id={props.id}
             className="nav-item ms-3">
-            <Link to={props.linkTo} className="nav-link">
+            <Link to={props.linkTo} className="nav-link" style={{color: "white"}}>
                 {props.title}
             </Link>
         </li>

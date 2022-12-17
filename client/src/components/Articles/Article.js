@@ -15,12 +15,19 @@ const Article = (props) => {
                 createDate: Date
                 textContent: string
                 mediaContentURL: string
+                numLikes: number
             }
             mode: "myPosts" or "allPosts"
         }
     */
+    console.log(props.article);
+
+    const onEditTextContent = (event) => {
+        console.log(event.target.value);
+    };
+
     return (
-        <MyCard style={{marginBottom: "2rem"}}>
+        <MyCard style={{ marginBottom: "2rem", background: "#242526" }}>
             <div
                 className="row justify-content-between"
                 style={{ width: "41rem", height: "50px" }}>
@@ -42,7 +49,7 @@ const Article = (props) => {
             </div>
             <div className="row" style={{ marginTop: "1rem" }}>
                 {props.mode === "allPosts" && (
-                    <p style={{ textAlign: "start", color: "black" }}>
+                    <p style={{ textAlign: "start", color: "white" }}>
                         {props.article.textContent}
                     </p>
                 )}
@@ -50,11 +57,13 @@ const Article = (props) => {
                     <textarea
                         style={{
                             textAlign: "start",
-                            color: "black",
+                            background: "#3b3c3d",
+                            color: "white",
                             borderRadius: "15px",
-                        }}>
-                        {props.article.textContent}
-                    </textarea>
+                        }}
+                        value={props.article.textContent}
+                        onChange={onEditTextContent}
+                    />
                 )}
             </div>
             <div className="row" style={{ marginTop: "0.5rem" }}>
@@ -62,7 +71,7 @@ const Article = (props) => {
                     contentURL={props.article.mediaContentURL}
                 />
             </div>
-            {props.mode === "allPosts" && <ArticleLikeCommentShareReport />}
+            {props.mode === "allPosts" && <ArticleLikeCommentShareReport numLikes={props.article.numLikes}/>}
             {props.mode === "myPosts" && <ArticleEditDelete />}
         </MyCard>
     );
