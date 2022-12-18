@@ -41,6 +41,7 @@ const NotificationList = (props) => {
                     notification={notification}
                     onChangeReadState={changeReadStateHandler}
                     onRemoveItem={removeItemHandler}
+                    theme={props.theme}
                 />
             ))}
         </div>

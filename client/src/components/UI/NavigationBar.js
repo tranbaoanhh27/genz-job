@@ -1,4 +1,5 @@
 import React from "react";
+import { DarkTheme, LightTheme } from "../../assets/themes";
 import NavigationItem from "./NavigationItem";
 import UserSearch from "./UserSearch";
 
@@ -15,11 +16,12 @@ export default function NavigationBar(props) {
         }
     */
     document.body.style.paddingTop = "5rem";
+    const theme = props.theme === "light" ? LightTheme : DarkTheme;
     return (
         <nav
             className="navbar fixed-top navbar-expand-lg"
-            style={{ background: "#242526" }}>
-            <div className="container">
+            style={{ background: theme.card }}>
+            <div className="container-fluid">
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img
                         className="d-inline-block align-top"
@@ -27,7 +29,7 @@ export default function NavigationBar(props) {
                         height="45"
                     />
                 </a>
-                <UserSearch />
+                <UserSearch theme={theme}/>
                 <button
                     type="button"
                     data-bs-toggle="collapse"
@@ -46,6 +48,7 @@ export default function NavigationBar(props) {
                                 id={item.id}
                                 title={item.title}
                                 linkTo={item.linkTo}
+                                theme={theme}
                             />
                         ))}
                     </ul>

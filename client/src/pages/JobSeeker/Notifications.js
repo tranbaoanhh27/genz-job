@@ -1,9 +1,6 @@
 import React from "react";
+import NotificationPage from "../../components/Notifications/NotificationPage";
 
-export default function JobseekerNotifications() {
-    return (
-        <div style={{marginTop: "5rem"}}>
-            <h1>This is Notifications Page</h1>
-        </div>
-    );
+export default function JobseekerNotifications(props) {
+    return <NotificationPage theme="light" userId={props.userId} />;
 }

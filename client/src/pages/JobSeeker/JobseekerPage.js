@@ -40,8 +40,8 @@ const NAV_ITEMS = [
 
 export default function JobseekerPage() {
     return (
-        <div style={{marginTop: "5rem"}}>
-            <NavigationBar items={NAV_ITEMS}/>
+        <div>
+            <NavigationBar items={NAV_ITEMS} theme="light" />
             <Routes>
                 <Route index element={<JobseekerJobs />} />
                 <Route path="jobs" element={<JobseekerJobs />} />
