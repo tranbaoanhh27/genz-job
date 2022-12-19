@@ -8,9 +8,10 @@ const UserSearch = (props) => {
                 type="search"
                 placeholder="Tìm kiếm người dùng..."
                 aria-label="Search"
+                style={{background: "#3a3b3c", color: "white", border: "0px"}}
             />
             <button
-                className="btn btn-outline-primary"
+                className="btn btn-success"
                 style={{ width: "130px" }}
                 type="submit">
                 Tìm kiếm

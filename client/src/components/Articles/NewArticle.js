@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import "../../assets/css/NewArticle.css";
 import ArticleForm from "./ArticleForm";
+import styled from "styled-components";
 import MyCard from "../UI/MyCard";
+import axios from "axios";
+import { API_BASE_URL } from "../../Data/apiConstants";
 
+// Default Component
 const NewArticle = (props) => {
     const [isEditting, setIsEditting] = useState(false);
 
@@ -12,46 +15,75 @@ const NewArticle = (props) => {
     };
 
     const articleFormReturnHandler = (enteredArticle) => {
-        // TODO: POST the enteredArticle if it's not null
+        // Create body for API post request
+        const body = {
+            ...enteredArticle,
+            authorId: props.userId,
+        };
+
+        // Send POST request to create new article
+        axios.post(API_BASE_URL + "/article/create", body).then((response) => {
+            if (response.status == 200) {
+                // If request executed successfully, update the article list
+                props.onPostNewArticle();
+            }
+        });
+
         setIsEditting(false);
-    }
+    };
 
     let component = (
         <div>
-            <button
-                type="button"
-                className="new-article__start-article"
-                onClick={startEditHandler}>
+            <StartArticleButton type="button" onClick={startEditHandler}>
                 Bài viết mới
-            </button>
-            <div className="new-article__add-attachments">
-                <button
-                    className="btn btn-primary"
-                    type="button"
-                    onClick={startEditHandler}>
-                    Thêm ảnh
-                </button>
-                <button
-                    className="btn btn-primary"
-                    type="button"
-                    onClick={startEditHandler}>
-                    Thêm video
-                </button>
-                <button
-                    className="btn btn-primary"
-                    type="button"
-                    onClick={startEditHandler}>
-                    Thêm tệp âm thanh
-                </button>
-            </div>
+            </StartArticleButton>
+            <AttachmentButtons>
+                <PrimaryButton onClick={startEditHandler}>Thêm ảnh</PrimaryButton>
+                <PrimaryButton onClick={startEditHandler}>Thêm video</PrimaryButton>
+                <PrimaryButton onClick={startEditHandler}>Thêm tệp âm thanh</PrimaryButton>
+            </AttachmentButtons>
         </div>
     );
 
     if (isEditting) {
-        component = <ArticleForm onArticleReturn={articleFormReturnHandler}/>;
+        component = <ArticleForm onArticleReturn={articleFormReturnHandler} />;
     }
 
-    return <MyCard>{component}</MyCard>;
+    return <MyCard style={{ background: "#242526" }}>{component}</MyCard>;
 };
 
 export default NewArticle;
+
+// Styled Components
+const StartArticleButton = styled.button`
+    background-color: #3b3c3d;
+    color: white;
+    padding: 1rem;
+    margin: 1rem auto;
+    width: 40rem;
+    border-radius: 12px;
+    text-align: start;
+    border: 0px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+`;
+
+const AttachmentButtons = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    & button {
+        border-radius: 30px;
+        padding-inline: 2rem;
+    }
+`;
+
+// Reusable Components
+const PrimaryButton = (props) => {
+    return (
+        <button className="btn btn-primary" type="button" onClick={props.onClick}>
+            {props.children}
+        </button>
+    );
+};
