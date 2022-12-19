@@ -12,6 +12,16 @@ router.get('/', async (req, res) => {
     res.send(JSON.stringify(roles, null, 2));
 });
 
+// Get list <title, id>
+router.get('/getList', async (req, res) => {
+    var roles = await db.Role.findAll();
+    var newList = {};
+    roles.forEach(role => {
+        newList[role.Title] = role.id;
+    });
+    res.send(JSON.stringify(newList, null, 2));
+});
+
 // Get detail
 router.get('/detail/:id', async (req, res) => {
     var role = await db.Role.findByPk(req.params.id);

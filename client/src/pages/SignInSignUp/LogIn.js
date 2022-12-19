@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Logo } from "./Logo"
 import { Button } from "../../components/UI/Button"
 import { InputTextField } from "../../components/UI/InputTextField"
+import AuthAPI from "../../api/AuthApi"
 
 export function LogIn({ setComponent }) {
     
@@ -15,26 +16,22 @@ export function LogIn({ setComponent }) {
         console.log("Login Submit Button Clicked!");
 
         // Send Request to Back-end
-        // const requestBody = {
-        //     userName: userName,
-        //     password: password,
-        // };
-        // axios
-        //     .post(API_BASE_URL + "/authentication/login", requestBody)
-        //     .then((response) => {
-        //         if (response.status === 200) {
-        //             console.log(
-        //                 "Received response for Log in POST request: ",
-        //                 response.data
-        //             );
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.log("Log In POST request error: " + error);
-        //     });
-
-        navigate('recruiter');
-        // navigate('jobseeker');
+        AuthAPI.Login(userName, password)
+        .then(response => {
+            console.log(response.data.Roles)
+            if (response.data.Roles === 'recruiter') {
+                navigate('recruiter');
+            }
+            else if (response.data.Roles == 'job-seeker') {
+                navigate('jobseeker');
+            }
+            else if (response.data.Roles) {
+                // navigate('admin');
+            }
+        })
+        .catch(error => {
+            console.log({ message: error.message});
+        });
     };
 
     return (

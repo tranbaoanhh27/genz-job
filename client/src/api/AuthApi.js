@@ -22,14 +22,14 @@ class AuthApi {
         localStorage.removeItem("user");
     }
 
-    static Signup(userName, email, password) {
+    static Signup(userName, email, password, role) {
         const config = { 
             userName,
             email,
             password
         };
-
-        return axios.post(this.apiUrl + "signup", config);
+        
+        return axios.post(this.apiUrl + "signup", config)
     }
 
     static GetCurrentUser() {

@@ -4,7 +4,7 @@ import { Carousel } from "./Carousel";
 import { SignInSignUpSelection } from "./SignInSignUpSelection";
 import { LogIn } from "./LogIn";
 import { SignUpJobSearch } from "./SignUpJobSearch";
-import { SignUpRecruiter } from "./SignUpRecruiter";
+import { SignUp } from "./SignUp";
 
 function MainComponent() {
 
@@ -29,10 +29,10 @@ function MainComponent() {
             );
 
         case "signUpJobSearch":
-            return <SignUpJobSearch setComponent={setComponent} />;
+            return <SignUp setComponent={setComponent} role="job-seeker" />;
 
         case "signUpRecruiter":
-            return <SignUpRecruiter setComponent={setComponent} />;
+            return <SignUp setComponent={setComponent} role='recruiter'/>;
 
         default:
             return <LogIn setComponent={setComponent} />;
