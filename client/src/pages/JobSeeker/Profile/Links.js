@@ -4,8 +4,10 @@ import { socialLinks } from '../../../Data/Profile';
 function Link({icon, linkText}) {
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-        <i className={`${icon} fa-lg`} style={{color: "var(--notice)"}}></i>
-        <p className="mb-0" style={{color: "var(--primary)"}}>{linkText}</p>
+            <i className={`${icon} fa-lg`} style={{color: "var(--notice)"}}></i>
+            <div>
+                <p className="mb-0" style={{color: "var(--primary)"}} contentEditable>{linkText}</p>
+            </div>
         </li>
     )
 }

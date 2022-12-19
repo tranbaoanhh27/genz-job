@@ -25,6 +25,10 @@ export let personalInformation = [
     {
         key: "Giới tính",
         value: "Nam"
+    },
+    {
+        key: "Role",
+        value: "Người tìm việc"
     }
 ];
 

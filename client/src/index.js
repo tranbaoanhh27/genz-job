@@ -8,7 +8,6 @@ import "./assets/css/App.css"
 import reportWebVitals from "./reportWebVitals";
 
 import AuthVerify from "./common/AuthVerify";
-import AdminCP from "./AdminCP";
 
 import RecruiterPage from "./pages/Recruiter/Recruiter";
 import JobseekerPage from "./pages/JobSeeker/JobseekerPage";
