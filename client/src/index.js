@@ -57,14 +57,25 @@ const NAV_RECRUITER_ITEMS = [
         linkTo: "notifications",
     },
     {
-        id: "navProfile",
-        title: "Hồ sơ",
-        linkTo: "profile",
-    },
-    {
-        id: "navLogOut",
-        title: "Thoát",
-        linkTo: "logout",
+        title: "Tài khoản",
+        isDropdown: true,
+        children: [
+            {
+                id: "navProfile",
+                title: "Hồ sơ của tôi",
+                linkTo: "profile",
+            },
+            {
+                id: "navMyJobs",
+                title: "Tin tuyển dụng của tôi",
+                linkTo: "job/create",
+            },
+            {
+                id: "navLogOut",
+                title: "Đăng xuất",
+                linkTo: "logout",
+            },
+        ],
     },
 ];
 
@@ -97,7 +108,7 @@ const App = (props) => {
 
     const rerender = useForceUpdate();
     return (
-        <div style={{ fontSize: "100%", color: "black" }}>
+        <div>
             {window.location.pathname !== "/auth" && <Navbar items={navigation_items} rerenderApp={rerender} />}
             <Routes>
                 {/* Homepage */}

@@ -43,10 +43,9 @@ export default function NavigationBar(props) {
                         {props.items.map((item) => (
                             <NavigationItem
                                 key={item.id}
-                                id={item.id}
-                                title={item.title}
-                                linkTo={item.linkTo}
+                                item={item}
                                 theme={theme}
+                                isDropdown={item.isDropdown}
                                 rerenderApp={props.rerenderApp}
                             />
                         ))}
