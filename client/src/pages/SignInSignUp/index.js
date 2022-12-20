@@ -3,10 +3,9 @@ import React, { Component, useState } from "react";
 import { Carousel } from "./Carousel";
 import { SignInSignUpSelection } from "./SignInSignUpSelection";
 import { LogIn } from "./LogIn";
-import { SignUpJobSearch } from "./SignUpJobSearch";
 import { SignUp } from "./SignUp";
 
-function MainComponent() {
+function MainComponent({ setUser }) {
 
     // Detect if you are signing up or signing in, etc.
     const [component, setComponent] = useState("both");
@@ -35,11 +34,11 @@ function MainComponent() {
             return <SignUp setComponent={setComponent} role='recruiter'/>;
 
         default:
-            return <LogIn setComponent={setComponent} />;
+            return <LogIn setComponent={setComponent} setUser={setUser}/>;
     }
 }
 
-export function SignInAndSignUp() {
+export function SignInAndSignUp({ setUser }) {
 
     return (
         <div className="SignInAndSignUp">
@@ -47,7 +46,7 @@ export function SignInAndSignUp() {
                 <div className="container-fluid h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <Carousel />
-                        <MainComponent />
+                        <MainComponent setUser={setUser}/>
                     </div>
                 </div>
             </section>

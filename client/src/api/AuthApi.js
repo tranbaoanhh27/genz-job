@@ -35,6 +35,11 @@ class AuthApi {
     static GetCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
     }
+
+    static GetCurrentUserRole() {
+        var user = this.GetCurrentUser();
+        return user.data.Roles;
+    }
 }
 
 export default AuthApi;

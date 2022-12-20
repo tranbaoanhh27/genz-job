@@ -1,39 +1,147 @@
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
+import Job from "./pages/Job/index";
+import Article from "./pages/Article/index";
+import Message from "./pages/Message/index";
+import Notification from "./pages/Notification/index";
+import Profile from "./pages/Profile/index";
 import { Admin } from "./pages/Admin/index";
+import Navbar from "./components/UI/NavigationBar";
 import "./assets/css/App.css";
 
 import reportWebVitals from "./reportWebVitals";
 
+import AuthApi from './api/AuthApi';
 import AuthVerify from "./common/AuthVerify";
+import SecuredRoute, { checkUserPermission } from './components/SecuredRoute';
 
-import RecruiterPage from "./pages/Recruiter/Recruiter";
-import JobseekerPage from "./pages/JobSeeker/JobseekerPage";
+const NAV_GENERAL_ITEMS = [
+	{
+		id: "navJobs",
+		title: "Tin tuyển dụng",
+		linkTo: "",
+	},
+	{
+		id: "navArticels",
+		title: "Bài viết",
+		linkTo: "articles",
+	},
+	{
+		id: "navProfile",
+		title: "Đăng nhập/Đăng kí",
+		linkTo: "auth",
+	},
+];
+
+const NAV_RECRUITER_ITEMS = [
+	{
+		id: "navJobs",
+		title: "Tin tuyển dụng",
+		linkTo: "",
+	},
+	{
+		id: "navArticels",
+		title: "Bài viết",
+		linkTo: "articles",
+	},
+	{
+		id: "navMessages",
+		title: "Tin nhắn",
+		linkTo: "messages",
+	},
+	{
+		id: "navNotifications",
+		title: "Thông báo",
+		linkTo: "notifications",
+	},
+	{
+		id: "navProfile",
+		title: "Hồ sơ",
+		linkTo: "profile",
+	},
+	{
+		id: "navLogOut",
+		title: "Thoát",
+		linkTo: "logout",
+	},
+];
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
+const Logout = ({setUser}) => {
+	AuthApi.Logout();
+	setUser(null);
+	return <Navigate to='/'/>
+}
+
+const App = (props) => {
+	var currentUser = AuthApi.GetCurrentUser();
+	if (currentUser) currentUser = currentUser.data;
+	const [user, setUser] = useState(currentUser);
+	console.log(window.location);
+	var navigation_items = NAV_RECRUITER_ITEMS;
+	if (!user) {
+		navigation_items = NAV_GENERAL_ITEMS;
+	}
+	return (
+		<div style={{ fontSize: "100%", color: "black" }}>
+			{(window.location.pathname !== "/auth") && <Navbar items={navigation_items}/>}
+			<Routes>
+				{/* Homepage */}
+				<Route path="/*" element={<Job />} />
+
+				{/* Login */}
+				<Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
+
+				{/* Article */}
+				<Route path="articles" element={<Article />} />
+
+				{/* Messages */}
+				<Route path='messages' element={
+					<SecuredRoute user={user} permission='route.authenticated'>
+						<Message />
+					</SecuredRoute>
+					} />
+
+				{/* Notifications */}
+				<Route path='notifications' element={
+					<SecuredRoute user={user} permission='route.authenticated'>
+						<Notification />
+					</SecuredRoute>
+					} />
+
+				{/* Profile */}
+				<Route path='profile' element={
+					<SecuredRoute user={user} permission='route.authenticated'>
+						<Profile />
+					</SecuredRoute>
+					} />
+
+				{/* Profile */}
+				<Route path='logout' element={
+					<SecuredRoute user={user} permission='route.authenticated'>
+						<Logout setUser={setUser}/>
+					</SecuredRoute>
+					} />
+
+				{/* Admin Control Panel */}
+				<Route path="AdminCP/*" element={<Admin />} />
+
+			</Routes>
+		</div>
+	);
+};
+
 root.render(
-    <>
-        <BrowserRouter>
-            <Routes>
-                {/* Homepage */}
-                <Route path="/*" element={<SignInAndSignUp />} />
-
-                {/* Admin Control Panel */}
-                <Route path="AdminCP/*" element={<Admin />} />
-
-                {/* Recruiter Pages */}
-                <Route path="recruiter/*" element={<RecruiterPage userId="1"/>} />
-
-                {/* Job Seeker Pages */}
-                <Route path="jobseeker/*" element={<JobseekerPage />} />
-            </Routes>
-            <AuthVerify />
-        </BrowserRouter>
-    </>
+	<>
+		<BrowserRouter>
+			<App />		
+			<AuthVerify />
+		</BrowserRouter>
+	</>
 );
 
 // If you want to start measuring performance in your app, pass a function

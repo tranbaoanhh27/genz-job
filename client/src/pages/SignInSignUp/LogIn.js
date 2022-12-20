@@ -5,7 +5,7 @@ import { Button } from "../../components/UI/Button"
 import { InputTextField } from "../../components/UI/InputTextField"
 import AuthAPI from "../../api/AuthApi"
 
-export function LogIn({ setComponent }) {
+export function LogIn({ setComponent, setUser }) {
     
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -18,12 +18,14 @@ export function LogIn({ setComponent }) {
         // Send Request to Back-end
         AuthAPI.Login(userName, password)
         .then(response => {
-            console.log(response.data.Roles)
+            console.log(response.data)
             if (response.data.Roles === 'recruiter') {
-                navigate('recruiter');
+                navigate('/');
+                setUser(response.data);
             }
             else if (response.data.Roles == 'job-seeker') {
-                navigate('jobseeker');
+                navigate('/');
+                setUser(response.data);
             }
             else if (response.data.Roles) {
                 // navigate('admin');
