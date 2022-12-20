@@ -18,9 +18,7 @@ export default function NavigationBar(props) {
     document.body.style.paddingTop = "5rem";
     const theme = props.theme === "light" ? LightTheme : DarkTheme;
     return (
-        <nav
-            className="navbar fixed-top navbar-expand-lg"
-            style={{ background: theme.card }}>
+        <nav className="navbar fixed-top navbar-expand-lg" style={{ background: theme.card }}>
             <div className="container-fluid">
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img
@@ -29,7 +27,7 @@ export default function NavigationBar(props) {
                         height="45"
                     />
                 </a>
-                <UserSearch theme={theme}/>
+                <UserSearch theme={theme} />
                 <button
                     type="button"
                     data-bs-toggle="collapse"
@@ -49,6 +47,7 @@ export default function NavigationBar(props) {
                                 title={item.title}
                                 linkTo={item.linkTo}
                                 theme={theme}
+                                rerenderApp={props.rerenderApp}
                             />
                         ))}
                     </ul>

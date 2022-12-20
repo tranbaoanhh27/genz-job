@@ -13,135 +13,156 @@ import "./assets/css/App.css";
 
 import reportWebVitals from "./reportWebVitals";
 
-import AuthApi from './api/AuthApi';
+import AuthApi from "./api/AuthApi";
 import AuthVerify from "./common/AuthVerify";
-import SecuredRoute, { checkUserPermission } from './components/SecuredRoute';
+import SecuredRoute, { checkUserPermission } from "./components/SecuredRoute";
 
 const NAV_GENERAL_ITEMS = [
-	{
-		id: "navJobs",
-		title: "Tin tuyển dụng",
-		linkTo: "",
-	},
-	{
-		id: "navArticels",
-		title: "Bài viết",
-		linkTo: "articles",
-	},
-	{
-		id: "navProfile",
-		title: "Đăng nhập/Đăng kí",
-		linkTo: "auth",
-	},
+    {
+        id: "navJobs",
+        title: "Tin tuyển dụng",
+        linkTo: "",
+    },
+    {
+        id: "navArticels",
+        title: "Bài viết",
+        linkTo: "articles",
+    },
+    {
+        id: "navProfile",
+        title: "Đăng nhập/Đăng kí",
+        linkTo: "auth",
+    },
 ];
 
 const NAV_RECRUITER_ITEMS = [
-	{
-		id: "navJobs",
-		title: "Tin tuyển dụng",
-		linkTo: "",
-	},
-	{
-		id: "navArticels",
-		title: "Bài viết",
-		linkTo: "articles",
-	},
-	{
-		id: "navMessages",
-		title: "Tin nhắn",
-		linkTo: "messages",
-	},
-	{
-		id: "navNotifications",
-		title: "Thông báo",
-		linkTo: "notifications",
-	},
-	{
-		id: "navProfile",
-		title: "Hồ sơ",
-		linkTo: "profile",
-	},
-	{
-		id: "navLogOut",
-		title: "Thoát",
-		linkTo: "logout",
-	},
+    {
+        id: "navJobs",
+        title: "Tin tuyển dụng",
+        linkTo: "",
+    },
+    {
+        id: "navArticels",
+        title: "Bài viết",
+        linkTo: "articles",
+    },
+    {
+        id: "navMessages",
+        title: "Tin nhắn",
+        linkTo: "messages",
+    },
+    {
+        id: "navNotifications",
+        title: "Thông báo",
+        linkTo: "notifications",
+    },
+    {
+        id: "navProfile",
+        title: "Hồ sơ",
+        linkTo: "profile",
+    },
+    {
+        id: "navLogOut",
+        title: "Thoát",
+        linkTo: "logout",
+    },
 ];
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-const Logout = ({setUser}) => {
-	AuthApi.Logout();
-	setUser(null);
-	return <Navigate to='/'/>
+const Logout = ({ setUser }) => {
+    AuthApi.Logout();
+    setUser(null);
+    return <Navigate to="/" />;
+};
+
+function useForceUpdate() {
+    const [value, setValue] = useState(0);
+    return () => setValue((value) => value + 1);
 }
 
 const App = (props) => {
-	var currentUser = AuthApi.GetCurrentUser();
-	if (currentUser) currentUser = currentUser.data;
-	const [user, setUser] = useState(currentUser);
-	console.log(window.location);
-	var navigation_items = NAV_RECRUITER_ITEMS;
-	if (!user) {
-		navigation_items = NAV_GENERAL_ITEMS;
-	}
-	return (
-		<div style={{ fontSize: "100%", color: "black" }}>
-			{(window.location.pathname !== "/auth") && <Navbar items={navigation_items}/>}
-			<Routes>
-				{/* Homepage */}
-				<Route path="/*" element={<Job />} />
+    var currentUser = AuthApi.GetCurrentUser();
+    if (currentUser) currentUser = currentUser.data;
+    const [user, setUser] = useState(currentUser);
 
-				{/* Login */}
-				<Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
+    console.log(window.location);
 
-				{/* Article */}
-				<Route path="articles" element={<Article />} />
+    var navigation_items = NAV_RECRUITER_ITEMS;
 
-				{/* Messages */}
-				<Route path='messages' element={
-					<SecuredRoute user={user} permission='route.authenticated'>
-						<Message />
-					</SecuredRoute>
-					} />
+    if (!user) {
+        navigation_items = NAV_GENERAL_ITEMS;
+    }
 
-				{/* Notifications */}
-				<Route path='notifications' element={
-					<SecuredRoute user={user} permission='route.authenticated'>
-						<Notification />
-					</SecuredRoute>
-					} />
+    const rerender = useForceUpdate();
+    return (
+        <div style={{ fontSize: "100%", color: "black" }}>
+            {window.location.pathname !== "/auth" && <Navbar items={navigation_items} rerenderApp={rerender} />}
+            <Routes>
+                {/* Homepage */}
+                <Route path="/*" element={<Job />} />
 
-				{/* Profile */}
-				<Route path='profile' element={
-					<SecuredRoute user={user} permission='route.authenticated'>
-						<Profile />
-					</SecuredRoute>
-					} />
+                {/* Login */}
+                <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
 
-				{/* Profile */}
-				<Route path='logout' element={
-					<SecuredRoute user={user} permission='route.authenticated'>
-						<Logout setUser={setUser}/>
-					</SecuredRoute>
-					} />
+                {/* Article */}
+                <Route path="articles" element={<Article />} />
 
-				{/* Admin Control Panel */}
-				<Route path="AdminCP/*" element={<Admin />} />
+                {/* Messages */}
+                <Route
+                    path="messages"
+                    element={
+                        <SecuredRoute user={user} permission="route.authenticated">
+                            <Message />
+                        </SecuredRoute>
+                    }
+                />
 
-			</Routes>
-		</div>
-	);
+                {/* Notifications */}
+                <Route
+                    path="notifications"
+                    element={
+                        <SecuredRoute user={user} permission="route.authenticated">
+                            <Notification />
+                        </SecuredRoute>
+                    }
+                />
+
+                {/* Profile */}
+                <Route
+                    path="profile"
+                    element={
+                        <SecuredRoute user={user} permission="route.authenticated">
+                            <Profile />
+                        </SecuredRoute>
+                    }
+                />
+
+                {/* Profile */}
+                <Route
+                    path="logout"
+                    element={
+                        <SecuredRoute user={user} permission="route.authenticated">
+                            <Logout setUser={setUser} />
+                        </SecuredRoute>
+                    }
+                />
+
+                {/* Admin Control Panel */}
+                <Route path="AdminCP/*" element={<Admin />} />
+            </Routes>
+        </div>
+    );
 };
 
 root.render(
-	<>
-		<BrowserRouter>
-			<App />		
-			<AuthVerify />
-		</BrowserRouter>
-	</>
+    <>
+        <BrowserRouter>
+            <App />
+            <AuthVerify />
+        </BrowserRouter>
+    </>
 );
 
 // If you want to start measuring performance in your app, pass a function
