@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Page } from '../../Data/Admin';
 
 export function SideBar({ setPage }) {
     return (
@@ -15,7 +16,7 @@ export function SideBar({ setPage }) {
 
             { /* Nav Item - Dashboard */ }
             <li className="nav-item mb-3">
-                <a className="nav-link" href='#' onClick={ () => setPage("Tài khoản người dùng") }>
+                <a className="nav-link" id='account-link' href='#' onClick={ () => setPage(Page.Account) }>
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Tài khoản người dùng</span></a>
             </li>
@@ -24,7 +25,7 @@ export function SideBar({ setPage }) {
             <hr className="sidebar-divider mb-3"/>
 
             <li className="nav-item mb-3">
-                <a className="nav-link" href="#" onClick={ () => setPage("Bài đăng tuyển dụng")}>
+                <a className="nav-link" id="jobArticle-link" href="#" onClick={ () => setPage(Page.HireRecruiter)}>
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Bài đăng tuyển dụng</span></a>
             </li>
