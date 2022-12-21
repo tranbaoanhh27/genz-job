@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import RecruiterJobListItem from "./JobListItem";
+import JobListItem from "./JobListItem";
 
-const RecruiterJobList = (props) => {
+const JobList = (props) => {
     /*
         props = {
             jobs: arrray of job = {
@@ -12,6 +12,7 @@ const RecruiterJobList = (props) => {
                 createdDate: Date
                 imageUrl: string
             }
+            onSelectJob: function(jobId)
         }
     */
     const [currentActive, setCurrentActive] = useState(props.jobs[0].id);
@@ -19,7 +20,7 @@ const RecruiterJobList = (props) => {
     const itemClickHandler = (jobId) => {
         setCurrentActive(jobId);
         props.onSelectJob(jobId);
-    }
+    };
 
     return (
         <div
@@ -28,11 +29,10 @@ const RecruiterJobList = (props) => {
                 marginTop: "0.5rem",
                 overflowX: "hidden",
                 overflowY: "scroll",
-                maxHeight: "25rem",
-                borderRadius: "15px"
+                borderRadius: "15px",
             }}>
             {props.jobs.map((job) => (
-                <RecruiterJobListItem
+                <JobListItem
                     key={job.id}
                     jobId={job.id}
                     jobTitle={job.title}
@@ -45,4 +45,4 @@ const RecruiterJobList = (props) => {
     );
 };
 
-export default RecruiterJobList;
+export default JobList;

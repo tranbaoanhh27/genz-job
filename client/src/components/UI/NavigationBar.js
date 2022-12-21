@@ -15,16 +15,18 @@ export default function NavigationBar(props) {
             ]
         }
     */
-    document.body.style.paddingTop = "5rem";
+    document.body.style.marginTop = "5rem";
     const theme = props.theme === "light" ? LightTheme : DarkTheme;
     return (
-        <nav className="navbar fixed-top navbar-expand-lg" style={{ background: theme.card }}>
+        <nav
+            className="navbar fixed-top navbar-expand-lg"
+            style={{ background: theme.card, height: "4rem" }}>
             <div className="container-fluid">
                 <a href="#" className="navbar-brand mb-0 h1">
                     <img
                         className="d-inline-block align-top"
                         src="https://raw.githubusercontent.com/theanhbr01/CSC13002/master/client/src/assets/images/landscape-logo.png"
-                        height="45"
+                        height="45px"
                     />
                 </a>
                 <UserSearch theme={theme} />

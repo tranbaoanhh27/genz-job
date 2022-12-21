@@ -1,6 +1,6 @@
 import React from "react";
 
-const RecruiterJobListItem = (props) => {
+const JobListItem = (props) => {
     /*
         props = {
             jobTitle: string
@@ -10,7 +10,7 @@ const RecruiterJobListItem = (props) => {
     const clickHandler = (event) => {
         event.preventDefault();
         props.onItemClick(props.jobId);
-    }
+    };
     return (
         <div
             className="list-group-item list-group-item-action"
@@ -19,7 +19,7 @@ const RecruiterJobListItem = (props) => {
                 flexDirection: "column",
                 justifyContent: "space-evenly",
                 background: props.isActive === true ? "#0d6efd" : "#242526",
-                color: "white"
+                color: "white",
             }}
             onClick={clickHandler}>
             <h5>{props.jobTitle}</h5>
@@ -28,4 +28,4 @@ const RecruiterJobListItem = (props) => {
     );
 };
 
-export default RecruiterJobListItem;
+export default JobListItem;

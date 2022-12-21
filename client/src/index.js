@@ -57,6 +57,7 @@ const NAV_RECRUITER_ITEMS = [
         linkTo: "notifications",
     },
     {
+        id: "navAccount",
         title: "Tài khoản",
         isDropdown: true,
         children: [
@@ -109,7 +110,9 @@ const App = (props) => {
     const rerender = useForceUpdate();
     return (
         <div>
-            {window.location.pathname !== "/auth" && <Navbar items={navigation_items} rerenderApp={rerender} />}
+            {window.location.pathname !== "/auth" && (
+                <Navbar items={navigation_items} rerenderApp={rerender} />
+            )}
             <Routes>
                 {/* Homepage */}
                 <Route path="/*" element={<Job />} />
