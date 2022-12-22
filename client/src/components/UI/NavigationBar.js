@@ -15,7 +15,7 @@ export default function NavigationBar(props) {
             ]
         }
     */
-    document.body.style.marginTop = "5rem";
+    document.body.style.paddingTop = "5rem";
     const theme = props.theme === "light" ? LightTheme : DarkTheme;
     return (
         <nav
