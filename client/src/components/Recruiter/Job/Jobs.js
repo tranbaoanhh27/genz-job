@@ -1,14 +1,15 @@
 import React from "react";
 import RecruiterJobFilter from "./JobFilter";
-import RecruiterJobList from "./JobList";
+import JobList from "../../Job/JobList";
 import RecruiterJobSearch from "./JobSearch";
 
 const RecruiterJobs = (props) => {
+    console.log(props.jobs);
     return (
         <div style={{ ...props.style, marginTop: "1rem" }}>
             <RecruiterJobSearch />
             <RecruiterJobFilter />
-            <RecruiterJobList jobs={props.jobs} onSelectJob={props.onSelectJob}/>
+            <JobList jobs={props.jobs} onSelectJob={props.onSelectJob} />
         </div>
     );
 };

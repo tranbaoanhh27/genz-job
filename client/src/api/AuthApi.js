@@ -4,7 +4,7 @@ import axios from 'axios';
 class AuthApi {
     static apiUrl = process.env.REACT_APP_API_URL + '/authentication/';
 
-    Login(userName, password) {
+    static Login(userName, password) {
         const config = {
             userName,
             password
@@ -18,23 +18,28 @@ class AuthApi {
         });
     }
 
-    Logout() {
+    static Logout() {
         localStorage.removeItem("user");
     }
 
-    Signup(userName, email, password) {
+    static Signup(userName, email, password, role) {
         const config = { 
             userName,
             email,
             password
         };
-
-        return axios.post(this.apiUrl + "signup", config);
+        
+        return axios.post(this.apiUrl + "signup", config)
     }
 
-    GetCurrentUser() {
+    static GetCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
+    }
+
+    static GetCurrentUserRole() {
+        var user = this.GetCurrentUser();
+        return user.data.Roles;
     }
 }
 
-export default new AuthApi();
+export default AuthApi;

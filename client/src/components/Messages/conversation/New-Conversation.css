@@ -1,0 +1,13 @@
+#new-message-container {
+    background: #fff;
+  }
+  
+  #new-message-container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    min-height: 100%;
+    align-content: center;
+    grid-area: new-message-container;
+    padding: 0 15px;
+  }
+  

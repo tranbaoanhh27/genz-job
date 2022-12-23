@@ -16,7 +16,7 @@ class UserHelper {
             LastActivyDate: Date.now()
           })
           .then(user => {
-            return res.send({ message: "User Created" });
+            return res.send({ data: user });
           })
           .catch(err => {
             return res.status(500).send({ message: err.message });

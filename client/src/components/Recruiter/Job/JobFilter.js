@@ -1,11 +1,16 @@
 import React from "react";
 
 const RecruiterJobFilter = (props) => {
+    const changeFilter = (event) => {
+        console.log(event.target.value);
+    };
+
     return (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
             <label>Các tin đã tạo</label>
             <select
                 value="sortByTitle"
+                onChange={changeFilter}
                 style={{
                     background: "#242526",
                     borderRadius: "15px",

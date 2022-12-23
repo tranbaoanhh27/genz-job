@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
     });
 });
 
-router.post('/signup', UserHelper.CreateUser)
+router.post('/signup', UserHelper.GetUser, UserHelper.CreateUser)
 
 router.get('/isAuthenticated', AuthencationHelper.VerifyToken, (req, res) => {
     res.status(200).send({"IsAuthenticated": true});

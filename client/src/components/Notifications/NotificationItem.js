@@ -4,7 +4,7 @@ import NotificationActions from "./NotificationActions";
 import styled from "styled-components";
 
 const Card = styled(MyCard)`
-    background: #242526;
+    background: ${props => props.theme.card};
     width: 50rem;
 `;
 
@@ -54,7 +54,7 @@ const NotificationItem = (props) => {
 
     console.log(props.notification.readState);
     return (
-        <Card>
+        <Card theme={props.theme}>
             <div className="row">
                 <div className="col-1">
                     <Image src={props.notification.imageUrl} />
@@ -72,6 +72,7 @@ const NotificationItem = (props) => {
                         readState={props.notification.readState}
                         onChangeReadState={readStateChangeHandler}
                         onRemove={removeNotification}
+                        theme={props.theme}
                     />
                     {props.notification.readState === "unread" && <Badge className="badge">Mới</Badge>}
                 </SpaceBetweenColumn>
