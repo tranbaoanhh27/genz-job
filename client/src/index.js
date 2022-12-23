@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import { HomePage } from './pages/Home/index';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
 import Job from "./pages/Job/index";
 import Article from "./pages/Article/index";
@@ -10,8 +8,6 @@ import Message from "./pages/Message/index";
 import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
 import { Admin } from "./pages/Admin/index";
-import RecruiterPage from "./pages/Recruiter/Recruiter";
-import JobseekerPage from "./pages/JobSeeker/JobseekerPage";
 import Navbar from "./components/UI/NavigationBar";
 import "./assets/css/App.css";
 
@@ -83,11 +79,6 @@ const NAV_RECRUITER_ITEMS = [
         ],
     },
 ];
-
-import reportWebVitals from "./reportWebVitals";
-import AuthVerify from "./common/AuthVerify";
-
-import "./assets/css/App.css";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
