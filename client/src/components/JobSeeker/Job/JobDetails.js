@@ -19,6 +19,8 @@ export default startJobDetailPage;
  * @returns JSXElement displaying details of this job and list of related jobs
  */
 export const JobDetails = (props) => {
+    document.body.style.background = DarkTheme.background;
+
     const params = useParams();
     const [selectedJobId, setSelectedJobId] = useState(params.jobId || JOBS[0].id);
     const [isSharingJob, setIsSharingJob] = useState(false);
@@ -34,7 +36,7 @@ export const JobDetails = (props) => {
     };
 
     return (
-        <>
+        <div style={{ color: DarkTheme.text }}>
             {isSharingJob && (
                 <JobShareModal
                     title="Chia sẻ tin tuyển dụng"
@@ -64,7 +66,7 @@ export const JobDetails = (props) => {
                     </RightColumn>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

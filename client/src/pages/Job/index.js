@@ -41,17 +41,6 @@ export default function Job() {
                         </div>
                     }
                 />
-
-                <Route path="job/detail/:jobId" element={<JobDetails />} />
-
-                <Route
-                    path="job/create"
-                    element={
-                        <SecuredRoute user={user} permission="route.recruiter" redirectTo="/">
-                            <RecruiterJobPage />
-                        </SecuredRoute>
-                    }
-                />
             </Routes>
         </div>
     );

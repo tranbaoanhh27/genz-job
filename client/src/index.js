@@ -10,6 +10,7 @@ import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
 import { Admin } from "./pages/Admin/index";
 import Navbar from "./components/UI/NavigationBar";
+import { JobDetails } from "./components/JobSeeker/Job/JobDetails";
 import "./assets/css/App.css";
 import {
     NAV_GENERAL_ITEMS,
@@ -76,6 +77,7 @@ const App = (props) => {
                         </SecuredRoute>
                     }
                 />
+                <Route path="job/detail/:jobId" element={<JobDetails />} />
 
                 {/* Article */}
                 <Route path="articles" element={<Article />} />

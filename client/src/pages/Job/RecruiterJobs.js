@@ -11,7 +11,6 @@ import AuthApi from "../../api/AuthApi";
 
 const RecruiterJobPage = (props) => {
     document.body.style.background = DarkTheme.background;
-    document.body.style.color = DarkTheme.text;
 
     const [jobs, setJobs] = useState(undefined);
     const [currentJob, setCurrenJob] = useState(undefined);
@@ -48,7 +47,7 @@ const RecruiterJobPage = (props) => {
     };
 
     return (
-        <div className="container-flex" style={{ paddingInline: "2rem" }}>
+        <div className="container-flex" style={{ paddingInline: "2rem", color: DarkTheme.text }}>
             <Row className="row">
                 <div className="col">
                     {!isCreatingJob && <RecruiterJobDetails job={currentJob} />}
