@@ -2,83 +2,28 @@ import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
-import Job from "./pages/Job/index";
+import RecruiterJobPage from "./pages/Job/RecruiterJobs";
+import { HomePage } from "./pages/Home/index";
 import Article from "./pages/Article/index";
 import Message from "./pages/Message/index";
 import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
 import { Admin } from "./pages/Admin/index";
 import Navbar from "./components/UI/NavigationBar";
+import { JobDetails } from "./components/JobSeeker/Job/JobDetails";
 import "./assets/css/App.css";
+import {
+    NAV_GENERAL_ITEMS,
+    NAV_RECRUITER_ITEMS,
+    NAV_JOBSEEKER_ITEMS,
+} from "./Data/NavigationItems";
 
 import reportWebVitals from "./reportWebVitals";
 
 import AuthApi from "./api/AuthApi";
 import AuthVerify from "./common/AuthVerify";
 import SecuredRoute, { checkUserPermission } from "./components/SecuredRoute";
-
-const NAV_GENERAL_ITEMS = [
-    {
-        id: "navJobs",
-        title: "Tin tuyển dụng",
-        linkTo: "",
-    },
-    {
-        id: "navArticels",
-        title: "Bài viết",
-        linkTo: "articles",
-    },
-    {
-        id: "navProfile",
-        title: "Đăng nhập/Đăng kí",
-        linkTo: "auth",
-    },
-];
-
-const NAV_RECRUITER_ITEMS = [
-    {
-        id: "navJobs",
-        title: "Tin tuyển dụng",
-        linkTo: "",
-    },
-    {
-        id: "navArticels",
-        title: "Bài viết",
-        linkTo: "articles",
-    },
-    {
-        id: "navMessages",
-        title: "Tin nhắn",
-        linkTo: "messages",
-    },
-    {
-        id: "navNotifications",
-        title: "Thông báo",
-        linkTo: "notifications",
-    },
-    {
-        id: "navAccount",
-        title: "Tài khoản",
-        isDropdown: true,
-        children: [
-            {
-                id: "navProfile",
-                title: "Hồ sơ của tôi",
-                linkTo: "profile",
-            },
-            {
-                id: "navMyJobs",
-                title: "Tin tuyển dụng của tôi",
-                linkTo: "job/create",
-            },
-            {
-                id: "navLogOut",
-                title: "Đăng xuất",
-                linkTo: "logout",
-            },
-        ],
-    },
-];
+import { data } from "jquery";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -97,14 +42,16 @@ function useForceUpdate() {
 const App = (props) => {
     var currentUser = AuthApi.GetCurrentUser();
     if (currentUser) currentUser = currentUser.data;
+    console.log(currentUser);
     const [user, setUser] = useState(currentUser);
 
     console.log(window.location);
 
-    var navigation_items = NAV_RECRUITER_ITEMS;
+    let navigation_items = NAV_GENERAL_ITEMS;
 
-    if (!user) {
-        navigation_items = NAV_GENERAL_ITEMS;
+    if (user) {
+        if (user.Roles === "recruiter") navigation_items = NAV_RECRUITER_ITEMS;
+        else if (user.Roles === "job-seeker") navigation_items = NAV_JOBSEEKER_ITEMS;
     }
 
     const rerender = useForceUpdate();
@@ -115,10 +62,22 @@ const App = (props) => {
             )}
             <Routes>
                 {/* Homepage */}
-                <Route path="/*" element={<Job />} />
+                <Route path="/*" element={<HomePage />} />
+                <Route path="/homepage" element={<HomePage />} />
 
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
+
+                {/* Job */}
+                <Route
+                    path="myjobs/*"
+                    element={
+                        <SecuredRoute user={user} permission="route.recruiter" redirectTo="/">
+                            <RecruiterJobPage />
+                        </SecuredRoute>
+                    }
+                />
+                <Route path="job/detail/:jobId" element={<JobDetails />} />
 
                 {/* Article */}
                 <Route path="articles" element={<Article />} />
@@ -153,7 +112,7 @@ const App = (props) => {
                     }
                 />
 
-                {/* Profile */}
+                {/* Logout */}
                 <Route
                     path="logout"
                     element={
