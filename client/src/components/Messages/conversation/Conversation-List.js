@@ -6,20 +6,22 @@ import './Conversation-List.css';
 
 const ConversationList = (props) => {
     const conversationItems = props.conversations.map((conversation, index) => {
-        if (conversation.senderId === props.receiverId) 
-            conversation.title = conversation.receiverId;
+        if (conversation.senderId === props.userId) 
+            conversation.title = conversation.receiverName;
         else
-            conversation.title = conversation.senderId;
+            conversation.title = conversation.senderName;
+
         var date = new Date(conversation.timestamp);
         conversation.createdAt = date.toDateString();
         conversation.latestMessageText = conversation.message;
         conversation.imageUrl = 'https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2022-07/kitten-playing-575035.jpg?h=b1b36da8&itok=ySAJgYQ2'
+        var selected = props.selectedConversation;
         return <ConversationItem 
             key={index}
             index={index}
-            isActive={index === props.selectedConversationIdx }
-            conversation={conversation} 
-            setSelectedConversationIdx={props.setSelectedConversationIdx}/>;
+            isActive={selected && conversation.senderId === selected.senderId && conversation.receiverId === selected.receiverId} 
+            conversation={conversation}
+            setSelectedConversation={props.setSelectedConversation}/>;
     });
 
     return (
