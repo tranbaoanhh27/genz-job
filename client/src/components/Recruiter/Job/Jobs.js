@@ -28,7 +28,9 @@ const RecruiterJobs = (props) => {
         <Column>
             <RecruiterJobSearch onChangeKeyword={(keyword) => setKeyword(keyword)} />
             <RecruiterJobFilter onChangeSortMode={(sortMode) => setSortMode(sortMode)} />
-            <JobList jobs={filteredJobs} onSelectJob={props.onSelectJob} />
+            {filteredJobs.length > 0 && (
+                <JobList jobs={filteredJobs} onSelectJob={props.onSelectJob} />
+            )}
         </Column>
     );
 };
