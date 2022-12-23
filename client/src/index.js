@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import { HomePage } from "./pages/Home/index";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
 import Job from "./pages/Job/index";
 import Article from "./pages/Article/index";
