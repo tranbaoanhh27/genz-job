@@ -1,4 +1,6 @@
 import React from "react";
+import styled from "styled-components";
+import { EMPTY_JOB } from "../../../Data/initialData";
 import MyCard from "../../UI/MyCard";
 import RecruiterJobImage from "./JobImage";
 import RecruiterJobInfo from "./JobInfo";
@@ -16,56 +18,56 @@ const RecruiterJobDetails = (props) => {
             }
         }
     */
+    let job = { ...EMPTY_JOB };
+    if (props.job !== undefined) job = { ...props.job };
     return (
-        <MyCard
-            style={{
-                background: "#242526",
-                width: "100%",
-                height: "100%",
-                margin: "auto",
-            }}>
+        <Card>
             <div className="row">
-                <RecruiterJobImage
-                    className="col-2"
-                    imageUrl={props.job.imageUrl}
-                />
-                <RecruiterJobInfo className="col" job={props.job} />
+                <RecruiterJobImage className="col-2" imageUrl={job.imageUrl} />
+                <RecruiterJobInfo key={job.id} className="col" job={job} />
             </div>
-            <div
-                style={{
-                    marginTop: "1rem",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                }}>
-                <button
+            <ButtonContainer>
+                <Button
                     type="button"
                     className="btn btn-danger"
-                    style={{
-                        marginInlineEnd: "2rem",
-                        borderRadius: "15px",
-                        paddingInline: "2rem",
-                    }}>
+                    style={{ marginInlineEnd: "2rem" }}>
                     Xóa tin tuyển dụng này
-                </button>
-                <button
-                    type="button"
-                    className="btn btn-success"
-                    style={{ borderRadius: "15px", paddingInline: "2rem" }}>
+                </Button>
+                <Button type="button" className="btn btn-success">
                     Lưu các chỉnh sửa
-                </button>
-            </div>
-            <div
-                style={{
-                    marginTop: "1rem",
-                    display: "flex",
-                    justifyContent: "space-between",
-                }}>
-                    <label>Danh sách đơn ứng tuyển</label>
-                    <a href="https://google.com">Các ứng viên tiềm năng</a>
-                </div>
+                </Button>
+            </ButtonContainer>
+            <SpaceBetweenRow style={{ marginTop: "1rem" }}>
+                <label>Danh sách đơn ứng tuyển</label>
+                <a href="https://google.com">Các ứng viên tiềm năng</a>
+            </SpaceBetweenRow>
             <div className="row"></div>
-        </MyCard>
+        </Card>
     );
 };
 
 export default RecruiterJobDetails;
+
+// Styled Components
+const Card = styled(MyCard)`
+    background: #242526;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+`;
+
+const ButtonContainer = styled.div`
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+`;
+
+const Button = styled.button`
+    border-radius: 30px;
+    padding-inline: 2rem;
+`;
+
+const SpaceBetweenRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;

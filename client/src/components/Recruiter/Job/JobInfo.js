@@ -1,51 +1,66 @@
-import React from "react";
-
-const recruiterJobInfoInputStyle = {
-    background: "#3a3b3c",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-};
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const RecruiterJobInfo = (props) => {
+    const [title, setTitle] = useState(props.job.title);
+    const [company, setCompany] = useState(props.job.company);
+    const [description, setDescription] = useState(props.job.description);
+
+    const jobTitleChangeHandler = (event) => {
+        console.log(event.target.value);
+        setTitle(event.target.value);
+    };
+
+    const jobCompanyChangeHandler = (event) => {
+        console.log(event.target.value);
+        setCompany(event.target.value);
+    };
+
+    const jobDescriptionChangeHandler = (event) => {
+        console.log(event.target.value);
+        setDescription(event.target.value);
+    };
+
     return (
-        <div
-            className={`${props.className}`}
-            style={{ display: "flex", flexDirection: "column" }}>
+        <FlexColumn className={`${props.className}`}>
             <div className="row">
-                <label className="col-3" style={{ textAlign: "start" }}>
-                    Tiêu đề:
-                </label>
-                <input
-                    className="col"
-                    type="text"
-                    value={props.job.title}
-                    style={recruiterJobInfoInputStyle}
-                />
+                <JobInfoLabel className="col-3">Tiêu đề:</JobInfoLabel>
+                <JobInfoInput className="col" type="text" value={title} onChange={jobTitleChangeHandler} />
             </div>
             <div className="row" style={{ marginTop: "0.5rem" }}>
-                <label className="col-3" style={{ textAlign: "start" }}>
-                    Công ty:
-                </label>
-                <input
-                    className="col"
-                    type="text"
-                    value={props.job.company}
-                    style={recruiterJobInfoInputStyle}
-                />
+                <JobInfoLabel className="col-3">Công ty:</JobInfoLabel>
+                <JobInfoInput className="col" type="text" value={company} onChange={jobCompanyChangeHandler} />
             </div>
             <div className="row" style={{ marginTop: "0.5rem", flex: "1" }}>
-                <label className="col-3" style={{ textAlign: "start" }}>
-                    Mô tả công việc:
-                </label>
-                <textarea
-                    className="col"
-                    value={props.job.description}
-                    style={recruiterJobInfoInputStyle}
-                />
+                <JobInfoLabel className="col-3">Mô tả công việc:</JobInfoLabel>
+                <JobInfoTextArea className="col" value={description} onChange={jobDescriptionChangeHandler} />
             </div>
-        </div>
+        </FlexColumn>
     );
 };
 
 export default RecruiterJobInfo;
+
+// Styled Components
+const JobInfoLabel = styled.label`
+    text-align: start;
+`;
+
+const JobInfoInput = styled.input`
+    background: #3a3b3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+`;
+
+const JobInfoTextArea = styled.textarea`
+    background: #3a3b3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+`;
+
+const FlexColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+`;

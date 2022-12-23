@@ -1,22 +1,34 @@
 import React from "react";
+import styled from "styled-components";
 
 const RecruiterJobImage = (props) => {
     return (
-        <div
-            className={`${props.className}`}
-            style={{ display: "flex", flexDirection: "column" }}>
-            <img
-                src={props.imageUrl}
-                style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-            />
-            <button
-                type="button"
-                className="btn btn-primary"
-                style={{ marginTop: "0.5rem", borderRadius: "15px" }}>
+        <FlexColumn className={`${props.className}`}>
+            <Image src={props.imageUrl} />
+            <Button type="button" className="btn btn-primary">
                 Thay đổi ảnh
-            </button>
-        </div>
+            </Button>
+        </FlexColumn>
     );
 };
 
 export default RecruiterJobImage;
+
+// Styled Components
+const FlexColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const Image = styled.img`
+    width: 125px;
+    height: 125px;
+    border-radius: 15px;
+`;
+
+const Button = styled.button`
+    margin-top: 0.5rem;
+    border-radius: 30px;
+    max-width: 125px;
+    text-align: center;
+`;

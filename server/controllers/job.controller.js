@@ -46,6 +46,29 @@ router.post("/:authorId/create",
 	JobHelper.CreateJob
 );
 
+router.get("/:authorId/getJobs",
+	async (req, res, next) => {
+		req.params.id = req.params.authorId;
+		next();
+	},
+	UserHelper.GetUserById,
+	async (req, res, next) => {
+		var jobs = await db.Job.findAll({
+			include: [
+				db.JobProperty,
+				{
+					model: db.User,
+					as: "Author"
+				}
+			],
+			where: {
+				authorId: req.params.authorId
+			}
+		});
+		res.send(JSON.stringify(jobs, null, 2));
+	}
+);
+
 router.put("/edit", AuthencationHelper.VerifyToken, JobHelper.EditJob);
 
 router.post("/:jobId/newProperty", 
