@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
 import Job from "./pages/Job/index";
+import { HomePage } from "./pages/Home/index";
 import Article from "./pages/Article/index";
 import Message from "./pages/Message/index";
 import Notification from "./pages/Notification/index";
@@ -116,6 +117,8 @@ const App = (props) => {
             <Routes>
                 {/* Homepage */}
                 <Route path="/*" element={<Job />} />
+
+                <Route path="/homepage" element={<HomePage />} />
 
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
