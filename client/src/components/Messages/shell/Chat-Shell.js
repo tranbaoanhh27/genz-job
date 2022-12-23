@@ -48,15 +48,23 @@ const ChatShell = () => {
 
                 setConversations(conversationList);
             }
-            setSelectedConversation(conversations[selectedConversationIdx]);
-            if (selectedConversation) {
-                if (selectedConversation.senderId === receiverId) 
-                    setSenderId(selectedConversation.receiverId);
-                else    
-                    setSenderId(selectedConversation.senderId);
+            let selectedConver = conversations[selectedConversationIdx];
+            if (selectedConver) {
+                if (selectedConver.senderId === receiverId) {
+                    setSenderId(selectedConver.receiverId);
+                }
+                else {
+                    setSenderId(selectedConver.senderId);
+                }
+                selectedConver.title = senderId;
+                setSelectedConversation(selectedConver);
             }
       });
     }, [conversations]);
+
+    const sendMessageCallback = () => {
+        setSelectedConversationIdx(0);
+    };
 
     return (
         <div id="chat-container" style={{fontSize: "50%"}}>
@@ -67,9 +75,9 @@ const ChatShell = () => {
                 selectedConversationIdx={selectedConversationIdx}
                 setSelectedConversationIdx={setSelectedConversationIdx}/>
             <NewConversation />
-            {/* <ChatTitle selectedConversation={selectedConversation} /> */}
-            <MessageList messages={messages} senderId={senderId} receiverId={receiverId}/>
-            <ChatForm senderId={senderId} receiverId={receiverId}/>
+            {selectedConversation && <ChatTitle selectedConversation={selectedConversation} />}
+            {selectedConversation && <MessageList messages={messages} senderId={senderId} receiverId={receiverId}/>}
+            {selectedConversation && <ChatForm senderId={senderId} receiverId={receiverId} sendMessageCallback={sendMessageCallback}/>}
         </div>
     );
 }

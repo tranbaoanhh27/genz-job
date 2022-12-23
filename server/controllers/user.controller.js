@@ -31,6 +31,16 @@ router.get('/detail/:id', async (req, res) => {
     });
 });
 
+// Get user by username
+router.get('/uname/:username', async (req, res) => {
+    var users = await db.User.findAll({
+        where: {
+            UserName: req.params.username
+        }
+    });
+    res.send(JSON.stringify(users, null, 2));
+});
+
 //Create
 router.post('/create', UserHelper.GetUser, UserHelper.CreateUser);
 

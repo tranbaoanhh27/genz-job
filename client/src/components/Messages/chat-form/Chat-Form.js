@@ -22,6 +22,7 @@ function ChatForm(props) {
             timestamp
         });
         setMessageInput('');
+        props.sendMessageCallback();
     }
 
     const handleKeyDown = (event) => {
