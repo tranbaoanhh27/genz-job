@@ -57,6 +57,11 @@ export function TabPersonalInformation() {
             <div className="card mb-4">
                 <div className="card-body">
                     <h5 className='card-title text-center'>Tự thuật về bạn</h5>
+                    <form>
+                        <div className='form-group'>
+                            <textarea className='form-control mt-3' rows="3"></textarea>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div className="card mb-4">

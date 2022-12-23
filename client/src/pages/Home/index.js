@@ -15,12 +15,17 @@ export function HomePage() {
                         <GroupJob nameGroup = "Group 2"></GroupJob>
                     </div>
                     <div className='col-3'>
-                        <p>This columns will be used for something</p>
+                        <div className='row'>
+                            <div className='col d-flex justify-content-center'>
+                                <button type="button" className='btn btn-primary' disabled>Mở bộ lọc</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
+
     </div>
     )
 }
