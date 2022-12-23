@@ -21,12 +21,14 @@ const FlexColumn = styled.div`
 `;
 
 const Image = styled.img`
-    width: 100%;
-    height: 100%;
+    width: 125px;
+    height: 125px;
     border-radius: 15px;
 `;
 
 const Button = styled.button`
     margin-top: 0.5rem;
     border-radius: 30px;
+    max-width: 125px;
+    text-align: center;
 `;

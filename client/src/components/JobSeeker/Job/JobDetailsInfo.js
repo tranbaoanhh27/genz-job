@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { DarkTheme } from "../../../assets/themes";
-import { JOBS } from "../../../assets/just_testing_data";
+import { JOBS } from "../../../Data/initialData";
 
 const JobDetailsInfo = (props) => {
     const job = getJob(props.jobId);

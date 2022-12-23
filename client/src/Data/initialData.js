@@ -60,3 +60,15 @@ export const JOBS = [
         imageUrl: "https://media.vneconomy.vn/images/upload/2022/11/21/microsoft.jpg",
     },
 ];
+
+export const EMPTY_JOBS = [
+    {
+        id: "",
+        status: "",
+        title: "",
+        company: "",
+        description: "",
+        createdDate: new Date("2020-11-11"),
+        imageUrl: "",
+    },
+];

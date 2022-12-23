@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const NavigationItem = (props) => {
-    console.log(props.isDropdown);
     return (
         <>
             {props.isDropdown !== true && (

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import JobListItem from "./JobListItem";
 
+/**
+ *
+ * @param {array} jobs Array of job
+ * @param {function} onSelectJob function to execute when a job is selected
+ * @returns
+ */
 const JobList = (props) => {
     /*
         props = {
@@ -27,6 +33,7 @@ const JobList = (props) => {
             className="list-group"
             style={{
                 marginTop: "0.5rem",
+                height: "100%",
                 overflowX: "hidden",
                 overflowY: "scroll",
                 borderRadius: "15px",
