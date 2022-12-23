@@ -1,0 +1,30 @@
+#chat-form {
+    background: #eee;
+  }
+  
+  #chat-form > img {
+    cursor: pointer;
+    max-width: 100%;  
+    height: auto;  
+  }
+ 
+  #chat-form {
+    display: grid;
+    grid: 36px / 1fr 36px;
+    align-content: center;
+    align-items: center;
+    grid-gap: 15px;
+    grid-area: chat-form;
+    border-radius: 0 0 10px 0;
+    padding-right: 22px;
+  }
+  
+  #chat-form input {
+    outline: none;
+    padding: 7px;
+    padding-left: 20px;
+    border: 2px solid #ddd;
+    color: #330;
+    border-radius: 25px;
+    font-size: 1rem;
+  }
