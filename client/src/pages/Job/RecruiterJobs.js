@@ -9,8 +9,8 @@ import { API_BASE_URL } from "../../Data/apiConstants";
 import AuthApi from "../../api/AuthApi";
 
 const RecruiterJobPage = (props) => {
-    const [jobs, setJobs] = useState(EMPTY_JOBS);
-    const [currentJob, setCurrenJob] = useState(EMPTY_JOBS[0]);
+    const [jobs, setJobs] = useState(undefined);
+    const [currentJob, setCurrenJob] = useState(undefined);
     const [isCreatingJob, setIsCreatingJob] = useState(false);
 
     // Get user's created jobs
@@ -26,11 +26,13 @@ const RecruiterJobPage = (props) => {
             createdDate: new Date(job.createdAt),
             imageUrl: job.imageUrl || "",
         }));
-        setJobs(data);
+        if (jobs === undefined) setJobs(data);
     });
 
     const selectJobHandler = (jobId) => {
-        setCurrenJob(jobs.filter((job) => job.id === jobId)[0]);
+        if (jobs === undefined) return;
+        const searchResult = jobs.filter((job) => job.id === jobId);
+        if (searchResult.length > 0) setCurrenJob(searchResult[0]);
     };
 
     const startCreatingJob = () => {
@@ -52,7 +54,10 @@ const RecruiterJobPage = (props) => {
                     <Button className="btn btn-primary" onClick={startCreatingJob}>
                         Tin tuyển dụng mới
                     </Button>
-                    <RecruiterJobs jobs={jobs} onSelectJob={selectJobHandler} />
+                    <RecruiterJobs
+                        jobs={jobs === undefined ? EMPTY_JOBS : jobs}
+                        onSelectJob={selectJobHandler}
+                    />
                 </StartAlignedColumn>
             </Row>
         </div>

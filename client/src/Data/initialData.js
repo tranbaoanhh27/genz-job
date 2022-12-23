@@ -72,3 +72,13 @@ export const EMPTY_JOBS = [
         imageUrl: "",
     },
 ];
+
+export const EMPTY_JOB = {
+    id: "",
+    status: "",
+    title: "",
+    company: "",
+    description: "",
+    createdDate: new Date("2020-11-11"),
+    imageUrl: "",
+};

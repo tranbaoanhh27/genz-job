@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { EMPTY_JOB } from "../../../Data/initialData";
 import MyCard from "../../UI/MyCard";
 import RecruiterJobImage from "./JobImage";
 import RecruiterJobInfo from "./JobInfo";
@@ -17,14 +18,19 @@ const RecruiterJobDetails = (props) => {
             }
         }
     */
+    let job = { ...EMPTY_JOB };
+    if (props.job !== undefined) job = { ...props.job };
     return (
         <Card>
             <div className="row">
-                <RecruiterJobImage className="col-2" imageUrl={props.job.imageUrl} />
-                <RecruiterJobInfo key={props.job.id} className="col" job={props.job} />
+                <RecruiterJobImage className="col-2" imageUrl={job.imageUrl} />
+                <RecruiterJobInfo key={job.id} className="col" job={job} />
             </div>
             <ButtonContainer>
-                <Button type="button" className="btn btn-danger" style={{ marginInlineEnd: "2rem" }}>
+                <Button
+                    type="button"
+                    className="btn btn-danger"
+                    style={{ marginInlineEnd: "2rem" }}>
                     Xóa tin tuyển dụng này
                 </Button>
                 <Button type="button" className="btn btn-success">
