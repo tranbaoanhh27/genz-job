@@ -15,11 +15,11 @@ import FirebaseConfig from '../config';
 const firebase = initializeApp(FirebaseConfig);
 const db = getDatabase(firebase);
 
-const ChatShell = () => {
+const ChatShell = (props) => {
     const [selectedConversationIdx, setSelectedConversationIdx] = useState(0);
     const [selectedConversation, setSelectedConversation] = useState();
     const [conversations, setConversations] = useState([]);
-    const [receiverId, setReceiverId] = useState("2");
+    const [receiverId, setReceiverId] = useState(props.user.data.id);
     const [senderId, setSenderId] = useState("1");
   
     useEffect(() => {
@@ -59,6 +59,11 @@ const ChatShell = () => {
                 selectedConver.title = senderId;
                 setSelectedConversation(selectedConver);
             }
+            else {
+                selectedConver = [];
+                selectedConver.title = senderId;
+                setSelectedConversation(selectedConver);
+            }
       });
     }, [conversations]);
 
@@ -74,7 +79,7 @@ const ChatShell = () => {
                 conversations={conversations} 
                 selectedConversationIdx={selectedConversationIdx}
                 setSelectedConversationIdx={setSelectedConversationIdx}/>
-            <NewConversation />
+            <NewConversation setSenderId={setSenderId}/>
             {selectedConversation && <ChatTitle selectedConversation={selectedConversation} />}
             {selectedConversation && <MessageList messages={messages} senderId={senderId} receiverId={receiverId}/>}
             {selectedConversation && <ChatForm senderId={senderId} receiverId={receiverId} sendMessageCallback={sendMessageCallback}/>}

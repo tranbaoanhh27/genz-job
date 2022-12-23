@@ -16,8 +16,8 @@ function ChatForm(props) {
     const sendMessage = () => {
         const timestamp = Date.now();
         set(ref(db, process.env.REACT_APP_FIREBASE_CHAT_COLLECTION + timestamp), {
-            senderId: props.senderId,
-            receiverId: props.receiverId,
+            senderId: props.receiverId,
+            receiverId: props.senderId,
             message: messageInput,
             timestamp
         });
