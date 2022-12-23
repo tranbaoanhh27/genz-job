@@ -9,6 +9,7 @@ import JobseekerArticles from "./Articles";
 import JobseekerMessages from "./Messages";
 import JobseekerNotifications from "./Notifications";
 import Profile from "./Profile/index";
+import { HomePage } from "../Home";
 
 const NAV_ITEMS = [
     {
@@ -44,6 +45,7 @@ export default function JobseekerPage() {
             <NavigationBar items={NAV_ITEMS}/>
             <Routes>
                 <Route index element={<JobseekerJobs />} />
+                <Route path="homepage" element={<HomePage />} />
                 <Route path="jobs" element={<JobseekerJobs />} />
                 <Route path="jobs/jobdetails" element={<JobseekerJobDetails />} />
                 <Route path="articles" element={<JobseekerArticles />} />
