@@ -1,11 +1,9 @@
 import React, { Component, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import RecruiterJobPage from "./Jobs";
+import RecruiterJobPage from "./RecruiterJobs";
 import { JobDetails } from "../../components/JobSeeker/Job/JobDetails";
 import AuthApi from "../../api/AuthApi";
 import SecuredRoute, { checkUserPermission } from "../../components/SecuredRoute";
-import axios from "axios";
-import { API_BASE_URL } from "../../Data/apiConstants";
 import startJobDetailPage from "../../components/JobSeeker/Job/JobDetails";
 
 export default function Job() {

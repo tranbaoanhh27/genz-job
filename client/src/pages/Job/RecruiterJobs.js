@@ -6,6 +6,7 @@ import RecruiterJobs from "../../components/Recruiter/Job/Jobs";
 import { EMPTY_JOBS } from "../../Data/initialData";
 import axios from "axios";
 import { API_BASE_URL } from "../../Data/apiConstants";
+import AuthApi from "../../api/AuthApi";
 
 const RecruiterJobPage = (props) => {
     const [jobs, setJobs] = useState(EMPTY_JOBS);
@@ -13,8 +14,10 @@ const RecruiterJobPage = (props) => {
     const [isCreatingJob, setIsCreatingJob] = useState(false);
 
     // Get user's created jobs
-    const URL = API_BASE_URL + "/job";
+    const userId = AuthApi.GetCurrentUser().data.id;
+    const URL = API_BASE_URL + `/job/${userId}/getJobs`;
     axios.get(URL).then((response) => {
+        console.log(response);
         const data = [...response.data].map((job) => ({
             id: job.id,
             title: job.title,
