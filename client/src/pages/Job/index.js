@@ -1,9 +1,13 @@
 import React, { Component, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import RecruiterJobPage from "./Jobs";
-import JobseekerJobDetails from "../../components/JobSeeker/Job/JobDetails";
+import { JobDetails } from "../../components/JobSeeker/Job/JobDetails";
 import AuthApi from "../../api/AuthApi";
 import SecuredRoute, { checkUserPermission } from "../../components/SecuredRoute";
+import axios from "axios";
+import { API_BASE_URL } from "../../Data/apiConstants";
+import startJobDetailPage from "../../components/JobSeeker/Job/JobDetails";
+
 export default function Job() {
     document.body.style.background = "#18191a";
     var user = AuthApi.GetCurrentUser();
@@ -25,9 +29,23 @@ export default function Job() {
     return (
         <div style={{ fontSize: "90%", color: "white" }}>
             <Routes>
-                <Route index element={<div>Job lists</div>} />
+                <Route
+                    index
+                    element={
+                        <div>
+                            <p>Job List</p>
+                            <button onClick={() => startJobDetailPage(1)}>
+                                Test go to Job details Page jobId=1
+                            </button>
+                            <button onClick={() => startJobDetailPage(3)}>
+                                Test go to Job details Page jobId=3
+                            </button>
+                        </div>
+                    }
+                />
 
-                <Route path="job/detail" element={<JobseekerJobDetails />} />
+                <Route path="job/detail/:jobId" element={<JobDetails />} />
+
                 <Route
                     path="job/create"
                     element={

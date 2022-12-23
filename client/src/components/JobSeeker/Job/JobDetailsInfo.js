@@ -1,22 +1,36 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { DarkTheme } from "../../../assets/themes";
-import { JOBS } from "../../../Data/initialData";
+import { API_BASE_URL } from "../../../Data/apiConstants";
 
 const JobDetailsInfo = (props) => {
-    const job = getJob(props.jobId);
+    const [job, setJobs] = useState(undefined);
+
+    // Call API to get Job's details
+    axios.get(API_BASE_URL + `/job/detail/${props.jobId}`).then((response) => {
+        if (response.status === 200) {
+            console.log(response.data);
+            if (job === undefined)
+                setJobs({ ...response.data, createdDate: response.data.createdAt });
+        }
+    });
+
     return (
         <SpaceBetweenColumn>
             <SpaceBetweenRow>
-                <JobImage src={job.imageUrl} />
+                <JobImage src={(job && job.imageUrl) || ""} />
                 <SpaceBetweenColumn style={{ flex: 1 }}>
-                    <JobStatus label="Trạng thái:" status={job.status} />
-                    <SmallInfo label="Tên công việc:" content={job.title} />
-                    <SmallInfo label="Địa chỉ:" content={job.address || "Không rõ"} />
-                    <SmallInfo label="Công ty:" content={job.company} />
+                    <JobStatus label="Trạng thái:" status={(job && job.status) || "unknown"} />
+                    <SmallInfo label="Tên công việc:" content={(job && job.title) || "Không rõ"} />
+                    <SmallInfo label="Địa chỉ:" content={(job && job.address) || "Không rõ"} />
+                    <SmallInfo label="Công ty:" content={(job && job.company) || "Không rõ"} />
                 </SpaceBetweenColumn>
             </SpaceBetweenRow>
-            <JobDescription label="Mô tả công việc:" content={job.description} />
+            <JobDescription
+                label="Mô tả công việc:"
+                content={(job && job.description) || "Không rõ"}
+            />
             <Review label="Đánh giá:" />
             <AlignEndRow>
                 <button
@@ -31,10 +45,6 @@ const JobDetailsInfo = (props) => {
 };
 
 export default JobDetailsInfo;
-
-const getJob = (jobId) => {
-    return JOBS.filter((job) => job.id === jobId)[0];
-};
 
 const SpaceBetweenColumn = styled.div`
     display: flex;
@@ -138,13 +148,9 @@ const JobDescription = ({ label, content }) => {
                         overflowY: "scroll",
                         overflowX: "hidden",
                         background: DarkTheme.input,
+                        whiteSpace: "pre-wrap",
                     }}>
-                    {lines.map((line) => (
-                        <p>
-                            {line}
-                            <br />
-                        </p>
-                    ))}
+                    {content}
                 </p>
             </div>
         </div>
