@@ -1,0 +1,19 @@
+#new-message-container {
+    background: #fff;
+  }
+  
+  #new-message-container {
+    display: grid;
+    grid: 40px / 40px;
+    align-content: center;
+    grid-area: new-message-container;
+    padding: 0 15px;
+  }
+  
+  #new-message-container button {
+    background: rgb(163, 163, 163);
+    border-radius: 100%;
+    border: none;
+    color: #000000;
+    font-size: 2rem;
+  }
