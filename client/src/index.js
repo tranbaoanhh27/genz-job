@@ -18,6 +18,7 @@ import reportWebVitals from "./reportWebVitals";
 import AuthApi from "./api/AuthApi";
 import AuthVerify from "./common/AuthVerify";
 import SecuredRoute, { checkUserPermission } from "./components/SecuredRoute";
+import { data } from "jquery";
 
 const NAV_GENERAL_ITEMS = [
     {
@@ -82,6 +83,39 @@ const NAV_RECRUITER_ITEMS = [
     },
 ];
 
+const NAV_JOBSEEKER_ITEMS = [
+    {
+        id: "navJobs",
+        title: "Săn việc làm",
+        linkTo: "jobs",
+    },
+    {
+        id: "navArticles",
+        title: "Bảng tin",
+        linkTo: "articles",
+    },
+    {
+        id: "navMessages",
+        title: "Tin nhắn",
+        linkTo: "messages",
+    },
+    {
+        id: "navNotifications",
+        title: "Thông báo",
+        linkTo: "notifications",
+    },
+    {
+        id: "navProfile",
+        title: "Hồ sơ",
+        linkTo: "profile",
+    },
+    {
+        id: "navLogOut",
+        title: "Đăng xuất",
+        linkTo: "logout",
+    },
+];
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 
@@ -99,14 +133,16 @@ function useForceUpdate() {
 const App = (props) => {
     var currentUser = AuthApi.GetCurrentUser();
     if (currentUser) currentUser = currentUser.data;
+    console.log(currentUser);
     const [user, setUser] = useState(currentUser);
 
     console.log(window.location);
 
-    var navigation_items = NAV_RECRUITER_ITEMS;
+    let navigation_items = NAV_GENERAL_ITEMS;
 
-    if (!user) {
-        navigation_items = NAV_GENERAL_ITEMS;
+    if (user) {
+        if (user.Roles === "recruiter") navigation_items = NAV_RECRUITER_ITEMS;
+        else if (user.Roles === "job-seeker") navigation_items = NAV_JOBSEEKER_ITEMS;
     }
 
     const rerender = useForceUpdate();
