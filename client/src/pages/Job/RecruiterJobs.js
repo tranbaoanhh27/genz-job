@@ -4,11 +4,15 @@ import RecruiterJobDetails from "../../components/Recruiter/Job/JobDetails";
 import RecruiterCreateJob from "../../components/Recruiter/Job/CreateJob";
 import RecruiterJobs from "../../components/Recruiter/Job/Jobs";
 import { EMPTY_JOBS } from "../../Data/initialData";
+import { DarkTheme } from "../../assets/themes";
 import axios from "axios";
 import { API_BASE_URL } from "../../Data/apiConstants";
 import AuthApi from "../../api/AuthApi";
 
 const RecruiterJobPage = (props) => {
+    document.body.style.background = DarkTheme.background;
+    document.body.style.color = DarkTheme.text;
+
     const [jobs, setJobs] = useState(undefined);
     const [currentJob, setCurrenJob] = useState(undefined);
     const [isCreatingJob, setIsCreatingJob] = useState(false);

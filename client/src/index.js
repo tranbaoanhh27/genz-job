@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SignInAndSignUp } from "./pages/SignInSignUp/index";
-import Job from "./pages/Job/index";
+import RecruiterJobPage from "./pages/Job/RecruiterJobs";
 import { HomePage } from "./pages/Home/index";
 import Article from "./pages/Article/index";
 import Message from "./pages/Message/index";
@@ -11,6 +11,11 @@ import Profile from "./pages/Profile/index";
 import { Admin } from "./pages/Admin/index";
 import Navbar from "./components/UI/NavigationBar";
 import "./assets/css/App.css";
+import {
+    NAV_GENERAL_ITEMS,
+    NAV_RECRUITER_ITEMS,
+    NAV_JOBSEEKER_ITEMS,
+} from "./Data/NavigationItems";
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -18,102 +23,6 @@ import AuthApi from "./api/AuthApi";
 import AuthVerify from "./common/AuthVerify";
 import SecuredRoute, { checkUserPermission } from "./components/SecuredRoute";
 import { data } from "jquery";
-
-const NAV_GENERAL_ITEMS = [
-    {
-        id: "navJobs",
-        title: "Tin tuyển dụng",
-        linkTo: "",
-    },
-    {
-        id: "navArticels",
-        title: "Bài viết",
-        linkTo: "articles",
-    },
-    {
-        id: "navProfile",
-        title: "Đăng nhập/Đăng kí",
-        linkTo: "auth",
-    },
-];
-
-const NAV_RECRUITER_ITEMS = [
-    {
-        id: "navJobs",
-        title: "Tin tuyển dụng",
-        linkTo: "",
-    },
-    {
-        id: "navArticels",
-        title: "Bài viết",
-        linkTo: "articles",
-    },
-    {
-        id: "navMessages",
-        title: "Tin nhắn",
-        linkTo: "messages",
-    },
-    {
-        id: "navNotifications",
-        title: "Thông báo",
-        linkTo: "notifications",
-    },
-    {
-        id: "navAccount",
-        title: "Tài khoản",
-        isDropdown: true,
-        children: [
-            {
-                id: "navProfile",
-                title: "Hồ sơ của tôi",
-                linkTo: "profile",
-            },
-            {
-                id: "navMyJobs",
-                title: "Tin tuyển dụng của tôi",
-                linkTo: "job/create",
-            },
-            {
-                id: "navLogOut",
-                title: "Đăng xuất",
-                linkTo: "logout",
-            },
-        ],
-    },
-];
-
-const NAV_JOBSEEKER_ITEMS = [
-    {
-        id: "navJobs",
-        title: "Săn việc làm",
-        linkTo: "jobs",
-    },
-    {
-        id: "navArticles",
-        title: "Bảng tin",
-        linkTo: "articles",
-    },
-    {
-        id: "navMessages",
-        title: "Tin nhắn",
-        linkTo: "messages",
-    },
-    {
-        id: "navNotifications",
-        title: "Thông báo",
-        linkTo: "notifications",
-    },
-    {
-        id: "navProfile",
-        title: "Hồ sơ",
-        linkTo: "profile",
-    },
-    {
-        id: "navLogOut",
-        title: "Đăng xuất",
-        linkTo: "logout",
-    },
-];
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -152,12 +61,21 @@ const App = (props) => {
             )}
             <Routes>
                 {/* Homepage */}
-                <Route path="/*" element={<Job />} />
-
+                <Route path="/*" element={<HomePage />} />
                 <Route path="/homepage" element={<HomePage />} />
 
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
+
+                {/* Job */}
+                <Route
+                    path="myjobs/*"
+                    element={
+                        <SecuredRoute user={user} permission="route.recruiter" redirectTo="/">
+                            <RecruiterJobPage />
+                        </SecuredRoute>
+                    }
+                />
 
                 {/* Article */}
                 <Route path="articles" element={<Article />} />
@@ -192,7 +110,7 @@ const App = (props) => {
                     }
                 />
 
-                {/* Profile */}
+                {/* Logout */}
                 <Route
                     path="logout"
                     element={
