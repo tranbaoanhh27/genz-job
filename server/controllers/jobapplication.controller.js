@@ -43,4 +43,20 @@ router.get("/", async(req, res, next) => {
 	res.send(JSON.stringify(applications, null, 2));
 });
 
+// Get applications for jobId
+router.get('/all/:jobId', async(req, res, next) => {
+	let jobApplications = "";
+	jobApplications = await db.JobApplication.findAll({
+		where: {
+			JobId: req.params.jobId
+		}
+	});
+	if (jobApplications === "") {
+		return res.send({message: "No application founded"});
+	}
+	else{
+		return res.send(JSON.stringify(jobApplications, null, 2));
+	}
+});
+
 module.exports = router;
