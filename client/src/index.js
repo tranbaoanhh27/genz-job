@@ -8,6 +8,7 @@ import Article from "./pages/Article/index";
 import Message from "./pages/Message/index";
 import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
+import SearchResult from "./pages/SearchResult/index";
 import { Admin } from "./pages/Admin/index";
 import Navbar from "./components/UI/NavigationBar";
 import { JobDetails } from "./components/JobSeeker/Job/JobDetails";
@@ -64,6 +65,9 @@ const App = (props) => {
                 {/* Homepage */}
                 <Route path="/*" element={<HomePage />} />
                 <Route path="/homepage" element={<HomePage />} />
+
+                {/* Search */}
+                <Route path="s/*" element={<SearchResult />} />
 
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />

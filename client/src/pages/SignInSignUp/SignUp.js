@@ -16,8 +16,14 @@ export function SignUp({ setComponent, role }) {
     const signUpHandler = (event) => {
         event.preventDefault();
         AuthAPI.Signup(username, email, password).then((response) => {
-            if (response.status === 200) console.log("Signed Up Successfully!");
-            else console.log("Failed to Sign Up!");
+            if (response.status === 200) {
+                console.log("Signed Up Successfully!");
+                alert("Đăng kí thành công!");
+            }
+            else {
+                console.log("Failed to Sign Up!");
+                alert("Đăng kí không thành công!");
+            }
             RoleApi.assign(response.data.data.id, role);
         })
     };
