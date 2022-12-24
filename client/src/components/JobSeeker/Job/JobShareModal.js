@@ -94,7 +94,7 @@ const ShareViaMessage = (props) => {
 
     const receiverChangeHandler = (event) => {
         setIsShared(false);
-        setReceiverId(event.target.value);
+        setReceiverId(Number(event.target.value));
         const name = users.filter((user) => +user.id === +event.target.value)[0].UserName;
         console.log(name);
         setReceiverName(name);

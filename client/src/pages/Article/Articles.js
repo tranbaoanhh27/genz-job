@@ -45,39 +45,59 @@ export default function RecruiterArticles(props) {
 
     const showMyPosts = () => {
         // Get user's posts, then set articles
-        axios
-            .get(API_BASE_URL + "/article?userId=" + props.userId)
-            .then((response) => {
-                console.log(response);
-                if (response.status === 200) {
-                    // Set articles to response data articles
-                    setArticles(
-                        response.data.articles.map((responseArticle) => {
-                            return {
-                                id: responseArticle.id,
-                                authorName: response.data.userName,
-                                createDate: new Date(responseArticle.createdAt),
-                                updateDate: new Date(responseArticle.updatedAt),
-                                avatarURL: responseArticle.avatarURL,
-                                textContent: responseArticle.content,
-                                mediaContentURL: responseArticle.media,
-                                numLikes: Math.floor(Math.random() * 100)   // just for test
-                            };
-                        })
-                    );
-                } else {
-                    // TODO: show error message
-                }
-            });
+        axios.get(API_BASE_URL + "/article?userId=" + props.userId).then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+                // Set articles to response data articles
+                setArticles(
+                    response.data.articles.map((responseArticle) => {
+                        return {
+                            id: responseArticle.id,
+                            authorName: response.data.userName,
+                            createDate: new Date(responseArticle.createdAt),
+                            updateDate: new Date(responseArticle.updatedAt),
+                            avatarURL: responseArticle.avatarURL,
+                            textContent: responseArticle.content,
+                            mediaContentURL: responseArticle.media,
+                            numLikes: Math.floor(Math.random() * 100), // just for test
+                        };
+                    })
+                );
+            } else {
+                // TODO: show error message
+            }
+        });
     };
 
     const showAllPosts = () => {
-        setArticles(SAMPLE_ARTICLES);
+        // Get user's posts, then set articles
+        axios.get(API_BASE_URL + "/article").then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+                // Set articles to response data articles
+                setArticles(
+                    response.data.articles.map((responseArticle) => {
+                        return {
+                            id: responseArticle.id,
+                            authorName: response.data.userName,
+                            createDate: new Date(responseArticle.createdAt),
+                            updateDate: new Date(responseArticle.updatedAt),
+                            avatarURL: responseArticle.avatarURL,
+                            textContent: responseArticle.content,
+                            mediaContentURL: responseArticle.media,
+                            numLikes: Math.floor(Math.random() * 100), // just for test
+                        };
+                    })
+                );
+            } else {
+                // TODO: show error message
+            }
+        });
     };
 
     return (
         <div>
-            <NewArticle userId={props.userId} onPostNewArticle={showMyPosts}/>
+            <NewArticle userId={props.userId} onPostNewArticle={showMyPosts} />
             <Articles
                 articles={articles}
                 onSelectMyPostsFilter={showMyPosts}
