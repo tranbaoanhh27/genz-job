@@ -36,7 +36,7 @@ export const JobDetails = (props) => {
     };
 
     return (
-        <div style={{ color: DarkTheme.text }}>
+        <div style={{ color: DarkTheme.text, fontSize: "90%" }}>
             {isSharingJob && (
                 <JobShareModal
                     title="Chia sẻ tin tuyển dụng"

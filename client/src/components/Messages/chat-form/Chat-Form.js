@@ -1,17 +1,34 @@
-import React from 'react';
+import React from "react";
 
-import './Chat-Form.css';
-import { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
+import "./Chat-Form.css";
+import { useState, useEffect } from "react";
+import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "firebase/database";
-import FirebaseConfig from '../config';
+import FirebaseConfig from "../config";
 
 const firebase = initializeApp(FirebaseConfig);
 const db = getDatabase(firebase);
 
-function ChatForm(props) {
+export const sendMessage = (senderId, receiverId, senderName, receiverName, message) => {
+    const timestamp = Date.now();
+    set(
+        ref(
+            getDatabase(initializeApp(FirebaseConfig)),
+            process.env.REACT_APP_FIREBASE_CHAT_COLLECTION + timestamp
+        ),
+        {
+            senderId: senderId,
+            receiverId: receiverId,
+            senderName: senderName,
+            receiverName: receiverName,
+            message: message,
+            timestamp,
+        }
+    );
+};
 
-    const [messageInput, setMessageInput] = useState('');
+function ChatForm(props) {
+    const [messageInput, setMessageInput] = useState("");
 
     const sendMessage = () => {
         const timestamp = Date.now();
@@ -21,28 +38,29 @@ function ChatForm(props) {
             senderName: props.senderName,
             receiverName: props.receiverName,
             message: messageInput,
-            timestamp
+            timestamp,
         });
-        setMessageInput('');
-    }
+        setMessageInput("");
+    };
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-          sendMessage();
+        if (event.key === "Enter") {
+            sendMessage();
         }
-      }
+    };
 
     return (
         <div id="chat-form">
-            <input type="text" 
-                   placeholder="Type a message" 
-                   value={messageInput}
-                   onChange={e => setMessageInput(e.target.value)}
-                   onKeyDown={handleKeyDown}/>
+            <input
+                type="text"
+                placeholder="Type a message"
+                value={messageInput}
+                onChange={(e) => setMessageInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+            />
 
-            <img src="assets/img/send.png" alt="Send message" 
-                onClick={sendMessage}/>
-        </div> 
+            <img src="assets/img/send.png" alt="Send message" onClick={sendMessage} />
+        </div>
     );
 }
 

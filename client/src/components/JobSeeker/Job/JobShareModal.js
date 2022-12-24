@@ -4,6 +4,8 @@ import MyCard from "../../UI/MyCard";
 import { DarkTheme } from "../../../assets/themes";
 import { API_BASE_URL } from "../../../Data/apiConstants";
 import axios from "axios";
+import AuthApi from "../../../api/AuthApi";
+import { sendMessage } from "../../Messages/chat-form/Chat-Form";
 
 const JobShareModal = (props) => {
     const [copied, setCopied] = useState(false);
@@ -74,6 +76,8 @@ const LinkCopyGroup = (props) => {
 const ShareViaMessage = (props) => {
     const [users, setUsers] = useState([]);
     const [receiverId, setReceiverId] = useState(undefined);
+    const [receiverName, setReceiverName] = useState(undefined);
+    const [isShared, setIsShared] = useState(false);
 
     // Call API to get users
     const URL = API_BASE_URL + "/user";
@@ -81,19 +85,42 @@ const ShareViaMessage = (props) => {
         // If success
         if (response.status === 200) {
             setUsers(response.data);
-            if (receiverId === undefined && response.data.length > 0)
+            if (receiverId === undefined && response.data.length > 0) {
                 setReceiverId(response.data[0].id);
+                setReceiverName(response.data[0].UserName);
+            }
         }
     });
 
     const receiverChangeHandler = (event) => {
-        setReceiverId(event.target.value);
+        setIsShared(false);
+        setReceiverId(Number(event.target.value));
+        const name = users.filter((user) => +user.id === +event.target.value)[0].UserName;
+        console.log(name);
+        setReceiverName(name);
     };
 
     const shareViaMessage = () => {
         // Now I just log the result, later I will call to Message component
         console.log(receiverId);
         console.log(window.location.href);
+
+        // Prepare data
+        let sender = AuthApi.GetCurrentUser();
+        if (sender) sender = sender.data;
+        else return;
+        const senderId = sender.id;
+        const senderName = sender.UserName;
+        const message = "Có thể bạn sẽ thích công việc này đấy!";
+
+        // Send message if inputs are valid
+        console.log(senderId, receiverId, senderName, receiverName, message);
+        if (receiverId !== undefined && receiverName !== undefined) {
+            sendMessage(senderId, receiverId, senderName, receiverName, message);
+            sendMessage(senderId, receiverId, senderName, receiverName, window.location.href);
+            // Show success message
+            setIsShared(true);
+        }
     };
 
     return (
@@ -114,6 +141,7 @@ const ShareViaMessage = (props) => {
                     Gửi
                 </button>
             </div>
+            {isShared && <p style={{ color: "green" }}>Đã chia sẻ công việc qua tin nhắn!</p>}
         </>
     );
 };
