@@ -3,8 +3,14 @@ import { Links } from "./Links"
 import { TabPersonalInformation } from "./TabPersonalInformation";
 import { ListJobStatus } from "./ListJobStatus";
 import { ListAccountFollow } from "./ListAccountFollow";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-function MainProfile() {
+function MainProfile({ user, viewedUser }) {
+
+    if (!viewedUser) return (
+        <div>404 Not Found</div>
+    );
 
     return (
     <section style={{backgroundColor: "var(--background)"}}>
@@ -17,13 +23,13 @@ function MainProfile() {
                 <div className="card-body text-center">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                     className="rounded-circle img-fluid" style={{width: "150px"}} />
-                <h5 className="my-3">Who Someone</h5>
+                <h5 className="my-3">{viewedUser.UserName}</h5>
                 <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">District 5, Ho Chi Minh City, Viet Nam</p>
-                <div className="d-flex justify-content-center mb-2">
+                {user.id !== viewedUser.id && <div className="d-flex justify-content-center mb-2">
                     <button type="button" className="btn btn-primary" style={{backgroundColor: "var(--primary)"}}>Follow</button>
                     <button type="button" className="btn btn-primary ms-1" backgroundColor="var(--primary)">Message</button>
-                </div>
+                </div>}
                 </div>
             </div>
 
@@ -58,12 +64,32 @@ function MainProfile() {
     )
 }
 
-export default function Profile() {
+export default function Profile({ user }) {
+
+    const [viewedUser, setViewedUser] = useState(undefined);
+
+    let { username } = useParams();
+    console.log("username: " + username);
+    console.log("current user: " + user.UserName);
     
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/user/uname/' + username)
+            .then(response => {
+                if (response.status === 200) {
+                    var viewedUser = response.data[0];
+                    console.log("Get viewed user");
+                    console.log(viewedUser);
+                    setViewedUser(viewedUser)
+                }
+            })
+            .catch(error => {
+                console.log(error.message);
+            });
+    });
+
     return (
         <div classNameName="Profile">
-            <MainProfile />
+            <MainProfile user={user} viewedUser={viewedUser}/>
         </div>
     )
-    
 }

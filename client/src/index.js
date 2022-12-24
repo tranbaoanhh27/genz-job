@@ -69,6 +69,9 @@ const App = (props) => {
                 {/* Search */}
                 <Route path="s/*" element={<SearchResult />} />
 
+                {/* Profile */}
+                <Route path="p/*" element={<Profile user={user}/>} />
+
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
 
