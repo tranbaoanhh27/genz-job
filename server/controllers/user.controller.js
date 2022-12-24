@@ -41,6 +41,20 @@ router.get('/uname/:username', async (req, res) => {
     res.send(JSON.stringify(users, null, 2));
 });
 
+// Search user by username
+router.get('/search/:keyword', async (req, res) => {
+    var users = await db.User.findAll({
+        where: {
+            [Op.or]:{
+                UserName: {
+                    [Op.like]: '%' + req.params.keyword + '%'
+                }
+            }
+        }
+    });
+    res.send(JSON.stringify(users, null, 2));
+});
+
 //Create
 router.post('/create', UserHelper.GetUser, UserHelper.CreateUser);
 

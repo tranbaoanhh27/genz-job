@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Role, { through: models.UserRole});
     User.belongsToMany(models.Job, { through: models.Bookmark });
     User.belongsToMany(models.Job, { through: models.JobApplication });
-    User.hasMany(models.UserProperty)
-    // User.hasMany(models.Article, { as: "authorId", foreignKey: "UserId"});
+    User.hasMany(models.UserProperty);
+    // User.hasMany(models.Article);
     User.belongsToMany(User,{ through: models.Following, as: "FollowerId", foreignKey: "FollowerId" });
     User.belongsToMany(User, { through: models.Following, as: "UserId", foreignKey: "UserId" });
   };

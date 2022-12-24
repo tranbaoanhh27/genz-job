@@ -17,10 +17,10 @@ function MainComponent({ setUser }) {
             return <SignInSignUpSelection setComponent={setComponent} component={component} />;
 
         case "signUpJobSearch":
-            return <SignUp setComponent={setComponent} role="job-seeker" />;
+            return <SignUp setComponent={setComponent} setUser={setUser} role="job-seeker" />;
 
         case "signUpRecruiter":
-            return <SignUp setComponent={setComponent} role="recruiter" />;
+            return <SignUp setComponent={setComponent} setUser={setUser} role="recruiter" />;
 
         default:
             return <LogIn setComponent={setComponent} setUser={setUser} />;
