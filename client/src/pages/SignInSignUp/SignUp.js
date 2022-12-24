@@ -20,15 +20,28 @@ export function SignUp({ setComponent, role, setUser }) {
         AuthAPI.Signup(username, email, password).then((response) => {
             if (response.status === 200) {
                 console.log("Signed Up Successfully!");
-                RoleApi.assign(response.data.data.id, role);
-                alert("Đăng kí thành công!");
+                RoleApi.assign(response.data.data.id, role)
+                .then(response => {
+                    if (response.status === 200)
+                        alert("Đăng kí thành công!");
+                })
+                .catch(error => {
+                    let msg = error.message;
+                    if (error.response)
+                        msg = error.response.data.message;
+                    alert("Đăng kí không thành công!\n"+ msg);
+                    console.log(error);
+                });
             }
             else {
                 console.log("Failed to Sign Up!");
             }
         })
         .catch(error => {
-            alert("Đăng kí không thành công!\n"+error.response.data.message);
+            let msg = error.message;
+            if (error.response)
+                msg = error.response.data.message;
+            alert("Đăng kí không thành công!\n"+ msg);
             console.log(error);
         });
     };
