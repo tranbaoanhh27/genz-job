@@ -6,7 +6,7 @@ export function checkUserPermission (user = { Roles: [] }, permission) {
 		"route.admin": ["admin"],
         "route.job-seeker": ["job-seeker"],
         "route.recruiter": ["recruiter"],
-		"route.authenticated": ["job-seeker", 'recruiter', "admin"],
+		"route.authenticated": ["job-seeker", 'recruiter', "admin", "*"],
 		"route.home": ["*"], //means "Any role"
 		"component.Authenticate": ["*", "!user", "!admin"],
 		"component.BecomeAdmin": ["user"],

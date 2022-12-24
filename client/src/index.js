@@ -156,7 +156,7 @@ const App = (props) => {
                     }
                 />
 
-                {/* Profile */}
+                {/* Logout */}
                 <Route
                     path="logout"
                     element={

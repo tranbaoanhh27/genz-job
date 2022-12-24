@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { socialLinks } from "../../../Data/Profile";
 
+import { ProfileLocationPrint } from "./../../../Data/Profile"
+
 function Link({ icon, linkText }) {
     return (
-        <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-            <i className={`${icon} fa-lg`} style={{ color: "var(--notice)" }}></i>
-            <p className="mb-0" style={{ color: "var(--primary)" }}>
-                {linkText}
-            </p>
-        </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href={`https://${linkText}`}>
+                    <i className={`${icon} fa-lg`} style={{ color: "var(--notice)" }}></i>
+                </a>
+                <div>
+                    <p className="mb-0" style={{ color: "var(--primary)" }} contentEditable="true">
+                        {linkText}
+                    </p>
+                </div>
+            </li>
     );
 }
 
@@ -27,6 +33,9 @@ export function Links() {
                         <Link icon={link.icon} linkText={link.text}></Link>
                     ))}
                 </ul>
+            </div>
+            <div className="card-footer fst-italic">
+                Bấm vào icon để truy cập đường dẫn tương ứng
             </div>
         </div>
     );
