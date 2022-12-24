@@ -1,50 +1,74 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { DarkTheme } from "../../../assets/themes";
-import { JOBS } from "../../../assets/just_testing_data";
+import { JOBS } from "../../../Data/initialData";
 import JobList from "../../Job/JobList";
 import MyCard from "../../UI/MyCard";
 import JobDetailsInfo from "./JobDetailsInfo";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import JobShareModal from "./JobShareModal";
+
+const startJobDetailPage = (jobId) => {
+    window.location.href = window.location.origin + "/job/detail/" + jobId;
+};
+
+export default startJobDetailPage;
 
 /**
  * @param {string} jobId ID of job to display
  * @returns JSXElement displaying details of this job and list of related jobs
  */
-const JobDetails = (props) => {
-    const [selectedJobId, setSelectedJobId] = useState(props.jobId || JOBS[0].id);
+export const JobDetails = (props) => {
+    document.body.style.background = DarkTheme.background;
+
+    const params = useParams();
+    const [selectedJobId, setSelectedJobId] = useState(params.jobId || JOBS[0].id);
+    const [isSharingJob, setIsSharingJob] = useState(false);
     const nav = useNavigate();
 
     const selectJob = (jobId) => {
         setSelectedJobId(jobId);
     };
 
+    const showJobShareModal = (event) => {
+        event.preventDefault();
+        setIsSharingJob(true);
+    };
+
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <LeftColumn className="col-9">
-                    <Title>Chi tiết công việc</Title>
-                    <DetailsCard>
-                        <JobDetailsInfo key={selectedJobId} jobId={selectedJobId} />
-                    </DetailsCard>
-                </LeftColumn>
-                <RightColumn className="col-3">
-                    <BackButton className="btn btn-secondary" onClick={() => nav(-1)}>
-                        Quay lại
-                    </BackButton>
-                    <SpaceBetweenRow style={{ marginTop: "0.5rem" }}>
-                        <Button className="btn btn-success">Ứng tuyển ngay</Button>
-                        <Button className="btn btn-primary">Chia sẻ</Button>
-                    </SpaceBetweenRow>
-                    <JobsLabel>Có thể bạn quan tâm</JobsLabel>
-                    <JobList jobs={JOBS} onSelectJob={selectJob} />
-                </RightColumn>
+        <div style={{ color: DarkTheme.text }}>
+            {isSharingJob && (
+                <JobShareModal
+                    title="Chia sẻ tin tuyển dụng"
+                    onClose={() => setIsSharingJob(false)}
+                />
+            )}
+            <div className="container-fluid">
+                <div className="row">
+                    <LeftColumn className="col-9">
+                        <Title>Chi tiết công việc</Title>
+                        <DetailsCard>
+                            <JobDetailsInfo key={selectedJobId} jobId={selectedJobId} />
+                        </DetailsCard>
+                    </LeftColumn>
+                    <RightColumn className="col-3">
+                        <BackButton className="btn btn-secondary" onClick={() => nav(-1)}>
+                            Quay lại
+                        </BackButton>
+                        <SpaceBetweenRow style={{ marginTop: "0.5rem" }}>
+                            <Button className="btn btn-success">Ứng tuyển ngay</Button>
+                            <Button className="btn btn-primary" onClick={showJobShareModal}>
+                                Chia sẻ
+                            </Button>
+                        </SpaceBetweenRow>
+                        <JobsLabel>Có thể bạn quan tâm</JobsLabel>
+                        <JobList jobs={JOBS} onSelectJob={selectJob} />
+                    </RightColumn>
+                </div>
             </div>
         </div>
     );
 };
-
-export default JobDetails;
 
 const SpaceBetweenColumn = styled.div`
     display: flex;

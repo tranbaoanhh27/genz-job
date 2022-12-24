@@ -6,7 +6,6 @@ import { personalInformation } from '../../../Data/Profile';
 import { ProfileLocationPrint } from "./../../../Data/Profile"
 
 function AddMainTextField({ setListTextField }) {
-
     const addTextField = () => {
         let newField = {
             key: "Thay đổi tựa đề thông tin",
@@ -22,11 +21,13 @@ function AddMainTextField({ setListTextField }) {
             <hr />
             <div className="row">
                 <div className="col-sm-12 text-center text-primary">
-                <p className="mb-0" style={{cursor: "pointer"}} onClickCapture={ addTextField }>Tạo trường thông tin mới</p>
+                    <p className="mb-0" style={{ cursor: "pointer" }} onClickCapture={addTextField}>
+                        Tạo trường thông tin mới
+                    </p>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 function RowTextInformation( {field, index} ) {
@@ -44,7 +45,7 @@ function RowTextInformation( {field, index} ) {
             </div>
             <hr />
         </div>
-    )
+    );
 }
 
 function AddJobExp() {
@@ -102,8 +103,8 @@ export function TabPersonalInformation({ setTitleProfile }) {
 
     const [listTextField, setListTextField] = useState([]);
 
-    useEffect( () => {
-        setListTextField( personalInformation );
+    useEffect(() => {
+        setListTextField(personalInformation);
     }, []);
 
     if (listTextField.length === 0) return <p>Loading</p>; else
@@ -113,13 +114,15 @@ export function TabPersonalInformation({ setTitleProfile }) {
             { setTitleProfile( listTextField.find(x => x.key === "Title").value) }
             <div className="card mb-4">
                 <div className="card-body">
-                    { listTextField.map( (field, id) => <RowTextInformation field={field} index={id}></RowTextInformation>) }
+                    {listTextField.map((field, id) => (
+                        <RowTextInformation field={field} index={id}></RowTextInformation>
+                    ))}
                     <AddMainTextField setListTextField={setListTextField} />
                 </div>
             </div>
             <div className="card mb-4">
                 <div className="card-body">
-                    <h5 className='card-title text-center'>Tự thuật về bạn</h5>
+                    <h5 className="card-title text-center">Tự thuật về bạn</h5>
                     <form>
                         <div className='form-group'>
                             <textarea className='form-control mt-3' rows="3">{listTextField.find( x => x.location === ProfileLocationPrint.AboutYou ).value}</textarea>
@@ -141,5 +144,5 @@ export function TabPersonalInformation({ setTitleProfile }) {
 
             <ModalAddJobExp />
         </div>
-    )
+    );
 }

@@ -16,13 +16,14 @@ function ChatForm(props) {
     const sendMessage = () => {
         const timestamp = Date.now();
         set(ref(db, process.env.REACT_APP_FIREBASE_CHAT_COLLECTION + timestamp), {
-            senderId: props.receiverId,
-            receiverId: props.senderId,
+            senderId: props.senderId,
+            receiverId: props.receiverId,
+            senderName: props.senderName,
+            receiverName: props.receiverName,
             message: messageInput,
             timestamp
         });
         setMessageInput('');
-        props.sendMessageCallback();
     }
 
     const handleKeyDown = (event) => {

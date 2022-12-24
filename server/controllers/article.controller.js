@@ -33,13 +33,16 @@ router.get("/", async (req, res, next) => {
         user = await db.User.findByPk(req.query.userId);
 
         articles = await db.Article.findAll({
+            include: { model: db.User },
             where: {
                 authorId: req.query.userId
             }
         });
     }
     else
-        articles = await db.Article.findAll();
+        articles = await db.Article.findAll({
+            include: { model: db.User }
+        });
     
     const userName = user["UserName"];
     let result = {userName, articles};

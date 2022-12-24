@@ -10,8 +10,8 @@ const ConversationItem = (props) => {
     }
 
     const clickHandler = () => {
-        props.setSelectedConversationIdx(props.index);
-        console.log("Set selected idx = " + props.index);
+        props.setSelectedConversation(props.conversation);
+        console.log("Set selected idx = " + props.conversation.receiverId + "-" + props.conversation.senderId);
     };
 
     return (

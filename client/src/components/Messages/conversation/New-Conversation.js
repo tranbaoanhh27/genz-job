@@ -11,16 +11,23 @@ const Button = styled.button`
     border: none;
 `;
 
-function NewConversation({ setSenderId }) {
-
+function NewConversation({ userId, username, setSelectedConversation }) {
     const [usernameInput, setUsernameInput] = useState('');
 
     const searchUser = () => {
+        if (usernameInput.toLowerCase() === username.toLowerCase())
+            return;
         axios.get(process.env.REACT_APP_API_URL + '/user/uname/' + usernameInput)
         .then(response => {
-            if (response.status == 200) {
-                setSenderId(response.data[0].id);
-                console.log(response.data[0].id);
+            if (response.status === 200) {
+                var newConversation = {};
+                newConversation.senderId = userId;
+                newConversation.receiverId = response.data[0].id;
+                newConversation.title = response.data[0].UserName;
+                newConversation.senderName = username;
+                newConversation.receiverName = response.data[0].UserName;
+                console.log(response.data[0]);
+                setSelectedConversation(newConversation);
             }
         });
     };
