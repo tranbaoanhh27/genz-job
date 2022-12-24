@@ -54,21 +54,67 @@ router.post("/:jobId/newProperty",
 		next();
 	}, JobHelper.AddJobProperty);
 
-router.get("/search", async (req, res) => {
-	var keyword = req.query.k;
+// router.get("/search", async (req, res) => {
+// 	var keyword = req.query.k;
+// 	var numOfResult = req.query.num;
+// 	if (!numOfResult) 
+// 		numOfResult = 1000;
+// 	var jobs = await db.Job.findAll({
+// 		where: {
+// 			[Op.or]: [
+// 				{title: {[Op.like]: '%' + keyword + '%'}},
+// 				{description: {[Op.like]: '%' + keyword + '%'}},
+// 			]
+// 		},
+// 		limit: parseInt(numOfResult)
+// 	});
+// 	res.send(JSON.stringify(jobs, null, 2));
+// });
+
+router.get('/search', async (req, res, next) => {
+	var jobId = req.query.jobId;
 	var numOfResult = req.query.num;
-	if (!numOfResult) 
-		numOfResult = 1000;
-	var jobs = await db.Job.findAll({
+	if (!numOfResult)
+		numOfResult = 100;
+
+	var targetJob = await db.Job.findByPk(jobId);
+	if (targetJob) {
+		let jobs = "";
+		jobs = await db.Job.findAll({
+			attributes: ['id', 'title', 'datePosted'],
+			// include: [
+			// 	db.JobProperty,
+			// ],
+			where: {
+				[Op.or]: [
+					{title: {[Op.like]: '%' + targetJob.title + '%'}},
+					{description: {[Op.like]: '%' + targetJob.description + '%'}},
+				]
+			},
+			limit: parseInt(numOfResult)
+		})
+
+		res.send(JSON.stringify(jobs, null, 2));
+	}
+	else {
+		res.status(404).send({message: "Not found target job"})
+	}
+});
+
+router.get('/find', async (req, res, next) => {
+	let jobs = ""
+	jobs = await db.Job.findAll({
 		where: {
-			[Op.or]: [
-				{title: {[Op.like]: '%' + keyword + '%'}},
-				{description: {[Op.like]: '%' + keyword + '%'}},
-			]
-		},
-		limit: parseInt(numOfResult)
-	});
-	res.send(JSON.stringify(jobs, null, 2));
+			authorId: req.query.userId
+		}
+	})
+
+	if (jobs) {
+		res.send(JSON.stringify(jobs, null, 2));
+	}
+	else {
+		res.status(404).send({message: "No job founded"})
+	}
 });
 
 module.exports = router;
