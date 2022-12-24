@@ -6,6 +6,8 @@ import { ListAccountFollow } from "./ListAccountFollow";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+import { ProfileLocationPrint } from "./../../../Data/Profile"
+
 function MainProfile({ user, viewedUser }) {
 
     if (!viewedUser) return (
@@ -51,7 +53,7 @@ function MainProfile({ user, viewedUser }) {
             <div className='tab-content'>
 
                 <div className='tab-pane active mt-2' id="personalInfo">
-                    <TabPersonalInformation />
+                    <TabPersonalInformation setTitleProfile={setTitleProfile}/>
                 </div>
                 <ListJobStatus />
                 <ListAccountFollow />
