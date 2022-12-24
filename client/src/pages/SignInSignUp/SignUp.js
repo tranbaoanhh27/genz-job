@@ -4,28 +4,33 @@ import { Button } from "../../components/UI/Button";
 import { InputTextField } from "../../components/UI/InputTextField";
 import AuthAPI from "../../api/AuthApi"
 import RoleApi from "../../api/RoleApi"
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-export function SignUp({ setComponent, role }) {
+export function SignUp({ setComponent, role, setUser }) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerification, setPasswordVerification] = useState("");
     const [validPasswordVerification, setValidPasswordVerification] = useState(true);
 
+    const navigate = useNavigate();
+
     const signUpHandler = (event) => {
         event.preventDefault();
         AuthAPI.Signup(username, email, password).then((response) => {
             if (response.status === 200) {
                 console.log("Signed Up Successfully!");
+                RoleApi.assign(response.data.data.id, role);
                 alert("Đăng kí thành công!");
             }
             else {
                 console.log("Failed to Sign Up!");
-                alert("Đăng kí không thành công!");
             }
-            RoleApi.assign(response.data.data.id, role);
         })
+        .catch(error => {
+            alert("Đăng kí không thành công!\n"+error.response.data.message);
+            console.log(error);
+        });
     };
 
     const usernameChangeHandler = (event) => {
