@@ -21,6 +21,12 @@ router.post('/create', async (req, res, next) => {
     });
 });
 
+router.get('/all', async (req, res, next) => {
+    let articles = ""
+    articles = await db.Article.findAll();
+    res.send(JSON.stringify(articles, null, 2));
+})
+
 //Get all articleId of a userId
 router.get("/", async (req, res, next) => {
     let articles = "";
@@ -50,20 +56,35 @@ router.get("/", async (req, res, next) => {
     res.send(JSON.stringify(result, null, 2));
 });
 
-// //Get som article of userId
-// router.get('/:user/articles', async(err, req, res, next) => {
-//     let articles = "";
-//     if (req.body.userId) {
-//         articles = db.Article.findAll({
-//             where: {
-//                 authorId: req.params.authorId
-//             }
-//         })
+router.delete('/delete/:articleId', async (req, res, next) => {
+    const articleId = req.params.articleId;
 
-//         res.send(JSON.stringify(articles, null, 2));
-//     }
-//     else
-//         res.status(500).send({message: err.message});
-// })
+    // delete object in article comment
+    await db.ArticleComment.destroy({
+        where: {
+            ArticleId: articleId 
+        }
+    });
+
+    // delete object in article reaction
+    await db.ArticleReaction.destroy({
+        where: {
+            articleId: articleId
+        }
+    });
+
+    // delete object in article
+    await db.Article.destroy({
+        where: {
+            id: articleId
+        }
+    })
+    .then(article => {
+        return res.send({message: "delete successfully"});
+    })
+    .catch(err => {
+        return res.status(500).send({message: err.message});
+    })
+})
 
 module.exports = router
