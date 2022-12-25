@@ -14,8 +14,8 @@ export default function RecruiterArticles(props) {
                 res.data.articles.map((responseArticle) => {
                     return {
                         id: responseArticle.id,
-                        authorName: res.data.userName,
-                        createDate: new Date(responseArticle.createdAt),
+                        authorName: responseArticle.User.UserName,
+                        createDate: new Date(responseArticle.datePosted),
                         updateDate: new Date(responseArticle.updatedAt),
                         avatarURL: responseArticle.avatarURL,
                         textContent: responseArticle.content,
@@ -36,7 +36,7 @@ export default function RecruiterArticles(props) {
                         return {
                             id: responseArticle.id,
                             authorName: response.data.userName,
-                            createDate: new Date(responseArticle.createdAt),
+                            createDate: new Date(responseArticle.datePosted),
                             updateDate: new Date(responseArticle.updatedAt),
                             avatarURL: responseArticle.avatarURL,
                             textContent: responseArticle.content,
@@ -52,28 +52,8 @@ export default function RecruiterArticles(props) {
     };
 
     const showAllPosts = () => {
-        // Get user's posts, then set articles
-        axios.get(API_BASE_URL + "/article").then((response) => {
-            if (response.status === 200) {
-                // Set articles to response data articles
-                setArticles(
-                    response.data.articles.map((responseArticle) => {
-                        return {
-                            id: responseArticle.id,
-                            authorName: response.data.userName,
-                            createDate: new Date(responseArticle.createdAt),
-                            updateDate: new Date(responseArticle.updatedAt),
-                            avatarURL: responseArticle.avatarURL,
-                            textContent: responseArticle.content,
-                            mediaContentURL: responseArticle.media,
-                            numLikes: Math.floor(Math.random() * 100), // just for test
-                        };
-                    })
-                );
-            } else {
-                // TODO: show error message
-            }
-        });
+        // Just set it to undefined at it will autumatically call API to get all posts
+        setArticles(undefined);
     };
 
     return (
