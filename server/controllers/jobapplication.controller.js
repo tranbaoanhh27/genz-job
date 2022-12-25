@@ -47,6 +47,9 @@ router.get("/", async(req, res, next) => {
 router.get('/all/:jobId', async(req, res, next) => {
 	let jobApplications = "";
 	jobApplications = await db.JobApplication.findAll({
+		include: [
+			db.User
+		],
 		where: {
 			JobId: req.params.jobId
 		}
