@@ -89,19 +89,21 @@ export function TabPersonalInformation({ viewedUser, user }) {
     const [listTextField, setListTextField] = useState([]);
 
     useEffect(() => {
+        console.log("user id = " + user.id + " viewed user id = " + viewedUser.id);
         var personalInformation = viewedUser.UserProperties.map((property) => {
             return {
                 key: property.Title,
                 value: property.Value,
                 canEdit: "partial",
                 location: ProfileLocationPrint.MainText,
-                editable: user.id === viewedUser.id
             };
         });
         setListTextField(personalInformation);
     }, [viewedUser.id]);
 
     // if (listTextField.length === 0) return <p>Không có dữ liệu</p>; else
+
+    let editable = user.id === viewedUser.id
 
     console.log(listTextField);
     return (
@@ -113,9 +115,10 @@ export function TabPersonalInformation({ viewedUser, user }) {
                         listTextField.map((field, id) => (
                         <RowTextInformation field={field} index={id} viewedUser={viewedUser} 
                                             listTextField={listTextField}
+                                            editable={editable}
                                             setListTextField={setListTextField}></RowTextInformation>
                     ))}
-                    <AddMainTextField setListTextField={setListTextField} />
+                    {editable && <AddMainTextField setListTextField={setListTextField} />}
                 </div>
             </div>
             {/* <div className="card mb-4">

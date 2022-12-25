@@ -4,7 +4,7 @@ import { ModalAddJobExp } from './ModalJobExp';
 import ProfileApi from "../../../api/ProfileApi";
 import { ProfileLocationPrint } from "./../../../Data/Profile";
 
-function RowTextInformation( {field, index, viewedUser, setListTextField, listTextField} ) {
+function RowTextInformation( {field, editable, index, viewedUser, setListTextField, listTextField} ) {
     if (field.location !== ProfileLocationPrint.MainText) return; 
 
     const [title, setTitle] = useState(field.key);
@@ -55,6 +55,8 @@ function RowTextInformation( {field, index, viewedUser, setListTextField, listTe
         });
         setListTextField(newListTextField);       
     }
+
+    console.log(editable);
     
     if (field.status && field.status === "new") {
         return (
@@ -70,7 +72,7 @@ function RowTextInformation( {field, index, viewedUser, setListTextField, listTe
                            class="form-control" placeholder={field.value}
                            onChange={e => setValue(e.target.value)}/>
                 </div>
-                {field.editable && <div className="col-sm-2">
+                {editable && <div className="col-sm-2">
                     <button type="button" className="btn btn-primary" onClick={AddNewHandler}>Thêm</button>
                 </div>}
             </div>
@@ -89,7 +91,7 @@ function RowTextInformation( {field, index, viewedUser, setListTextField, listTe
                                class="form-control" value={value}
                                onChange={e => setValue(e.target.value)}/>
                     </div>
-                    {field.editable && <div className="col-sm-2">
+                    {editable && <div className="col-sm-2">
                         <button type="button" className="btn btn-primary" onClick={UpdateHandler}>Cập nhật</button>
                     </div>}
                 </div>
@@ -106,10 +108,10 @@ function RowTextInformation( {field, index, viewedUser, setListTextField, listTe
                     <div className="col-sm-7">
                         <p>{value}</p>  
                     </div>
-                    {field.editable && <div className="col-sm-1">
+                    {editable && <div className="col-sm-1">
                         <button type="button" className="btn btn-primary" onClick={EditHandler}>Sửa</button>
                     </div>}
-                    {field.editable && <div className="col-sm-1">
+                    {editable && <div className="col-sm-1">
                         <button type="button" className="btn btn-primary" onClick={DeleteHandler}>Xóa</button>
                     </div>}
                 </div>
