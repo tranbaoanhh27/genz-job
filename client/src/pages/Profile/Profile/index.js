@@ -26,8 +26,8 @@ function MainProfile({ user, viewedUser }) {
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                     className="rounded-circle img-fluid" style={{width: "150px"}} />
                 <h5 className="my-3">{viewedUser.UserName}</h5>
-                <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">District 5, Ho Chi Minh City, Viet Nam</p>
+                {/* <p className="text-muted mb-1">Full Stack Developer</p>
+                <p className="text-muted mb-4">District 5, Ho Chi Minh City, Viet Nam</p> */}
                 {user.id !== viewedUser.id && <div className="d-flex justify-content-center mb-2">
                     <button type="button" className="btn btn-primary" style={{backgroundColor: "var(--primary)"}}>Follow</button>
                     <button type="button" className="btn btn-primary ms-1" backgroundColor="var(--primary)">Message</button>
@@ -53,7 +53,7 @@ function MainProfile({ user, viewedUser }) {
             <div className='tab-content'>
 
                 <div className='tab-pane active mt-2' id="personalInfo">
-                    <TabPersonalInformation setTitleProfile={setTitleProfile}/>
+                    <TabPersonalInformation viewedUser={viewedUser} user={user}/>
                 </div>
                 <ListJobStatus />
                 <ListAccountFollow />
@@ -87,7 +87,7 @@ export default function Profile({ user }) {
             .catch(error => {
                 console.log(error.message);
             });
-    });
+    }, [username]);
 
     return (
         <div classNameName="Profile">

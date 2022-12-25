@@ -35,6 +35,13 @@ const Logout = ({ setUser }) => {
     return <Navigate to="/" />;
 };
 
+const SecuredProfile = ({ user }) => {
+    if (user)
+        return <Navigate to={'/p/' + user.UserName}/>;
+    else
+        return <Navigate to="/" />;
+}
+
 function useForceUpdate() {
     const [value, setValue] = useState(0);
     return () => setValue((value) => value + 1);
@@ -113,9 +120,7 @@ const App = (props) => {
                 <Route
                     path="profile"
                     element={
-                        <SecuredRoute user={user} permission="route.authenticated">
-                            <Profile />
-                        </SecuredRoute>
+                        <SecuredProfile user={user} />
                     }
                 />
 
