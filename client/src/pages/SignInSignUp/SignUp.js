@@ -2,8 +2,8 @@ import React, { Component, useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "../../components/UI/Button";
 import { InputTextField } from "../../components/UI/InputTextField";
-import AuthAPI from "../../api/AuthApi"
-import RoleApi from "../../api/RoleApi"
+import AuthAPI from "../../api/AuthApi";
+import RoleApi from "../../api/RoleApi";
 import { useNavigate } from "react-router-dom";
 
 export function SignUp({ setComponent, role, setUser }) {
@@ -17,20 +17,20 @@ export function SignUp({ setComponent, role, setUser }) {
 
     const signUpHandler = (event) => {
         event.preventDefault();
-        AuthAPI.Signup(username, email, password).then((response) => {
-            if (response.status === 200) {
-                console.log("Signed Up Successfully!");
-                RoleApi.assign(response.data.data.id, role);
-                alert("Đăng kí thành công!");
-            }
-            else {
-                console.log("Failed to Sign Up!");
-            }
-        })
-        .catch(error => {
-            alert("Đăng kí không thành công!\n"+error.response.data.message);
-            console.log(error);
-        });
+        AuthAPI.Signup(username, email, password)
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("Signed Up Successfully!");
+                    RoleApi.assign(response.data.data.id, role);
+                    alert("Đăng kí thành công!");
+                } else {
+                    console.log("Failed to Sign Up!");
+                }
+            })
+            .catch((error) => {
+                alert("Đăng kí không thành công!\n" + error.response.data.message);
+                console.log(error);
+            });
     };
 
     const usernameChangeHandler = (event) => {
@@ -53,7 +53,9 @@ export function SignUp({ setComponent, role, setUser }) {
     };
 
     return (
-        <div id="signInSignUpComponent" className="col-lg-7 d-flex align-items-center h-100 shadow-lg border">
+        <div
+            id="signInSignUpComponent"
+            className="col-lg-7 d-flex align-items-center h-100 shadow-lg border">
             <div className="d-flex flex-column flex-grow-1">
                 <Logo setComponent={setComponent} />
 
@@ -108,7 +110,12 @@ export function SignUp({ setComponent, role, setUser }) {
                                 name="verify"
                                 value={passwordVerification}
                                 onChange={passwordVerificationChangeHandler}
-                                style={{ border: validPasswordVerification ? "1px solid green" : "3px solid red" }}
+                                onFocus={passwordVerificationChangeHandler}
+                                style={{
+                                    border: validPasswordVerification
+                                        ? "1px solid green"
+                                        : "3px solid red",
+                                }}
                             />
                         </div>
                     </div>
