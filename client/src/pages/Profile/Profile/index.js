@@ -5,6 +5,7 @@ import { ListJobStatus } from "./ListJobStatus";
 import { ListAccountFollow } from "./ListAccountFollow";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ProfileApi from "../../../api/ProfileApi";
 
 import { ProfileLocationPrint } from "./../../../Data/Profile"
 
@@ -13,6 +14,33 @@ function MainProfile({ user, viewedUser }) {
     if (!viewedUser) return (
         <div>404 Not Found</div>
     );
+
+    const [followed, setFollowed] = useState(false);
+
+    useEffect(() => {
+        ProfileApi.IsFollowing(viewedUser, user)
+        .then(response => {
+            if (response.data) 
+                setFollowed(true);
+            else
+                setFollowed(false);
+        });
+    }, [viewedUser.id]);
+
+    const followHandler = () => {
+        if (followed) {
+            ProfileApi.Unfollow(viewedUser, user)
+            .then(response => {
+                setFollowed(false);
+            });
+        }
+        else {
+            ProfileApi.Follow(viewedUser, user)
+            .then(response => {
+                setFollowed(true);
+            });
+        }
+    }
 
     return (
     <section style={{backgroundColor: "var(--background)"}}>
@@ -29,8 +57,9 @@ function MainProfile({ user, viewedUser }) {
                 {/* <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">District 5, Ho Chi Minh City, Viet Nam</p> */}
                 {user.id !== viewedUser.id && <div className="d-flex justify-content-center mb-2">
-                    <button type="button" className="btn btn-primary" style={{backgroundColor: "var(--primary)"}}>Follow</button>
-                    <button type="button" className="btn btn-primary ms-1" backgroundColor="var(--primary)">Message</button>
+                    <button type="button" className="btn btn-primary" style={{backgroundColor: "var(--primary)"}}
+                            onClick={followHandler}>{followed ? "Hủy theo dõi" : "Theo dõi"}</button>
+                    <button type="button" className="btn btn-primary ms-1" backgroundColor="var(--primary)">Nhắn tin</button>
                 </div>}
                 </div>
             </div>
@@ -46,8 +75,8 @@ function MainProfile({ user, viewedUser }) {
 
             <ul className="nav nav-tabs" role = "tablist">
                 <li className='nav-item'><a className="nav-link active" data-bs-toggle="tab" href="#personalInfo">Thông tin cá nhân</a></li>
-                <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listFollow">Đang theo dõi ...</a></li>
-                <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listJob">Ứng tuyển</a></li>
+                {user.id === viewedUser.id && <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listFollow">Đang theo dõi ...</a></li>}
+                {user.id === viewedUser.id && <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listJob">Ứng tuyển</a></li>}
             </ul>
 
             <div className='tab-content'>
@@ -55,9 +84,8 @@ function MainProfile({ user, viewedUser }) {
                 <div className='tab-pane active mt-2' id="personalInfo">
                     <TabPersonalInformation viewedUser={viewedUser} user={user}/>
                 </div>
-                <ListJobStatus />
-                <ListAccountFollow />
-
+                {user.id === viewedUser.id && <ListJobStatus />}
+                {user.id === viewedUser.id && <ListAccountFollow viewedUser={viewedUser} user={user}/>}
             </div>
         </div>
         </div>
