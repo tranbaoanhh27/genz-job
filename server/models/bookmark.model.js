@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
   Bookmark.associate = function(models) {
-    // associations can be defined here
+    Bookmark.belongsTo(models.User);
+    Bookmark.belongsTo(models.Job);
   };
   return Bookmark;
 };
