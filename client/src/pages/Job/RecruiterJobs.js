@@ -46,6 +46,8 @@ const RecruiterJobPage = (props) => {
         setIsCreatingJob(false);
     };
 
+    const reloadJobs = () => setJobs(undefined);
+
     return (
         <div
             className="container-flex"
@@ -53,17 +55,19 @@ const RecruiterJobPage = (props) => {
             <Row className="row">
                 <div className="col">
                     {!isCreatingJob && <RecruiterJobDetails job={currentJob} />}
-                    {isCreatingJob && <RecruiterCreateJob onCancel={stopCreatingJob} />}
+                    {isCreatingJob && (
+                        <RecruiterCreateJob
+                            onCancel={stopCreatingJob}
+                            onCreateComplete={reloadJobs}
+                        />
+                    )}
                 </div>
-                <StartAlignedColumn className="col-3">
+                <RightColumn className="col-3">
                     <Button className="btn btn-primary" onClick={startCreatingJob}>
                         Tin tuyển dụng mới
                     </Button>
-                    <RecruiterJobs
-                        jobs={jobs === undefined ? EMPTY_JOBS : jobs}
-                        onSelectJob={selectJobHandler}
-                    />
-                </StartAlignedColumn>
+                    {jobs && <RecruiterJobs jobs={jobs} onSelectJob={selectJobHandler} />}
+                </RightColumn>
             </Row>
         </div>
     );
@@ -72,14 +76,15 @@ const RecruiterJobPage = (props) => {
 export default RecruiterJobPage;
 
 // Styled Components
-const StartAlignedColumn = styled.div`
+const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
+    height: calc(100vh - 6rem);
 `;
 
 const Button = styled.button`
-    height: 3rem;
+    height: 10%;
 `;
 
 const Row = styled.div`

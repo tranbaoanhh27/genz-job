@@ -7,6 +7,9 @@ import MyCard from "../../UI/MyCard";
 import JobDetailsInfo from "./JobDetailsInfo";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import JobShareModal from "./JobShareModal";
+import AuthApi from "../../../api/AuthApi";
+import { API_BASE_URL } from "../../../Data/apiConstants";
+import axios from "axios";
 
 const startJobDetailPage = (jobId) => {
     window.location.href = window.location.origin + "/job/detail/" + jobId;
@@ -35,6 +38,18 @@ export const JobDetails = (props) => {
         setIsSharingJob(true);
     };
 
+    const applyJob = (event) => {
+        event.preventDefault();
+        let user = AuthApi.GetCurrentUser();
+        if (user) user = user.data;
+        else return;
+        const URL = `${API_BASE_URL}/jobapplication/create?userId=${user.id}&jobId=${selectedJobId}`;
+        axios.post(URL).then((res) => {
+            if (res.status === 200) alert("Ứng tuyển thành công!");
+            else alert("Ứng tuyển thất bại, thử lại sau nhé!");
+        });
+    };
+
     return (
         <div style={{ color: DarkTheme.text, fontSize: "90%" }}>
             {isSharingJob && (
@@ -56,7 +71,9 @@ export const JobDetails = (props) => {
                             Quay lại
                         </BackButton>
                         <SpaceBetweenRow style={{ marginTop: "0.5rem" }}>
-                            <Button className="btn btn-success">Ứng tuyển ngay</Button>
+                            <Button className="btn btn-success" onClick={applyJob}>
+                                Ứng tuyển ngay
+                            </Button>
                             <Button className="btn btn-primary" onClick={showJobShareModal}>
                                 Chia sẻ
                             </Button>
