@@ -76,7 +76,7 @@ function MainProfile({ user, viewedUser }) {
             <ul className="nav nav-tabs" role = "tablist">
                 <li className='nav-item'><a className="nav-link active" data-bs-toggle="tab" href="#personalInfo">Thông tin cá nhân</a></li>
                 {user.id === viewedUser.id && <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listFollow">Đang theo dõi ...</a></li>}
-                {user.id === viewedUser.id && <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listJob">Ứng tuyển</a></li>}
+                {user.id === viewedUser.id && <li className='nav-item'><a className='nav-link' data-bs-toggle='tab' href="#listJob">Tin đã lưu</a></li>}
             </ul>
 
             <div className='tab-content'>
@@ -84,7 +84,7 @@ function MainProfile({ user, viewedUser }) {
                 <div className='tab-pane active mt-2' id="personalInfo">
                     <TabPersonalInformation viewedUser={viewedUser} user={user}/>
                 </div>
-                {user.id === viewedUser.id && <ListJobStatus />}
+                {user.id === viewedUser.id && <ListJobStatus user={user}/>}
                 {user.id === viewedUser.id && <ListAccountFollow viewedUser={viewedUser} user={user}/>}
             </div>
         </div>

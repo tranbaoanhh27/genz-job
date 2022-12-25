@@ -4,6 +4,7 @@ import axios from 'axios';
 class ProfileApi {
     static userApiUrl = process.env.REACT_APP_API_URL + '/user/';
     static followingApiUrl = process.env.REACT_APP_API_URL + '/following';
+    static bookmarkApiUrl = process.env.REACT_APP_API_URL + '/bookmark';
 
     static AddUserProperty(user, title, value) {
         const config = {
@@ -48,12 +49,21 @@ class ProfileApi {
     }
 
     static GetUserFollowing(user) {
-        console.log(this.followingApiUrl + "?userId=" + user.id);
         return axios.get(this.followingApiUrl + "?userId=" + user.id)
         .then(response => {
             return response.data.Followee;
         })
     }
+
+    static GetBookmarkedJobs(user) {
+        console.log(this.bookmarkApiUrl + "/list?userId=" + user.id);
+        return axios.get(this.bookmarkApiUrl + "/list?userId=" + user.id)
+        .then(response => {
+            return response.data.Bookmarks;
+        })
+    }
+
+
 }
 
 export default ProfileApi;
