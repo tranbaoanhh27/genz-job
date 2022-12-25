@@ -1,8 +1,10 @@
 import React, { Component, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import MyProfile from "./Profile/index";
+import { LightTheme } from "../../assets/themes";
 
 export default function Profile() {
+    document.body.style.background = LightTheme.background;
     return (
         <div>
             <Routes>
