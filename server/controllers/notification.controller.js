@@ -43,4 +43,42 @@ router.get("/", async(req, res, next) => {
 	res.send(JSON.stringify(notifications, null, 2));
 });
 
+router.post('/mark', async (req, res, next) => {
+	const status = req.body.status;
+	const notifcationId = req.body.notificationId;
+	if (status && notifcationId) {
+		await db.Notification.update({Status: status}, {
+			where: {id: notifcationId}
+		})
+		.then(notification => {
+			return res.send({message: "Done completely"});
+		})
+		.catch(err => {
+			return res.status(404).send({message: err.message});
+		})
+	}
+	else {
+		return res.status(404).send({message: "Can not change status"});
+	}
+});
+
+router.post('/mark/all', async (req, res, next) => {
+	const status = req.body.status;
+	const userId = req.body.userId;
+	if (status && userId) {
+		await db.Notification.update({Status: status}, {
+			where: {SenderId: userId}
+		})
+		.then(notification => {
+			return res.send({message: "Done completely"});
+		})
+		.catch(err => {
+			return res.status(404).send({message: err.message});
+		})
+	}
+	else {
+		return res.status(404).send({message: "Can found userId or Status"});
+	}
+})
+
 module.exports = router;
