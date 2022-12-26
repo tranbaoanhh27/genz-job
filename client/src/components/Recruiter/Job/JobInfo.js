@@ -25,15 +25,29 @@ const RecruiterJobInfo = (props) => {
         <FlexColumn className={`${props.className}`}>
             <div className="row">
                 <JobInfoLabel className="col-3">Tiêu đề:</JobInfoLabel>
-                <JobInfoInput className="col" type="text" value={title} onChange={jobTitleChangeHandler} />
+                <JobInfoInput
+                    className="col"
+                    type="text"
+                    value={title}
+                    onChange={jobTitleChangeHandler}
+                />
             </div>
             <div className="row" style={{ marginTop: "0.5rem" }}>
                 <JobInfoLabel className="col-3">Công ty:</JobInfoLabel>
-                <JobInfoInput className="col" type="text" value={company} onChange={jobCompanyChangeHandler} />
+                <JobInfoInput
+                    className="col"
+                    type="text"
+                    value={company}
+                    onChange={jobCompanyChangeHandler}
+                />
             </div>
             <div className="row" style={{ marginTop: "0.5rem", flex: "1" }}>
                 <JobInfoLabel className="col-3">Mô tả công việc:</JobInfoLabel>
-                <JobInfoTextArea className="col" value={description} onChange={jobDescriptionChangeHandler} />
+                <JobInfoTextArea
+                    className="col"
+                    value={description}
+                    onChange={jobDescriptionChangeHandler}
+                />
             </div>
         </FlexColumn>
     );
@@ -58,6 +72,7 @@ const JobInfoTextArea = styled.textarea`
     color: white;
     border: none;
     border-radius: 5px;
+    max-height: 8rem;
 `;
 
 const FlexColumn = styled.div`

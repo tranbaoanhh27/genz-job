@@ -27,12 +27,14 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     User.belongsToMany(models.Role, { through: models.UserRole});
-    User.belongsToMany(models.Job, { through: models.Bookmark });
+    User.hasMany(models.Bookmark);
     User.belongsToMany(models.Job, { through: models.JobApplication });
     User.hasMany(models.UserProperty);
+    User.hasMany(models.JobApplication);
+    // User.hasMany(models.Report);
     // User.hasMany(models.Article);
-    User.belongsToMany(User,{ through: models.Following, as: "FollowerId", foreignKey: "FollowerId" });
-    User.belongsToMany(User, { through: models.Following, as: "UserId", foreignKey: "UserId" });
+    User.belongsToMany(User,{ through: models.Following, as: "Followee", foreignKey: "FollowerId" });
+    User.belongsToMany(User, { through: models.Following, as: "Follower", foreignKey: "UserId" });
   };
   return User;
 };

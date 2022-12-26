@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-export function InputTextField({...rest}) {
-    return (
-        <input className='form-control' {...rest} />
-    )
+export function InputTextField({ ...rest }) {
+    return <input className="form-control" {...rest} />;
 }
