@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import MyCard from "../../UI/MyCard";
-import { DarkTheme } from "../../../assets/themes";
-import { API_BASE_URL } from "../../../Data/apiConstants";
+import MyCard from "../UI/MyCard";
+import { DarkTheme } from "../../assets/themes";
+import { API_BASE_URL } from "../../Data/apiConstants";
 import axios from "axios";
-import AuthApi from "../../../api/AuthApi";
-import { sendMessage } from "../../Messages/chat-form/Chat-Form";
+import AuthApi from "../../api/AuthApi";
+import { sendMessage } from "../Messages/chat-form/Chat-Form";
 
 const JobShareModal = (props) => {
     const [copied, setCopied] = useState(false);
