@@ -62,4 +62,47 @@ router.get('/all/:jobId', async(req, res, next) => {
 	}
 });
 
+
+router.put('/mark', async(req, res, next) => {
+	const newStatusId = req.body.newStatusId;
+	const candidateId = req.body.candidateId;
+	const jobId = req.body.jobId;
+
+	if (newStatusId && candidateId && jobId) {
+		if (newStatusId < 1 || newStatusId > 3) {
+			return res.status(404).send({message: "Invalidate message"});
+		}
+
+		let candidate = await db.User.findByPk(candidateId);
+		let job = await db.Job.findByPk(jobId);
+		let application = await db.JobApplication.findOne({
+			where: {
+				UserId: candidateId,
+				JobId: jobId
+			}
+		});
+
+
+		if (candidate && job && application) {
+			await db.JobApplication.update({StatusId: newStatusId},{
+				where: {
+					UserId: candidateId,
+					JobId: jobId
+				}
+			})
+			.then(jobApplication => {
+				return res.send({message: "Done completely"});
+			})
+			.catch(err => {
+				return res.status(404).send({message: err.message});
+			});
+		}
+		else {
+			return res.status(404).send({message: "Invalidate value"});
+		}
+	}
+	else{
+		return res.status(404).send({message: "Invalidate value"});
+	}
+});
 module.exports = router;

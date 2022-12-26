@@ -2,23 +2,36 @@
 const express = require("express");
 const db = require("../models");
 const { Op } = require("sequelize");
+const { response } = require("express");
 
 const router = express.Router();
 
 //Create an article
 router.post('/create', async (req, res, next) => {
-    await db.Article.create({
-        content: req.body.content,
-        media: req.body.media,
-        authorId: req.body.authorId,
-        datePosted: Date.now()
-    })
-    .then(Article => {
-        return res.send({message: "Article created"});
-    })
-    .catch(err => {
-        return res.status(500).send({message: err.message});
-    });
+    const authorId = req.body.authorId;
+    if (authorId) {
+        let author = await db.User.findByPk(authorId);
+        if (author) {
+            await db.Article.create({
+                content: req.body.content,
+                media: req.body.media,
+                authorId: req.body.authorId,
+                datePosted: Date.now()
+            })
+            .then(Article => {
+                return res.send({message: "Article created"});
+            })
+            .catch(err => {
+                return res.status(500).send({message: err.message});
+            });
+        }
+        else {
+            return res.status(500).send({message: "Invalidate value"});
+        }
+    }
+    else {
+        return res.status(500).send({message: "Invalidate value"});
+    }
 });
 
 router.get('/all', async (req, res, next) => {

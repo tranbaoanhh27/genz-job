@@ -43,7 +43,7 @@ router.get("/", async(req, res, next) => {
 	res.send(JSON.stringify(notifications, null, 2));
 });
 
-router.post('/mark', async (req, res, next) => {
+router.put('/mark', async (req, res, next) => {
 	const status = req.body.status;
 	const notifcationId = req.body.notificationId;
 	if (status && notifcationId) {
@@ -62,7 +62,7 @@ router.post('/mark', async (req, res, next) => {
 	}
 });
 
-router.post('/mark/all', async (req, res, next) => {
+router.put('/mark/all', async (req, res, next) => {
 	const status = req.body.status;
 	const userId = req.body.userId;
 	if (status && userId) {
