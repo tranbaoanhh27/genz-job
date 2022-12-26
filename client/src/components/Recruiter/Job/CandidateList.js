@@ -15,7 +15,11 @@ const CandidateList = (props) => {
             {props.jobApplications &&
                 props.jobApplications.length > 0 &&
                 props.jobApplications.map((jobApplication) => (
-                    <CandidateItem key={jobApplication.id} jobApplication={jobApplication} />
+                    <CandidateItem
+                        key={jobApplication.id}
+                        jobApplication={jobApplication}
+                        reloadCandidates={props.reloadCandidates}
+                    />
                 ))}
             {(props.jobApplications === undefined || props.jobApplications.length === 0) && (
                 <h5>Oops! Rất tiếc, chưa có ai ứng tuyển cả</h5>

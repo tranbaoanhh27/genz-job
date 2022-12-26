@@ -9,12 +9,41 @@ import AuthApi from "../../../api/AuthApi";
 
 const JobApplication = (props) => {
     const [jobTitle, setJobTitle] = useState(undefined);
-    console.log(props.data);
+    const [status, setStatus] = useState(undefined);
+    const [updated, setUpdated] = useState(false);
 
+    console.log(props.data);
     if (!props.data) return;
 
+    if (status === undefined) setStatus(props.data.StatusId);
+
     const updateStatus = (newStatus) => {
-        console.log(newStatus);
+        console.log("Update job application status: ", newStatus);
+
+        // Call API to update job application status
+        const body = {
+            jobId: props.data.JobId,
+            candidateId: props.data.UserId,
+            newStatusId: newStatus,
+        };
+
+        const URL = API_BASE_URL + "/jobapplication/mark";
+
+        axios
+            .put(URL, body)
+            .then((res) => {
+                console.log("Change Job application status result: ", res);
+                if (res.status === 200) alert("Cập nhật trạng thái hồ sơ thành công!");
+                // Reload component by resetting state variable
+                setStatus(newStatus);
+                setUpdated(true);
+            })
+            .catch((err) => {
+                console.log("Change job application status failed: ", err);
+                alert(
+                    "Đã có lỗi xảy ra, cập nhật trạng thái hồ sơ không thành công. Hãy thử tải lại trang và thử lại!"
+                );
+            });
     };
 
     const navigateToMessage = () => {
@@ -73,24 +102,39 @@ const JobApplication = (props) => {
                             label="Ngày nộp đơn:"
                             info={props.data.applyTime.toLocaleString("vi-VN")}
                         />
-                        <Status label="Trạng thái hồ sơ:" status={props.data.StatusId} />
+                        <Status label="Trạng thái hồ sơ:" status={status} />
+                        {status === STATUS["NOT_DECIDED"] && (
+                            <p
+                                style={{
+                                    width: "100%",
+                                    textAlign: "start",
+                                    marginTop: "2rem",
+                                }}>
+                                Lưu ý: Bạn không thể thay đổi quyết định khi đã chấp nhận hoặc từ
+                                chối ứng viên
+                            </p>
+                        )}
                     </RightColumn>
                 </Content>
                 <Actions>
-                    {props.data.StatusId !== STATUS["NOT_DECIDED"] && (
+                    {status !== STATUS["NOT_DECIDED"] && (
                         <>
                             <p style={{ paddingInlineEnd: "1rem" }}>
                                 Bạn không thể thay đổi quyết định khi đã chấp nhận hoặc từ chối ứng
                                 viên
                             </p>
-                            <Button className="btn btn-danger" onClick={props.onClose}>
+                            <Button
+                                className="btn btn-danger"
+                                onClick={updated ? props.onUpdateStatus : props.onClose}>
                                 Đóng
                             </Button>
                         </>
                     )}
-                    {props.data.StatusId === STATUS["NOT_DECIDED"] && (
+                    {status === STATUS["NOT_DECIDED"] && (
                         <>
-                            <Button className="btn btn-secondary" onClick={props.onClose}>
+                            <Button
+                                className="btn btn-secondary"
+                                onClick={updated ? props.onUpdateStatus : props.onClose}>
                                 Quyết định sau
                             </Button>
                             <Button

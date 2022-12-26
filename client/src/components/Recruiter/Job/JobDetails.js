@@ -31,6 +31,8 @@ const RecruiterJobDetails = (props) => {
         });
     }
 
+    const reloadCandidates = () => setCandidates(undefined);
+
     return (
         <Card>
             {props.job && (
@@ -55,7 +57,10 @@ const RecruiterJobDetails = (props) => {
                             <label>Danh sách đơn ứng tuyển</label>
                             <a href="https://google.com">Các ứng viên tiềm năng</a>
                         </SpaceBetweenRow>
-                        <CandidateList jobApplications={candidates} />
+                        <CandidateList
+                            jobApplications={candidates}
+                            reloadCandidates={reloadCandidates}
+                        />
                     </VerticalHalf>
                 </>
             )}

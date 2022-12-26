@@ -19,6 +19,7 @@ const CandidateItem = (props) => {
                 <JobApplication
                     data={props.jobApplication}
                     onClose={() => setShowJobApplication(false)}
+                    onUpdateStatus={props.reloadCandidates}
                 />
             )}
             <Card
