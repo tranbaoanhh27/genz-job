@@ -23,10 +23,13 @@ module.exports = (sequelize, DateTypes) => {
             type: DateTypes.DATE,
             allowNull: false
         }
-    }, {});
+    }, {
+        timestamps: false
+    });
 
     ArticleComment.associate = function(models) {
-
+        ArticleComment.belongsTo(models.User, {foreignKey: 'commentorId', targetKey: 'id'});
+        ArticleComment.belongsTo(models.Article, {foreignKey: 'articleId', targetKey: 'id'});
     };
     return ArticleComment;
 };
