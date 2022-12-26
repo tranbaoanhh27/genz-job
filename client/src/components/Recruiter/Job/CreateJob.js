@@ -11,6 +11,7 @@ const CreateJob = (props) => {
     const titleRef = useRef();
     const descriptionRef = useRef();
     const salaryRef = useRef();
+    const companyRef = useRef();
     const startDateRef = useRef();
     const endDateRef = useRef();
 
@@ -22,6 +23,7 @@ const CreateJob = (props) => {
             title: titleRef.current.returnValue(),
             description: descriptionRef.current.returnValue(),
             salary: salaryRef.current.returnValue(),
+            company: companyRef.current.returnValue(),
             datePosted: startDateRef.current.returnValue(),
             closingDate: endDateRef.current.returnValue(),
         };
@@ -52,6 +54,7 @@ const CreateJob = (props) => {
                 <RecruiterJobImage imageUrl={DEFAULT_IMAGE_URL} />
             </CenterRow>
             <SmallInputField label="Tên công việc:" type="text" ref={titleRef} />
+            <SmallInputField label="Tên công ty:" type="text" ref={companyRef} />
             <LargeInputField label="Mô tả công việc:" ref={descriptionRef} />
             <SmallInputField
                 label="Mức lương (USD):"

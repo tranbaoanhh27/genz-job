@@ -13,14 +13,15 @@ const RecruiterJobDetails = (props) => {
     const [candidates, setCandidates] = useState(undefined);
 
     // Call API to get list of candidates of this job
-    if (candidates === undefined) {
+    if (candidates === undefined && props.job) {
         const URL = `${API_BASE_URL}/jobapplication/all/${props.job.id}`;
         axios.get(URL).then((res) => {
             console.log(res);
             if (res.status === 200) {
                 setCandidates(
                     res.data.map((jobApplication) => ({
-                        id: `job#${jobApplication.jobId}user#${jobApplication.UserId}`,
+                        ...jobApplication,
+                        id: `job#${jobApplication.JobId}user#${jobApplication.UserId}`,
                         candidateName: jobApplication.User.UserName,
                         applyTime: new Date(jobApplication.createdAt),
                         applyStatus: jobApplication.StatusId,

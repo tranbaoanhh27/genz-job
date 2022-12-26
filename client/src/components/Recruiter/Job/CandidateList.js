@@ -12,9 +12,14 @@ import { DarkTheme } from "../../../assets/themes";
 const CandidateList = (props) => {
     return (
         <Container className="list-group">
-            {props.jobApplications.map((jobApplication) => (
-                <CandidateItem key={jobApplication.id} jobApplication={jobApplication} />
-            ))}
+            {props.jobApplications &&
+                props.jobApplications.length > 0 &&
+                props.jobApplications.map((jobApplication) => (
+                    <CandidateItem key={jobApplication.id} jobApplication={jobApplication} />
+                ))}
+            {(props.jobApplications === undefined || props.jobApplications.length === 0) && (
+                <h5>Oops! Rất tiếc, chưa có ai ứng tuyển cả</h5>
+            )}
         </Container>
     );
 };

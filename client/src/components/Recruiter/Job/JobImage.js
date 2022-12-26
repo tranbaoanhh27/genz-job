@@ -4,7 +4,7 @@ import styled from "styled-components";
 const RecruiterJobImage = (props) => {
     return (
         <FlexColumn className={`${props.className}`}>
-            <Image src={props.imageUrl} />
+            <Image src={props.imageUrl || DEFAULT_IMG_URL} />
             <Button type="button" className="btn btn-primary">
                 Thay đổi ảnh
             </Button>
@@ -32,3 +32,5 @@ const Button = styled.button`
     max-width: 125px;
     text-align: center;
 `;
+
+const DEFAULT_IMG_URL = "https://www.fit.hcmus.edu.vn/vn/images/teachers/dbtien.jpg";

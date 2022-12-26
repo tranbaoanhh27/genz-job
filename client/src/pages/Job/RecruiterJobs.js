@@ -54,7 +54,7 @@ const RecruiterJobPage = (props) => {
             style={{ paddingInline: "2rem", color: DarkTheme.text, fontSize: "90%" }}>
             <Row className="row">
                 <div className="col">
-                    {!isCreatingJob && currentJob && <RecruiterJobDetails job={currentJob} />}
+                    {!isCreatingJob && <RecruiterJobDetails job={currentJob} />}
                     {isCreatingJob && (
                         <RecruiterCreateJob
                             onCancel={stopCreatingJob}

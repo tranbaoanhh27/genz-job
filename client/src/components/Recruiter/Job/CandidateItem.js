@@ -1,29 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { DarkTheme } from "../../../assets/themes";
 import MyCard from "../../UI/MyCard";
+import JobApplication from "../JobApplication/JobApplication";
 
 /**
  * React Function component representing a candidate in list of candidates
  * @param {Object} jobApplication An object representing a job application, includes
- * at least 4 keys {candidateName, candidateLevel, applyTime, applyStatus}
+ * at least 4 keys { candidateName, candidateLevel, applyTime, applyStatus}
  * @returns {JSXElement} A JSX Element representing a CandidateItem in CandidateList
  */
 const CandidateItem = (props) => {
     console.log(props.jobApplication);
+    const [showJobApplication, setShowJobApplication] = useState(false);
     return (
-        <Card className="list-group-item list-group-item-action">
-            <SpaceBetweenRow>
-                <h5>{props.jobApplication.candidateName}</h5>
-                <StatusBadge className="badge" status={props.jobApplication.applyStatus}>
-                    {statusContent[props.jobApplication.applyStatus]}
-                </StatusBadge>
-            </SpaceBetweenRow>
-            <SpaceBetweenRow>
-                <p>{`Mức kinh nghiệm: ${props.jobApplication.candidateLevel || "Không rõ"}`}</p>
-                <p>{`Ngày ứng tuyển: ${props.jobApplication.applyTime.toLocaleString("vi-VN")}`}</p>
-            </SpaceBetweenRow>
-        </Card>
+        <>
+            {showJobApplication && (
+                <JobApplication
+                    data={props.jobApplication}
+                    onClose={() => setShowJobApplication(false)}
+                />
+            )}
+            <Card
+                className="list-group-item list-group-item-action"
+                onClick={() => setShowJobApplication(true)}>
+                <SpaceBetweenRow>
+                    <h5>{props.jobApplication.candidateName}</h5>
+                    <StatusBadge className="badge" status={props.jobApplication.applyStatus}>
+                        {statusContent[props.jobApplication.applyStatus]}
+                    </StatusBadge>
+                </SpaceBetweenRow>
+                <SpaceBetweenRow>
+                    <p>{`Ngày ứng tuyển: ${props.jobApplication.applyTime.toLocaleString(
+                        "vi-VN"
+                    )}`}</p>
+                </SpaceBetweenRow>
+            </Card>
+        </>
     );
 };
 
@@ -56,8 +69,9 @@ const Card = styled(MyCard)`
     margin-bottom: 0.5rem;
 
     &:hover {
-        background: #0d6efd;
+        background: #242526bb;
         color: inherit;
+        cursor: pointer;
     }
 `;
 
