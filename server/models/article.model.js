@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     Article.associate = function(models) {
         Article.belongsTo(models.User, { foreignKey: 'authorId'});
         // Article.hasMany(models.Report);
+        // Article.hasMany(models.ArticleComment);
     };
     return Article;
 };
