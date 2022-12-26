@@ -23,6 +23,7 @@ const RecruiterJobPage = (props) => {
         axios.get(URL).then((response) => {
             console.log(response);
             const data = [...response.data].map((job) => ({
+                ...job,
                 id: job.id,
                 title: job.title,
                 company: job.company || "Không rõ",
@@ -60,6 +61,7 @@ const RecruiterJobPage = (props) => {
                         <RecruiterJobDetails
                             key={(currentJob && currentJob.id) || Math.random()}
                             job={currentJob}
+                            reloadJobs={reloadJobs}
                         />
                     )}
                     {isCreatingJob && (

@@ -21,8 +21,15 @@ const CandidateList = (props) => {
                         reloadCandidates={props.reloadCandidates}
                     />
                 ))}
-            {(props.jobApplications === undefined || props.jobApplications.length === 0) && (
-                <h5>Oops! Rất tiếc, chưa có ai ứng tuyển cả</h5>
+            {props.jobApplications && props.jobApplications.length === 0 && (
+                <CenterColumn>
+                    <h5>Oops! Rất tiếc, chưa có ai ứng tuyển cả</h5>
+                </CenterColumn>
+            )}
+            {!props.jobApplications && (
+                <CenterColumn>
+                    <h5>Oops! Đã có lỗi xảy ra, hãy thử tải lại trang</h5>
+                </CenterColumn>
             )}
         </Container>
     );
@@ -39,4 +46,11 @@ const Container = styled.div`
     padding-inline-end: 2rem;
     overflow-y: scroll;
     overflow-x: hidden;
+`;
+
+const CenterColumn = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;

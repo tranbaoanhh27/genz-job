@@ -33,4 +33,4 @@ const Button = styled.button`
     text-align: center;
 `;
 
-const DEFAULT_IMG_URL = "https://www.fit.hcmus.edu.vn/vn/images/teachers/dbtien.jpg";
+const DEFAULT_IMG_URL = "https://cdn.cdnlogo.com/logos/g/35/google-icon.svg";
