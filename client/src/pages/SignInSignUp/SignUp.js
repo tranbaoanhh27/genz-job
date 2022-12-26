@@ -21,14 +21,35 @@ export function SignUp({ setComponent, role, setUser }) {
             .then((response) => {
                 if (response.status === 200) {
                     console.log("Signed Up Successfully!");
-                    RoleApi.assign(response.data.data.id, role);
-                    alert("Đăng kí thành công!");
+                    RoleApi.assign(response.data.data.id, role)
+                        .then((response) => {
+                            if (response.status === 200) {
+                                alert("Signed Up Successfully!");
+                                AuthAPI.Login(username, password)
+                                    .then((response) => {
+                                        console.log(response.data);
+                                        navigate("/profile");
+                                        setUser(response.data);
+                                    })
+                                    .catch((error) => {
+                                        console.log({ message: error.message });
+                                    });
+                            }
+                        })
+                        .catch((error) => {
+                            let msg = error.message;
+                            if (error.response) msg = error.response.data.message;
+                            alert("Assigning role unsuccessfully!\n" + msg);
+                            console.log(error);
+                        });
                 } else {
                     console.log("Failed to Sign Up!");
                 }
             })
             .catch((error) => {
-                alert("Đăng kí không thành công!\n" + error.response.data.message);
+                let msg = error.message;
+                if (error.response) msg = error.response.data.message;
+                alert("Failed to Sign Up!\n" + msg);
                 console.log(error);
             });
     };

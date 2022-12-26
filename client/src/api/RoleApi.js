@@ -3,20 +3,17 @@ import axios from 'axios';
 
 class RoleApi {
 
-    static assign = (userId, roleTitle) => {
-        axios.get(process.env.REACT_APP_API_URL + '/role/getList')
-        .then(response => {
+    static async assign(userId, roleTitle) {
+        var response = await axios.get(process.env.REACT_APP_API_URL + '/role/getList');
+        if (response.status === 200) {
             var roles = response.data;
             var roleId = roles[roleTitle];
             const configRole = {
                 userId,
                 roleId
             }
-            axios.post(process.env.REACT_APP_API_URL + '/role/assign', configRole)    
-            .then(response => {
-                console.log("Assign successfully");
-            });
-        });
+            return axios.post(process.env.REACT_APP_API_URL + '/role/assign', configRole);
+        };
 
     }
 }

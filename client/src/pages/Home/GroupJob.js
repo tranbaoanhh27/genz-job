@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CardJob } from './CardJob';
+import { Alert } from './Alert';
 
 function GetMoreJobs(num, listPrevJobs) {
 
@@ -9,13 +10,15 @@ function GetMoreJobs(num, listPrevJobs) {
     for (let i = numPrevJobs + 1; i <= numPrevJobs + num; i++)
     {
         listPrevJobs.push({
-            name: `Công việc #${i}`,
-            recruiter: `Công ty #${i}`,
+            idJob: i,
+            name: `Đây là một tên công việc dài thứ #${i} để kiểm tra việc hiển thị`,
+            recruiter: `Đây là một tên công ty dài thứ #${i} để kiểm tra việc hiển thị khi bị overflow`,
             location: `Địa điểm #${i}`,
             salary: `Mức lương #${i}`,
             numOfExp: `Số năm kinh nghiệm #${i}`,
             lastUpdate: `Cập nhật lần cuối #${i}`,
-            closeTime: `Hạn chót ứng tuyển #${i}`
+            closeTime: `Hạn chót ứng tuyển #${i}`,
+            isBookmarked: false
         })
     }
 
@@ -25,6 +28,7 @@ function GetMoreJobs(num, listPrevJobs) {
 export function GroupJob({ nameGroup }) {
     
     const [listJob, setListJob] = useState([]);
+    const [alert, setAlert] = useState(null);
 
     useEffect( () => {
         let listPrevJobs = listJob;
@@ -48,8 +52,8 @@ export function GroupJob({ nameGroup }) {
 
                     {listJob.map( (value, id) => {
                         return (
-                            <div className='col-sm-6 mt-3'>
-                                <CardJob job={value} />
+                            <div className='col-sm-6 mt-3' style={{height: "17em"}}>
+                                <CardJob job={value} listJob={listJob} setListJob={setListJob} setAlert={setAlert}/>
                             </div>
                         )
                     })}
@@ -57,6 +61,8 @@ export function GroupJob({ nameGroup }) {
                 </div>
                 <p className='text-center' onClick={loadMoreJob}><a href='#'>Hiển thị thêm</a></p>
             </div>
+
+            {alert === null ? <></> : <Alert classAlert={alert.classAlert} info={alert.info} setAlert={setAlert}/>}
         </div>
     )
 }

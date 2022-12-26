@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         });
         Job.belongsToMany(models.User, { through: models.Bookmark });
         Job.belongsToMany(models.User, { through: models.JobApplication });
+        Job.hasMany(models.Bookmark)
     };
     return Job;
 }
