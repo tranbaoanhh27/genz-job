@@ -12,12 +12,16 @@ import { ProfileLocationPrint } from "./../../../Data/Profile";
 function MainProfile({ user, viewedUser }) {
     const [followed, setFollowed] = useState(false);
 
+    let viewedUserId = undefined;
+    if (viewedUser) viewedUserId = viewedUser.id;
+
     useEffect(() => {
+        if (viewedUser === undefined) return;
         ProfileApi.IsFollowing(viewedUser, user).then((response) => {
             if (response.data) setFollowed(true);
             else setFollowed(false);
         });
-    }, [viewedUser.id]);
+    }, [viewedUserId]);
 
     if (!viewedUser) return <div>404 Not Found</div>;
 
