@@ -4,6 +4,8 @@ import MyCard from "../../UI/MyCard";
 import { DarkTheme } from "../../../assets/themes";
 import axios from "axios";
 import { API_BASE_URL } from "../../../Data/apiConstants";
+import { sendMessage } from "../../Messages/chat-form/Chat-Form";
+import AuthApi from "../../../api/AuthApi";
 
 const JobApplication = (props) => {
     const [jobTitle, setJobTitle] = useState(undefined);
@@ -16,6 +18,21 @@ const JobApplication = (props) => {
     };
 
     const navigateToMessage = () => {
+        let user = AuthApi.GetCurrentUser();
+
+        if (user) user = user.data;
+        else return;
+
+        sendMessage(
+            user.id,
+            props.data.UserId,
+            user.UserName,
+            props.data.candidateName,
+            `Xin chào, chúng tôi liên hệ với bạn vì bạn đã ứng tuyển vào vị trí ${
+                jobTitle || "Error"
+            } của công ty chúng tôi`
+        );
+
         window.location.href = window.location.origin + "/messages";
     };
 
@@ -37,12 +54,6 @@ const JobApplication = (props) => {
             <DisabledBackground onClick={props.onClose} />
             <ModalCard>
                 <Header>
-                    <Button
-                        style={{ background: DarkTheme.button }}
-                        className="btn btn-danger"
-                        onClick={props.onClose}>
-                        Đóng
-                    </Button>
                     <h5>Đơn ứng tuyển</h5>
                 </Header>
                 <Content className="row">
@@ -66,24 +77,34 @@ const JobApplication = (props) => {
                     </RightColumn>
                 </Content>
                 <Actions>
-                    <Button
-                        className="btn btn-secondary"
-                        disabled={props.data.StatusId === STATUS["NOT_DECIDED"]}
-                        onClick={props.onClose}>
-                        Quyết định sau
-                    </Button>
-                    <Button
-                        className="btn btn-success"
-                        disabled={props.data.StatusId === STATUS["ACCEPTED"]}
-                        onClick={() => updateStatus(STATUS["ACCEPTED"])}>
-                        Chấp nhận
-                    </Button>
-                    <Button
-                        className="btn btn-danger"
-                        disabled={props.data.StatusId === STATUS["DECLINED"]}
-                        onClick={() => updateStatus(STATUS["DECLINED"])}>
-                        Từ chối
-                    </Button>
+                    {props.data.StatusId !== STATUS["NOT_DECIDED"] && (
+                        <>
+                            <p style={{ paddingInlineEnd: "1rem" }}>
+                                Bạn không thể thay đổi quyết định khi đã chấp nhận hoặc từ chối ứng
+                                viên
+                            </p>
+                            <Button className="btn btn-danger" onClick={props.onClose}>
+                                Đóng
+                            </Button>
+                        </>
+                    )}
+                    {props.data.StatusId === STATUS["NOT_DECIDED"] && (
+                        <>
+                            <Button className="btn btn-secondary" onClick={props.onClose}>
+                                Quyết định sau
+                            </Button>
+                            <Button
+                                className="btn btn-success"
+                                onClick={() => updateStatus(STATUS["ACCEPTED"])}>
+                                Chấp nhận
+                            </Button>
+                            <Button
+                                className="btn btn-danger"
+                                onClick={() => updateStatus(STATUS["DECLINED"])}>
+                                Từ chối
+                            </Button>
+                        </>
+                    )}
                 </Actions>
             </ModalCard>
         </>

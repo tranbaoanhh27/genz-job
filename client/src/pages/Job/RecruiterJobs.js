@@ -17,20 +17,22 @@ const RecruiterJobPage = (props) => {
     const [isCreatingJob, setIsCreatingJob] = useState(false);
 
     // Get user's created jobs
-    const userId = AuthApi.GetCurrentUser().data.id;
-    const URL = API_BASE_URL + `/job/${userId}/getJobs`;
-    axios.get(URL).then((response) => {
-        console.log(response);
-        const data = [...response.data].map((job) => ({
-            id: job.id,
-            title: job.title,
-            company: job.company || "Không rõ",
-            description: job.description,
-            createdDate: new Date(job.createdAt),
-            imageUrl: job.imageUrl || "",
-        }));
-        if (jobs === undefined) setJobs(data);
-    });
+    if (jobs === undefined) {
+        const userId = AuthApi.GetCurrentUser().data.id;
+        const URL = API_BASE_URL + `/job/${userId}/getJobs`;
+        axios.get(URL).then((response) => {
+            console.log(response);
+            const data = [...response.data].map((job) => ({
+                id: job.id,
+                title: job.title,
+                company: job.company || "Không rõ",
+                description: job.description,
+                createdDate: new Date(job.createdAt),
+                imageUrl: job.imageUrl || "",
+            }));
+            setJobs(data);
+        });
+    }
 
     const selectJobHandler = (jobId) => {
         if (jobs === undefined) return;
@@ -54,7 +56,12 @@ const RecruiterJobPage = (props) => {
             style={{ paddingInline: "2rem", color: DarkTheme.text, fontSize: "90%" }}>
             <Row className="row">
                 <div className="col">
-                    {!isCreatingJob && <RecruiterJobDetails job={currentJob} />}
+                    {!isCreatingJob && (
+                        <RecruiterJobDetails
+                            key={(currentJob && currentJob.id) || Math.random()}
+                            job={currentJob}
+                        />
+                    )}
                     {isCreatingJob && (
                         <RecruiterCreateJob
                             onCancel={stopCreatingJob}
