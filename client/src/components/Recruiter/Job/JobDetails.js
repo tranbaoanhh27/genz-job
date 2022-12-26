@@ -1,5 +1,7 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { API_BASE_URL } from "../../../Data/apiConstants";
 import { EMPTY_JOB } from "../../../Data/initialData";
 import MyCard from "../../UI/MyCard";
 import CandidateItem from "./CandidateItem";
@@ -8,6 +10,26 @@ import RecruiterJobImage from "./JobImage";
 import RecruiterJobInfo from "./JobInfo";
 
 const RecruiterJobDetails = (props) => {
+    const [candidates, setCandidates] = useState(undefined);
+
+    // Call API to get list of candidates of this job
+    if (candidates === undefined) {
+        const URL = `${API_BASE_URL}/jobapplication/all/${props.job.id}`;
+        axios.get(URL).then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+                setCandidates(
+                    res.data.map((jobApplication) => ({
+                        id: `job#${jobApplication.jobId}user#${jobApplication.UserId}`,
+                        candidateName: jobApplication.User.UserName,
+                        applyTime: new Date(jobApplication.createdAt),
+                        applyStatus: jobApplication.StatusId,
+                    }))
+                );
+            }
+        });
+    }
+
     return (
         <Card>
             {props.job && (
@@ -32,7 +54,7 @@ const RecruiterJobDetails = (props) => {
                             <label>Danh sách đơn ứng tuyển</label>
                             <a href="https://google.com">Các ứng viên tiềm năng</a>
                         </SpaceBetweenRow>
-                        <CandidateList jobApplications={SAMPLE_APPLICATIONS} />
+                        <CandidateList jobApplications={candidates} />
                     </VerticalHalf>
                 </>
             )}
