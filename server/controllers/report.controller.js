@@ -83,4 +83,30 @@ router.get('/all/article/:articleId', async(req, res, next) => {
     }
 });
 
+router.delete('/delete', async(req, res, next) => {
+    const articleId = req.query.articleId;
+    if (articleId) {
+        let article = await db.Article.findByPk(articleId);
+        if (article) {
+            await db.Report.destroy({
+                where: {
+                    articleId: articleId
+                }
+            })
+            .then(report => {
+                return res.send({message: "Done successfully"});
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            })
+        }
+        else {
+            return res.status(404).send({message: "Invalidate value"});
+        }
+    } 
+    else {
+        return res.status(404).send({message: "Invalidate value"});
+    }
+});
+
 module.exports = router;
