@@ -7,16 +7,15 @@ export function createBookmark(userId, jobId, resolve, reject) {
     axios.post(apiUrl + `/bookmark/create?userId=${userId}&jobId=${jobId}`, {}).then(resolve).catch(reject);
 }
 
-export function isBookmarked(userId, jobId) {   
+export function checkIsBookmarked(userId, jobId, resolve) {   
 
-    console.log(jobId);
     let apiUrl = process.env.REACT_APP_API_URL;
 
-    axios.get(apiUrl + `/bookmark?userId=${userId}`).then( responde => {
+    axios.get(apiUrl + `/bookmark?userId=${userId}`).then( (responde) => {
         let listJobBookmarked = responde.data;
-
-        return listJobBookmarked.find( (curVal) => {
-            return curVal.jobId === jobId;
+        let result = listJobBookmarked.some( (curVal) => {
+            return curVal.JobId === jobId;
         })
-    }).catch( () => false);
+        resolve(result);
+    })
 }
