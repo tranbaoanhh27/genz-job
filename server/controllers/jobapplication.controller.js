@@ -16,17 +16,33 @@ const STATUS = {
 
 //Create an application
 router.post("/create", async (req, res, next) => {
-    db.JobApplication.create({
-        UserId: req.query.userId,
-        JobId: req.query.jobId,
-        StatusId: STATUS.APPLIED,
-    })
-        .then((application) => {
-            res.send({ message: "Successfully applied" });
-        })
-        .catch((err) => {
-            res.status(500).send({ message: err.message });
-        });
+	const userId = req.query.userId;
+	const jobId = req.query.jobId;
+	
+	if (userId && jobId) {
+		let user = await db.User.findByPk(userId);
+		let job = await db.Job.findByPk(jobId);
+
+		if (user && job) {
+			await db.JobApplication.create({
+				UserId: req.query.userId,
+				JobId: req.query.jobId,
+				StatusId: STATUS.APPLIED,
+			})
+			.then((application) => {
+				res.send({ message: "Successfully applied" });
+			})
+			.catch((err) => {
+				res.status(500).send({ message: err.message });
+			});
+		}
+		else {
+			return res.status(500).send({message: "Invalidate value"})
+		}
+	}
+	else {
+		return res.status(500).send({message: "Invalidate value"})
+	};
 });
 
 //Get applications
