@@ -21,7 +21,7 @@ const JobList = (props) => {
             onSelectJob: function(jobId)
         }
     */
-    const [currentActive, setCurrentActive] = useState(props.jobs[0].id);
+    const [currentActive, setCurrentActive] = useState(undefined);
 
     const itemClickHandler = (jobId) => {
         setCurrentActive(jobId);
@@ -33,7 +33,6 @@ const JobList = (props) => {
             className="list-group"
             style={{
                 marginTop: "0.5rem",
-                height: "100%",
                 overflowX: "hidden",
                 overflowY: "scroll",
                 borderRadius: "15px",

@@ -16,12 +16,19 @@ const JobDetailsInfo = (props) => {
         }
     });
 
+    let status = undefined;
+    if (job && job.closingDate) {
+        const closingDate = new Date(job.closingDate);
+        if (Date.now() < closingDate) status = "opening";
+        else status = "closed";
+    }
+
     return (
         <SpaceBetweenColumn>
             <SpaceBetweenRow>
                 <JobImage src={(job && job.imageUrl) || ""} />
                 <SpaceBetweenColumn style={{ flex: 1 }}>
-                    <JobStatus label="Trạng thái:" status={(job && job.status) || "unknown"} />
+                    <JobStatus label="Trạng thái:" status={status || "unknown"} />
                     <SmallInfo label="Tên công việc:" content={(job && job.title) || "Không rõ"} />
                     <SmallInfo label="Địa chỉ:" content={(job && job.address) || "Không rõ"} />
                     <SmallInfo label="Công ty:" content={(job && job.company) || "Không rõ"} />

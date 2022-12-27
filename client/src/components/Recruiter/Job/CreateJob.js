@@ -35,9 +35,12 @@ const CreateJob = (props) => {
 
         // Call API
         const URL = API_BASE_URL + `/job/${userId}/create`;
-        axios
-            .post(URL, enteredJob, { headers: { "x-access-token": token } })
-            .then((response) => console.log(response));
+        axios.post(URL, enteredJob, { headers: { "x-access-token": token } }).then((response) => {
+            console.log(response);
+
+            // Reload jobs
+            props.onCreateComplete();
+        });
 
         // Close
         props.onCancel();
