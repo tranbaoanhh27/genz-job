@@ -140,8 +140,4 @@ router.get('/find', async (req, res, next) => {
 	}
 });
 
-router.put('/edit/jobProperty', async(req, res, next) => {
-	
-});
-
 module.exports = router;

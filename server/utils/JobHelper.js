@@ -27,6 +27,7 @@ class JobHelper {
         await db.Job.update({
             title: req.body.title,
             description: req.body.description,
+            company: req.body.company,
             salary: req.body.salary,
             datePosted: new Date(req.body.datePosted),
             closingDate: new Date(req.body.closingDate)}, 
