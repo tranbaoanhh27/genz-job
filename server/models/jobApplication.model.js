@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     StatusId: DataTypes.INTEGER
   });
   JobApplication.associate = function(models) {
-    // associations can be defined here
+    JobApplication.belongsTo(models.User, {foreignKey: "UserId"});
   };
   return JobApplication;
 };

@@ -9,18 +9,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        authorId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         datePosted: {
             type: DataTypes.DATE,
             allowNull: false
         }
-    }, {});
+    }, {
+        timestamps: false
+    });
 
     Article.associate = function(models) {
-        // Article.belongsTo(models.User);
+        Article.belongsTo(models.User, { foreignKey: 'authorId'});
+        // Article.hasMany(models.Report);
+        // Article.hasMany(models.ArticleComment);
     };
     return Article;
 };

@@ -2,24 +2,56 @@ import React, { Component, useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "../../components/UI/Button";
 import { InputTextField } from "../../components/UI/InputTextField";
-import AuthAPI from "../../api/AuthApi"
-import RoleApi from "../../api/RoleApi"
-import axios from 'axios';
+import AuthAPI from "../../api/AuthApi";
+import RoleApi from "../../api/RoleApi";
+import { useNavigate } from "react-router-dom";
 
-export function SignUp({ setComponent, role }) {
+export function SignUp({ setComponent, role, setUser }) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerification, setPasswordVerification] = useState("");
     const [validPasswordVerification, setValidPasswordVerification] = useState(true);
 
+    const navigate = useNavigate();
+
     const signUpHandler = (event) => {
         event.preventDefault();
-        AuthAPI.Signup(username, email, password).then((response) => {
-            if (response.status === 200) console.log("Signed Up Successfully!");
-            else console.log("Failed to Sign Up!");
-            RoleApi.assign(response.data.data.id, role);
-        })
+        AuthAPI.Signup(username, email, password)
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("Signed Up Successfully!");
+                    RoleApi.assign(response.data.data.id, role)
+                        .then((response) => {
+                            if (response.status === 200) {
+                                alert("Signed Up Successfully!");
+                                AuthAPI.Login(username, password)
+                                    .then((response) => {
+                                        console.log(response.data);
+                                        navigate("/profile");
+                                        setUser(response.data);
+                                    })
+                                    .catch((error) => {
+                                        console.log({ message: error.message });
+                                    });
+                            }
+                        })
+                        .catch((error) => {
+                            let msg = error.message;
+                            if (error.response) msg = error.response.data.message;
+                            alert("Assigning role unsuccessfully!\n" + msg);
+                            console.log(error);
+                        });
+                } else {
+                    console.log("Failed to Sign Up!");
+                }
+            })
+            .catch((error) => {
+                let msg = error.message;
+                if (error.response) msg = error.response.data.message;
+                alert("Failed to Sign Up!\n" + msg);
+                console.log(error);
+            });
     };
 
     const usernameChangeHandler = (event) => {
@@ -42,7 +74,9 @@ export function SignUp({ setComponent, role }) {
     };
 
     return (
-        <div id="signInSignUpComponent" className="col-lg-7 d-flex align-items-center h-100 shadow-lg border">
+        <div
+            id="signInSignUpComponent"
+            className="col-lg-7 d-flex align-items-center h-100 shadow-lg border">
             <div className="d-flex flex-column flex-grow-1">
                 <Logo setComponent={setComponent} />
 
@@ -97,7 +131,12 @@ export function SignUp({ setComponent, role }) {
                                 name="verify"
                                 value={passwordVerification}
                                 onChange={passwordVerificationChangeHandler}
-                                style={{ border: validPasswordVerification ? "1px solid green" : "3px solid red" }}
+                                onFocus={passwordVerificationChangeHandler}
+                                style={{
+                                    border: validPasswordVerification
+                                        ? "1px solid green"
+                                        : "3px solid red",
+                                }}
                             />
                         </div>
                     </div>

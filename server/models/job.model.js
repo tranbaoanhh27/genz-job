@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: "This is an opening position in my company."
         },
+        company: {
+            type: DataTypes.STRING,
+        },
         datePosted: DataTypes.DATE,
         closingDate: DataTypes.DATE,
         salary: DataTypes.INTEGER,
@@ -27,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         });
         Job.belongsToMany(models.User, { through: models.Bookmark });
         Job.belongsToMany(models.User, { through: models.JobApplication });
+        Job.hasMany(models.Bookmark)
     };
     return Job;
 }

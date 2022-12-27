@@ -34,8 +34,25 @@ router.get('/detail/:id', async (req, res) => {
 // Get user by username
 router.get('/uname/:username', async (req, res) => {
     var users = await db.User.findAll({
+        include: [
+            db.UserProperty
+        ],
         where: {
             UserName: req.params.username
+        }
+    });
+    res.send(JSON.stringify(users, null, 2));
+});
+
+// Search user by username
+router.get('/search/:keyword', async (req, res) => {
+    var users = await db.User.findAll({
+        where: {
+            [Op.or]:{
+                UserName: {
+                    [Op.like]: '%' + req.params.keyword + '%'
+                }
+            }
         }
     });
     res.send(JSON.stringify(users, null, 2));
@@ -83,15 +100,14 @@ router.post('/:id/property/new', UserHelper.GetUserById, UserHelper.ValidateUser
     });
 });
 
-//Delete property
-router.delete('/:id/property/delete/:propertyId', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
+// Delete property
+router.delete('/:id/property/delete', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
     const user = req.user;
     const title = req.body.title;
-    const value = req.body.value;
     db.UserProperty.destroy({
         where: {
             [Op.and]: [
-                { id: req.params.propertyId },
+                { Title: title },
                 { UserId: req.params.id }
             ]
         }
@@ -105,17 +121,17 @@ router.delete('/:id/property/delete/:propertyId', UserHelper.GetUserById, UserHe
 });
 
 //Update property
-router.put('/:id/property/edit/:propertyId', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
+router.put('/:id/property/edit', UserHelper.GetUserById, UserHelper.ValidateUser, async(req, res) => {
     const user = req.user;
     const title = req.body.title;
-    const value = req.body.value;
+    const newValue = req.body.newValue;
     db.UserProperty.update({
             Title: title,
-            Value: value
+            Value: newValue
         }, {
         where: {
             [Op.and]: [
-                { id: req.params.propertyId },
+                { Title: title },
                 { UserId: req.params.id }
             ]
         }
@@ -127,7 +143,6 @@ router.put('/:id/property/edit/:propertyId', UserHelper.GetUserById, UserHelper.
         res.status(500).send({ message: err.message });
     });
 });
-
 
 //Delete
 router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, async (req, res) => {
@@ -144,4 +159,5 @@ router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, as
         res.status(500).send({ message: err.message });
     });
 });
+
 module.exports = router;

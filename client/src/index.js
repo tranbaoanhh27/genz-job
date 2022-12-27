@@ -8,9 +8,10 @@ import Article from "./pages/Article/index";
 import Message from "./pages/Message/index";
 import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
+import SearchResult from "./pages/SearchResult/index";
 import { Admin } from "./pages/Admin/index";
 import Navbar from "./components/UI/NavigationBar";
-import { JobDetails } from "./components/JobSeeker/Job/JobDetails";
+import { JobDetails } from "./components/Job/JobDetails";
 import "./assets/css/App.css";
 import {
     NAV_GENERAL_ITEMS,
@@ -32,6 +33,11 @@ const Logout = ({ setUser }) => {
     AuthApi.Logout();
     setUser(null);
     return <Navigate to="/" />;
+};
+
+const SecuredProfile = ({ user }) => {
+    if (user) return <Navigate to={"/p/" + user.UserName} />;
+    else return <Navigate to="/" />;
 };
 
 function useForceUpdate() {
@@ -65,6 +71,12 @@ const App = (props) => {
                 <Route path="/*" element={<HomePage />} />
                 <Route path="/homepage" element={<HomePage />} />
 
+                {/* Search */}
+                <Route path="s/*" element={<SearchResult />} />
+
+                {/* Profile */}
+                <Route path="p/*" element={<Profile user={user} />} />
+
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
 
@@ -84,7 +96,7 @@ const App = (props) => {
 
                 {/* Messages */}
                 <Route
-                    path="messages"
+                    path="messages/*"
                     element={
                         <SecuredRoute user={user} permission="route.authenticated">
                             <Message />
@@ -103,14 +115,7 @@ const App = (props) => {
                 />
 
                 {/* Profile */}
-                <Route
-                    path="profile"
-                    element={
-                        <SecuredRoute user={user} permission="route.authenticated">
-                            <Profile />
-                        </SecuredRoute>
-                    }
-                />
+                <Route path="profile" element={<SecuredProfile user={user} />} />
 
                 {/* Logout */}
                 <Route

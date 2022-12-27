@@ -8,6 +8,7 @@ import { DarkTheme } from "../../assets/themes";
 import axios from "axios";
 import { API_BASE_URL } from "../../Data/apiConstants";
 import AuthApi from "../../api/AuthApi";
+import Loader from "../../components/UI/Loader";
 
 const RecruiterJobPage = (props) => {
     document.body.style.background = DarkTheme.background;
@@ -17,20 +18,23 @@ const RecruiterJobPage = (props) => {
     const [isCreatingJob, setIsCreatingJob] = useState(false);
 
     // Get user's created jobs
-    const userId = AuthApi.GetCurrentUser().data.id;
-    const URL = API_BASE_URL + `/job/${userId}/getJobs`;
-    axios.get(URL).then((response) => {
-        console.log(response);
-        const data = [...response.data].map((job) => ({
-            id: job.id,
-            title: job.title,
-            company: job.company || "Không rõ",
-            description: job.description,
-            createdDate: new Date(job.createdAt),
-            imageUrl: job.imageUrl || "",
-        }));
-        if (jobs === undefined) setJobs(data);
-    });
+    if (jobs === undefined) {
+        const userId = AuthApi.GetCurrentUser().data.id;
+        const URL = API_BASE_URL + `/job/${userId}/getJobs`;
+        axios.get(URL).then((response) => {
+            console.log(response);
+            const data = [...response.data].map((job) => ({
+                ...job,
+                id: job.id,
+                title: job.title,
+                company: job.company || "Không rõ",
+                description: job.description,
+                createdDate: new Date(job.createdAt),
+                imageUrl: job.imageUrl || "",
+            }));
+            setJobs(data);
+        });
+    }
 
     const selectJobHandler = (jobId) => {
         if (jobs === undefined) return;
@@ -46,22 +50,39 @@ const RecruiterJobPage = (props) => {
         setIsCreatingJob(false);
     };
 
+    const reloadJobs = () => setJobs(undefined);
+
     return (
-        <div className="container-flex" style={{ paddingInline: "2rem", color: DarkTheme.text }}>
+        <div
+            className="container-flex"
+            style={{ paddingInline: "2rem", color: DarkTheme.text, fontSize: "90%" }}>
             <Row className="row">
                 <div className="col">
-                    {!isCreatingJob && <RecruiterJobDetails job={currentJob} />}
-                    {isCreatingJob && <RecruiterCreateJob onCancel={stopCreatingJob} />}
+                    {!isCreatingJob && (
+                        <RecruiterJobDetails
+                            key={(currentJob && currentJob.id) || Math.random()}
+                            job={currentJob}
+                            reloadJobs={reloadJobs}
+                        />
+                    )}
+                    {isCreatingJob && (
+                        <RecruiterCreateJob
+                            onCancel={stopCreatingJob}
+                            onCreateComplete={reloadJobs}
+                        />
+                    )}
                 </div>
-                <StartAlignedColumn className="col-3">
+                <RightColumn className="col-3">
                     <Button className="btn btn-primary" onClick={startCreatingJob}>
                         Tin tuyển dụng mới
                     </Button>
-                    <RecruiterJobs
-                        jobs={jobs === undefined ? EMPTY_JOBS : jobs}
-                        onSelectJob={selectJobHandler}
-                    />
-                </StartAlignedColumn>
+                    {jobs && <RecruiterJobs jobs={jobs} onSelectJob={selectJobHandler} />}
+                    {!jobs && (
+                        <CenterRow style={{ marginTop: "2rem" }}>
+                            <Loader size="50px" />
+                        </CenterRow>
+                    )}
+                </RightColumn>
             </Row>
         </div>
     );
@@ -70,16 +91,23 @@ const RecruiterJobPage = (props) => {
 export default RecruiterJobPage;
 
 // Styled Components
-const StartAlignedColumn = styled.div`
+const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
+    height: calc(100vh - 6rem);
 `;
 
 const Button = styled.button`
-    height: 3rem;
+    height: 10%;
 `;
 
 const Row = styled.div`
     height: calc(100vh - 6rem);
+`;
+
+const CenterRow = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;

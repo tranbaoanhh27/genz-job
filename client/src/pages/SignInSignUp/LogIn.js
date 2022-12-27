@@ -24,7 +24,7 @@ export function LogIn({ setComponent, setUser }) {
                 if (response.data.Roles === "recruiter") {
                     navigate("/");
                     setUser(response.data);
-                } else if (response.data.Roles == "job-seeker") {
+                } else if (response.data.Roles === "job-seeker") {
                     navigate("/");
                     setUser(response.data);
                 } else if (response.data.Roles) {

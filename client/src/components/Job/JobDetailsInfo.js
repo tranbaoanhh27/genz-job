@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DarkTheme } from "../../../assets/themes";
-import { API_BASE_URL } from "../../../Data/apiConstants";
+import { DarkTheme } from "../../assets/themes";
+import { API_BASE_URL } from "../../Data/apiConstants";
 
 const JobDetailsInfo = (props) => {
     const [job, setJobs] = useState(undefined);
@@ -16,14 +16,24 @@ const JobDetailsInfo = (props) => {
         }
     });
 
+    let status = undefined;
+    if (job && job.closingDate) {
+        const closingDate = new Date(job.closingDate);
+        if (Date.now() < closingDate) status = "opening";
+        else status = "closed";
+    }
+
     return (
         <SpaceBetweenColumn>
             <SpaceBetweenRow>
-                <JobImage src={(job && job.imageUrl) || ""} />
+                <JobImage src={(job && job.imageUrl) || DEFAULT_IMAGE_URL} />
                 <SpaceBetweenColumn style={{ flex: 1 }}>
-                    <JobStatus label="Trạng thái:" status={(job && job.status) || "unknown"} />
+                    <JobStatus label="Trạng thái:" status={status || "unknown"} />
                     <SmallInfo label="Tên công việc:" content={(job && job.title) || "Không rõ"} />
-                    <SmallInfo label="Địa chỉ:" content={(job && job.address) || "Không rõ"} />
+                    <SmallInfo
+                        label="Mức lương:"
+                        content={"$" + (job && job.salary) || "Không rõ"}
+                    />
                     <SmallInfo label="Công ty:" content={(job && job.company) || "Không rõ"} />
                 </SpaceBetweenColumn>
             </SpaceBetweenRow>
@@ -93,7 +103,7 @@ const SmallInfo = ({ label, content }) => {
     );
 };
 
-const JobStatus = ({ label, status }) => {
+export const JobStatus = ({ label, status }) => {
     const badgeColor = (status) => {
         if (status === "opening") return "#198754";
         if (status === "closed") return "#dc3545";
@@ -187,3 +197,5 @@ const Review = ({ label }) => {
         </div>
     );
 };
+
+const DEFAULT_IMAGE_URL = "https://www.fit.hcmus.edu.vn/vn/images/teachers/dbtien.jpg";

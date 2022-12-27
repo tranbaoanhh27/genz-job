@@ -19,17 +19,41 @@ const REACTION = {
 
 //Create a reaction
 router.post("/create", async(req, res, next) => {
-	await db.ArticleReaction.create({
-		ReactorId: req.query.reactorId,
-		ArticleId: req.query.articleId,
-		ReactionId: req.body.reactionId
-	})
-	.then(reaction => {
-		res.send({ message: "Successfully reacted"});
-	})
-	.catch(err => {
-		res.status(500).send({ message: err.message });
-	});
+	const reactorId = req.query.reactorId;
+	const articleId = req.query.articleId;
+	const reactionId = req.query.reactionId;
+	
+	if (reactorId && articleId && reactionId) {
+
+		let reactor = await db.User.findByPk(reactorId);
+		let article = await db.Article.findByPk(articleId);
+		let reaction = await db.ArticleReaction.findOne({
+			where: {
+				ReactorId: reactorId,
+				ArticleId: articleId
+			}
+		});
+
+		if (reactor && article && reaction) {
+			await db.ArticleReaction.create({
+				ReactorId: req.query.reactorId,
+				ArticleId: req.query.articleId,
+				ReactionId: req.body.reactionId
+			})
+			.then(reaction => {
+				res.send({ message: "Successfully reacted"});
+			})
+			.catch(err => {
+				res.status(500).send({ message: err.message });
+			});
+		}
+		else {
+			return res.status(500).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(500).send({message: "Invalidate value"});
+	}
 });
 
 //Get reactions
@@ -45,5 +69,43 @@ router.get("/", async(req, res, next) => {
 		reactions = await db.ArticleReaction.findAll();
 	res.send(JSON.stringify(reactions, null, 2));
 });
+
+// Delete reactions
+router.delete('/delete', async(req, res, next) => {
+	const articleId = req.query.articleId;
+	const reactorId = req.query.userId;
+
+	if (articleId && reactorId) {
+		let article = await db.Article.findByPk(articleId);
+		let user = await db.Article.findByPk(reactorId);
+		let reaction = await db.ArticleReaction.findOne({
+			where: {
+				ReactorId: reactorId,
+				ArticleId: articleId
+			}
+		})
+
+		if (article && user && reaction) {
+			await db.ArticleReaction.destroy({
+				where: {
+					ReactorId: reactorId,
+					ArticleId: articleId
+				}
+			})
+			.then(articleReaction => {
+				return res.send({message: "Done succesfully"});
+			})
+			.catch(err => {
+				return res.send({message: err.message});
+			})
+		}
+		else {
+			return res.status(404).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(404).send({message: "Invalidate value"});
+	}
+})
 
 module.exports = router;

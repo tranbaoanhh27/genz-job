@@ -10,16 +10,32 @@ const router = express.Router();
 
 //Create a bookmark
 router.post("/create", async(req, res, next) => {
-	db.Bookmark.create({
-		UserId: req.query.userId,
-		JobId: req.query.jobId
-	})
-	.then(bookmark => {
-		res.send({ message: "Successfully bookmarked"});
-	})
-	.catch(err => {
-		res.status(500).send({ message: err.message });
-	});
+	const userId = req.query.userId;
+	const jobId = req.query.jobId;
+	
+	if (userId && jobId) {
+		let user = await db.User.findByPk(userId);
+		let job = await db.Job.findByPk(jobId);
+
+		if (user && job) {
+			db.Bookmark.create({
+				UserId: req.query.userId,
+				JobId: req.query.jobId
+			})
+			.then(bookmark => {
+				res.send({ message: "Successfully bookmarked"});
+			})
+			.catch(err => {
+				res.status(500).send({ message: err.message });
+			});
+		}
+		else {
+			return res.status(500).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(500).send({message: "Invalidate value"});
+	}
 });
 
 //Get bookmarks
@@ -34,6 +50,34 @@ router.get("/", async(req, res, next) => {
 		});
 	else
 		bookmarks = await db.Bookmark.findAll();
+	res.send(JSON.stringify(bookmarks, null, 2));
+});
+
+//Get bookmarks
+router.get("/list", async(req, res, next) => {
+	let option = null;
+	let bookmarks = "";
+	if (req.query.userId)
+		bookmarks = await db.User.findOne({
+			where: {
+				id: req.query.userId
+			},
+			include: {
+				model: db.Bookmark,
+				include: {
+					model: db.Job
+				}
+			}
+		});
+	else
+		bookmarks = await db.User.findAll({
+			include: {
+				model: db.Bookmark,
+				include: {
+					model: db.Job
+				}
+			}
+		});
 	res.send(JSON.stringify(bookmarks, null, 2));
 });
 
