@@ -107,7 +107,7 @@ router.get('/all', async(req, res, next) => {
                 }
             })
             .then(userRole => {
-                return res.send({userRole});
+                return res.send({data: userRole});
             })
             .catch(err => {
                 return res.status(404).send({message: err.message});
