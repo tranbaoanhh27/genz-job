@@ -87,4 +87,8 @@ router.delete('/delete/:id', RoleHelper.GetRoleById, RoleHelper.ValidateRole, as
 router.post('/assign', UserHelper.GetUserById, UserHelper.ValidateUser, RoleHelper.GetRoleById, RoleHelper.ValidateRole, RoleHelper.AssignRoleToUser);
 router.post('/unassign', UserHelper.GetUserById, UserHelper.ValidateUser, RoleHelper.GetRoleById, RoleHelper.ValidateRole, RoleHelper.UnassignRoleForUser);
 
+// Find all users of roleId
+router.get('/all/:roleId', async(req, res, next) => {
+    const roleId = req.params.roleId;
+});
 module.exports = router;

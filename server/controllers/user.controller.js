@@ -159,4 +159,5 @@ router.delete('/delete/:id', UserHelper.GetUserById, UserHelper.ValidateUser, as
         res.status(500).send({ message: err.message });
     });
 });
+
 module.exports = router;
