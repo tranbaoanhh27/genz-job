@@ -31,8 +31,6 @@ function AddMainTextField({ setListTextField }) {
     );
 }
 
-
-
 function AddJobExp() {
 
     return (
