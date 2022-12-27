@@ -1,21 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./../../assets/css/App.css";
 
-import { createBookmark, isBookmarked } from './../../api/Bookmark';
+import { createBookmark, checkIsBookmarked } from './../../api/Bookmark';
 import { Alert } from './Alert';
 import AuthApi from "../../api/AuthApi";
 
 const CardJob = ({ job, listJob, setListJob }) => {
 
     const [alert, setAlert] = useState({show: false});
-    const userId = useRef( AuthApi.GetCurrentUser().data.id );
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    let userId = -1;
+    if (AuthApi.GetCurrentUser !== null) userId = useRef( AuthApi.GetCurrentUser().data.id );
+
+    useEffect( () => { 
+        
+        const resolve = (result) => {
+            console.log(result);
+            setIsBookmarked(result);
+        }
+        checkIsBookmarked(userId.current, job.id, resolve)
+    }, [])
 
     const handleBookmarkClick = () => {
 
         const resolve = () => {
             setListJob( listJob.map( v => {
                 if (v.idJob === job.idJob) {
-                    return { ...v, isBookmarked: v.isBookmarked === true ? false : true}
+                    //return { ...v, isBookmarked: v.isBookmarked === true ? false : true}
+                    if (isBookmarked === true) setIsBookmarked(false); else setIsBookmarked(true);
                 }
                 else {
                     return v;
@@ -26,6 +39,8 @@ const CardJob = ({ job, listJob, setListJob }) => {
 
         const reject = () => {
             setAlert( {show: true, classAlert: "alert-warning", info: "Lưu bài đăng tuyển dụng thất bại"} )
+            // Although failed when creating a new bookmark in DBMS, but we just show it for presenting
+            if (isBookmarked === true) setIsBookmarked(false); else setIsBookmarked(true);
         }
 
         createBookmark(userId.current, job.id, resolve, reject);
@@ -45,7 +60,7 @@ const CardJob = ({ job, listJob, setListJob }) => {
                                 <h5 className="multiline-ellipse">{job.title}</h5>
                             </div>
                             <div className="col">
-                                <i className= { (isBookmarked(userId.current, job.id) === false ? "fa-regular" : "fa-solid") + " fa-bookmark"} style={{zIndex: "2", position: "relative"}} onClick={handleBookmarkClick}></i>
+                                <i className= { (isBookmarked === false ? "fa-regular" : "fa-solid") + " fa-bookmark"} style={{zIndex: "2", position: "relative"}} onClick={handleBookmarkClick}></i>
                             </div>  
                     </div>
                 </div>

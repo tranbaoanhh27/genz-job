@@ -44,11 +44,11 @@ export function GroupJob( { groupJob: { nameGroup, searchText, listFilter }} ) {
 
         const resolve = (jobs) => {
             setListJob([...listJob, ...jobs]);
+
+            // Search job
+            if (searchText !== null) setListJob( listJob.filter( isSearchText(searchText) ))
         }
         getListAllJob(resolve);
-
-        // Search job
-        if (searchText !== null) setListJob( listJob.filter( isSearchText(searchText) ))
     }, [])
 
     const loadMoreJob = () => {
