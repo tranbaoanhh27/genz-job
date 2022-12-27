@@ -73,38 +73,54 @@ router.delete('/delete/:articleId', async (req, res, next) => {
     const articleId = req.params.articleId;
 
     if (articleId) {
-        // delete object in article comment
-        await db.ArticleComment.destroy({
-            where: {
-                ArticleId: articleId 
-            }
-        })
-        .catch(err => {
-            return res.status(404).send({message: err.message});
-        })
+        let article = await db.Article.findByPk(articleId);
+        if (article) {
+            // delete object in article comment
+            await db.ArticleComment.destroy({
+                where: {
+                    ArticleId: articleId 
+                }
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            })
 
-        // delete object in article reaction
-        await db.ArticleReaction.destroy({
-            where: {
-                articleId: articleId
-            }
-        })
-        .catch(err => {
-            return res.status(404).send({message: err.message});
-        })
+            // delete object in report
+            await db.Report.destroy({
+                where: {
+                    articleId: articleId
+                }
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            })
 
-        // delete object in article
-        await db.Article.destroy({
-            where: {
-                id: articleId
-            }
-        })
-        .then(article => {
-            return res.send({message: "delete successfully"});
-        })
-        .catch(err => {
-            return res.status(500).send({message: err.message});
-        })
+            // delete object in article reaction
+            await db.ArticleReaction.destroy({
+                where: {
+                    articleId: articleId
+                }
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            })
+
+            // delete object in article
+            await db.Article.destroy({
+                where: {
+                    id: articleId
+                }
+            })
+            .then(article => {
+                return res.send({message: "delete successfully"});
+            })
+            .catch(err => {
+                return res.status(500).send({message: err.message});
+            })
+        }
+        else {
+            return res.status(404).send({message: "Invalidate value"});
+        }
     }
     else {
         return res.status(404).send({message: "Invalidate value"});

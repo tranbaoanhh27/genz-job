@@ -18,13 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         comment: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        dateCommented: {
-            type: DataTypes.DATE,
-            allowNull: false
         }
     }, {
-        timestamps: false
+        timestamps: true
     });
 
     ArticleComment.associate = function(models) {
