@@ -27,12 +27,8 @@ const CardJob = ({ job, listJob, setListJob }) => {
 
     const handleBookmarkClick = () => {
         const resolve = () => {
-            setListJob( listJob.map( v => {
-                if (v.idJob === job.idJob) {
                     //return { ...v, isBookmarked: v.isBookmarked === true ? false : true}
-                    if (isBookmarked === true) setIsBookmarked(false); else setIsBookmarked(true);
-                }
-            }));
+            if (isBookmarked === true) setIsBookmarked(false); else setIsBookmarked(true);
             setAlert( {show: true, classAlert: "alert-success", info: "Lưu bài đăng tuyển dụng thành công"} )
         }
 
