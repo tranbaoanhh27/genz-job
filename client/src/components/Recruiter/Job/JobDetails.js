@@ -6,9 +6,11 @@ import MyCard from "../../UI/MyCard";
 import CandidateList from "./CandidateList";
 import RecruiterJobImage from "./JobImage";
 import RecruiterJobInfo from "./JobInfo";
+import Recommends from "./Recommends";
 
 const RecruiterJobDetails = (props) => {
     const [candidates, setCandidates] = useState(undefined);
+    const [viewRecommends, setViewRecommends] = useState(false);
 
     // Call API to get list of candidates of this job
     if (candidates === undefined && props.job) {
@@ -32,39 +34,46 @@ const RecruiterJobDetails = (props) => {
     const reloadCandidates = () => setCandidates(undefined);
 
     return (
-        <Card>
-            {props.job && (
-                <>
-                    <div className="row" style={{ height: "55%" }}>
-                        <RecruiterJobImage className="col-2" imageUrl={props.job.imageUrl} />
-                        <RecruiterJobInfo
-                            key={props.job.id}
-                            className="col"
-                            job={props.job}
-                            onUpdated={props.reloadJobs}
-                        />
-                    </div>
-                    <div className="row" style={{ height: "45%" }}>
-                        <SpaceBetweenRow style={{ marginTop: "1rem" }}>
-                            <label>Danh sách đơn ứng tuyển</label>
-                            <a href="https://google.com">Các ứng viên tiềm năng</a>
-                        </SpaceBetweenRow>
-                        <CandidateList
-                            jobApplications={candidates}
-                            reloadCandidates={reloadCandidates}
-                        />
-                    </div>
-                </>
+        <>
+            {viewRecommends && (
+                <Recommends jobTitle={props.job.title} onClose={() => setViewRecommends(false)} />
             )}
-            {!props.job && (
-                <CenterColumn>
-                    <h4>
-                        Hãy chọn một tin tuyển dụng trong danh sách bên cạnh, hoặc tạo tin tuyển
-                        dụng mới!
-                    </h4>
-                </CenterColumn>
-            )}
-        </Card>
+            <Card>
+                {props.job && (
+                    <>
+                        <div className="row" style={{ height: "55%" }}>
+                            <RecruiterJobImage className="col-2" imageUrl={props.job.imageUrl} />
+                            <RecruiterJobInfo
+                                key={props.job.id}
+                                className="col"
+                                job={props.job}
+                                onUpdated={props.reloadJobs}
+                            />
+                        </div>
+                        <div className="row" style={{ height: "45%" }}>
+                            <SpaceBetweenRow style={{ marginTop: "1rem" }}>
+                                <label>Danh sách đơn ứng tuyển</label>
+                                <RecommendedUsers onClick={() => setViewRecommends(true)}>
+                                    Các ứng viên tiềm năng
+                                </RecommendedUsers>
+                            </SpaceBetweenRow>
+                            <CandidateList
+                                jobApplications={candidates}
+                                reloadCandidates={reloadCandidates}
+                            />
+                        </div>
+                    </>
+                )}
+                {!props.job && (
+                    <CenterColumn>
+                        <h4>
+                            Hãy chọn một tin tuyển dụng trong danh sách bên cạnh, hoặc tạo tin tuyển
+                            dụng mới!
+                        </h4>
+                    </CenterColumn>
+                )}
+            </Card>
+        </>
     );
 };
 
@@ -76,6 +85,15 @@ const Card = styled(MyCard)`
     width: 100%;
     height: calc(100vh - 6rem);
     margin: auto;
+`;
+
+const RecommendedUsers = styled.a`
+    color: #0d6efd;
+    text-decoration: underline;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const SpaceBetweenRow = styled.div`

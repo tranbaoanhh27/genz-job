@@ -96,7 +96,7 @@ const App = (props) => {
 
                 {/* Messages */}
                 <Route
-                    path="messages"
+                    path="messages/*"
                     element={
                         <SecuredRoute user={user} permission="route.authenticated">
                             <Message />
