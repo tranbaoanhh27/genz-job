@@ -8,6 +8,7 @@ import { DarkTheme } from "../../assets/themes";
 import axios from "axios";
 import { API_BASE_URL } from "../../Data/apiConstants";
 import AuthApi from "../../api/AuthApi";
+import Loader from "../../components/UI/Loader";
 
 const RecruiterJobPage = (props) => {
     document.body.style.background = DarkTheme.background;
@@ -76,6 +77,11 @@ const RecruiterJobPage = (props) => {
                         Tin tuyển dụng mới
                     </Button>
                     {jobs && <RecruiterJobs jobs={jobs} onSelectJob={selectJobHandler} />}
+                    {!jobs && (
+                        <CenterRow style={{ marginTop: "2rem" }}>
+                            <Loader size="50px" />
+                        </CenterRow>
+                    )}
                 </RightColumn>
             </Row>
         </div>
@@ -98,4 +104,10 @@ const Button = styled.button`
 
 const Row = styled.div`
     height: calc(100vh - 6rem);
+`;
+
+const CenterRow = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;

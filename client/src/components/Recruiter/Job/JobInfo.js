@@ -55,6 +55,7 @@ const RecruiterJobInfo = (props) => {
             id: props.job.id,
             authorId: user.data.id,
             title: title,
+            company: company,
             description: description,
             salary: salary,
             datePosted: props.job.datePosted,
