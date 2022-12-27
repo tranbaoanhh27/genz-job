@@ -1,12 +1,22 @@
 import axios from "axios";
 
-export function createBookmark(userId, jobId) {
+export function createBookmark(userId, jobId, resolve, reject) {
 
     let apiUrl = process.env.REACT_APP_API_URL;
-    let result;
-    let error = null;
 
-    axios.post(apiUrl + `/bookmark/create?userId=${userId}&jobId=${jobId}`, {}).then( (response) => {console.log(response); result = response; }).catch( er => { error = er; });
+    axios.post(apiUrl + `/bookmark/create?userId=${userId}&jobId=${jobId}`, {}).then(resolve).catch(reject);
+}
 
-    return [result, error];
+export function isBookmarked(userId, jobId) {   
+
+    console.log(jobId);
+    let apiUrl = process.env.REACT_APP_API_URL;
+
+    axios.get(apiUrl + `/bookmark?userId=${userId}`).then( responde => {
+        let listJobBookmarked = responde.data;
+
+        return listJobBookmarked.find( (curVal) => {
+            return curVal.jobId === jobId;
+        })
+    }).catch( () => false);
 }

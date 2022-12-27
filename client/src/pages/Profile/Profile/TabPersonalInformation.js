@@ -31,24 +31,6 @@ function AddMainTextField({ setListTextField }) {
     );
 }
 
-function RowTextInformation( {field, index} ) {
-
-    if (field.location !== ProfileLocationPrint.MainText) return; else
-    return (
-        <div>
-            <div className="row" key={index}>
-                <div className="col-sm-3">
-                    <p className="mb-0" contentEditable={field.canEdit === "all" ? "true" : "false"}>{field.key}</p>
-                </div>
-                <div className="col-sm-9">
-                    <p className="text-muted mb-0" contentEditable={field.canEdit !== "no" ? "true" : "false"}>{field.value}</p>
-                </div>
-            </div>
-            <hr />
-        </div>
-    );
-}
-
 function AddJobExp() {
 
     return (

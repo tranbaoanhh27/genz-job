@@ -30,10 +30,9 @@ export function ListJobStatus({ user }) {
     useEffect( () => {
         ProfileApi.GetBookmarkedJobs(user)
         .then(response => {
-            console.log("response:");
-            console.log(response);
             var jobList = response.map(item => item.Job);
             setListJob( jobList );
+            console.log(user.id);
         });
     }, [user.id]);
 

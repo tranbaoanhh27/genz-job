@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CardJob } from './CardJob';
-import { Alert } from './Alert';
+import { getListAllJob } from '../../api/Job';
 
 function GetMoreJobs(num, listPrevJobs) {
 
@@ -25,35 +25,54 @@ function GetMoreJobs(num, listPrevJobs) {
     return listPrevJobs;
 }
 
-export function GroupJob({ nameGroup }) {
+export function GroupJob( { groupJob: { nameGroup, searchText, listFilter }} ) {
     
     const [listJob, setListJob] = useState([]);
-    const [alert, setAlert] = useState(null);
+    const [numShowedJob, setNumShowedJob] = useState(3);
+
+    const isSearchText = (searchText) => {
+        
+        return function(object) {
+            let searchText = searchText.toLowerCase();
+            if ( Object.values(object).some( x => x.includes(searchText))) return true; 
+            if ( Object.keys(object).some( x => x.includes(searchText))) return true;
+            return false;
+        }
+    }
 
     useEffect( () => {
-        let listPrevJobs = listJob;
-        GetMoreJobs(5, listPrevJobs);
-        setListJob([...listPrevJobs]);   
+
+        const resolve = (jobs) => {
+            setListJob([...listJob, ...jobs]);
+        }
+        getListAllJob(resolve);
+
+        // Search job
+        if (searchText !== null) setListJob( listJob.filter( isSearchText(searchText) ))
     }, [])
 
     const loadMoreJob = () => {
-        let listPrevJobs = listJob;
-        console.log("hi");
-        GetMoreJobs(5, listPrevJobs);
-        setListJob([...listPrevJobs]);   
+        setNumShowedJob( (prev) => prev + 5);  
     }
 
-    if (listJob.length === 0) return <p>Đang tải!</p>; else
-    return (
+    if (listJob.length === 0) return (
+        <div className='card mb-5'>
+            <div className='card-body'>
+                <h5 className='card-title mb-4'>{nameGroup}</h5>
+                <p>Đang tải dữ liệu...</p>
+            </div>
+        </div>
+    )
+    else return (
         <div className='card mb-5'>
             <div className='card-body'>
                 <h5 className='card-title mb-4'>{nameGroup}</h5>
                 <div className='row mb-5'>
 
-                    {listJob.map( (value, id) => {
+                    {listJob.slice(0, numShowedJob).map( (value, id) => {
                         return (
                             <div className='col-sm-6 mt-3' style={{height: "17em"}}>
-                                <CardJob job={value} listJob={listJob} setListJob={setListJob} setAlert={setAlert}/>
+                                <CardJob job={value} listJob={listJob} setListJob={setListJob}/>
                             </div>
                         )
                     })}
@@ -62,7 +81,6 @@ export function GroupJob({ nameGroup }) {
                 <p className='text-center' onClick={loadMoreJob}><a href='#'>Hiển thị thêm</a></p>
             </div>
 
-            {alert === null ? <></> : <Alert classAlert={alert.classAlert} info={alert.info} setAlert={setAlert}/>}
         </div>
     )
 }
