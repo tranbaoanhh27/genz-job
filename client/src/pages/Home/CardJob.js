@@ -11,7 +11,7 @@ const CardJob = ({ job, listJob, setListJob }) => {
     const [isBookmarked, setIsBookmarked] = useState(false);
 
     let userId = -1;
-    if (AuthApi.GetCurrentUser !== null) userId = useRef( AuthApi.GetCurrentUser().data.id );
+    if (AuthApi.GetCurrentUser() !== null) userId = useRef( AuthApi.GetCurrentUser().data.id );
 
     useEffect( () => { 
         
