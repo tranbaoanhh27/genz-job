@@ -11,7 +11,7 @@ import Profile from "./pages/Profile/index";
 import SearchResult from "./pages/SearchResult/index";
 import { Admin } from "./pages/Admin/index";
 import Navbar from "./components/UI/NavigationBar";
-import { JobDetails } from "./components/JobSeeker/Job/JobDetails";
+import { JobDetails } from "./components/Job/JobDetails";
 import "./assets/css/App.css";
 import {
     NAV_GENERAL_ITEMS,
@@ -36,11 +36,9 @@ const Logout = ({ setUser }) => {
 };
 
 const SecuredProfile = ({ user }) => {
-    if (user)
-        return <Navigate to={'/p/' + user.UserName}/>;
-    else
-        return <Navigate to="/" />;
-}
+    if (user) return <Navigate to={"/p/" + user.UserName} />;
+    else return <Navigate to="/" />;
+};
 
 function useForceUpdate() {
     const [value, setValue] = useState(0);
@@ -77,7 +75,7 @@ const App = (props) => {
                 <Route path="s/*" element={<SearchResult />} />
 
                 {/* Profile */}
-                <Route path="p/*" element={<Profile user={user}/>} />
+                <Route path="p/*" element={<Profile user={user} />} />
 
                 {/* Login */}
                 <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
@@ -98,7 +96,7 @@ const App = (props) => {
 
                 {/* Messages */}
                 <Route
-                    path="messages"
+                    path="messages/*"
                     element={
                         <SecuredRoute user={user} permission="route.authenticated">
                             <Message />
@@ -117,12 +115,7 @@ const App = (props) => {
                 />
 
                 {/* Profile */}
-                <Route
-                    path="profile"
-                    element={
-                        <SecuredProfile user={user} />
-                    }
-                />
+                <Route path="profile" element={<SecuredProfile user={user} />} />
 
                 {/* Logout */}
                 <Route

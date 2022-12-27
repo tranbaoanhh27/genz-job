@@ -2,25 +2,26 @@ import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { API_BASE_URL } from "../../../Data/apiConstants";
-import { EMPTY_JOB } from "../../../Data/initialData";
 import MyCard from "../../UI/MyCard";
-import CandidateItem from "./CandidateItem";
 import CandidateList from "./CandidateList";
 import RecruiterJobImage from "./JobImage";
 import RecruiterJobInfo from "./JobInfo";
+import Recommends from "./Recommends";
 
 const RecruiterJobDetails = (props) => {
     const [candidates, setCandidates] = useState(undefined);
+    const [viewRecommends, setViewRecommends] = useState(false);
 
     // Call API to get list of candidates of this job
-    if (candidates === undefined) {
+    if (candidates === undefined && props.job) {
         const URL = `${API_BASE_URL}/jobapplication/all/${props.job.id}`;
         axios.get(URL).then((res) => {
             console.log(res);
             if (res.status === 200) {
                 setCandidates(
                     res.data.map((jobApplication) => ({
-                        id: `job#${jobApplication.jobId}user#${jobApplication.UserId}`,
+                        ...jobApplication,
+                        id: `job#${jobApplication.JobId}user#${jobApplication.UserId}`,
                         candidateName: jobApplication.User.UserName,
                         applyTime: new Date(jobApplication.createdAt),
                         applyStatus: jobApplication.StatusId,
@@ -30,69 +31,53 @@ const RecruiterJobDetails = (props) => {
         });
     }
 
+    const reloadCandidates = () => setCandidates(undefined);
+
     return (
-        <Card>
-            {props.job && (
-                <>
-                    <VerticalHalf className="row">
-                        <RecruiterJobImage className="col-2" imageUrl={props.job.imageUrl} />
-                        <RecruiterJobInfo key={props.job.id} className="col" job={props.job} />
-                        <ButtonContainer>
-                            <Button
-                                type="button"
-                                className="btn btn-danger"
-                                style={{ marginInlineEnd: "2rem" }}>
-                                Xóa tin tuyển dụng này
-                            </Button>
-                            <Button type="button" className="btn btn-success">
-                                Lưu các chỉnh sửa
-                            </Button>
-                        </ButtonContainer>
-                    </VerticalHalf>
-                    <VerticalHalf className="row">
-                        <SpaceBetweenRow style={{ marginTop: "1rem" }}>
-                            <label>Danh sách đơn ứng tuyển</label>
-                            <a href="https://google.com">Các ứng viên tiềm năng</a>
-                        </SpaceBetweenRow>
-                        <CandidateList jobApplications={candidates} />
-                    </VerticalHalf>
-                </>
+        <>
+            {viewRecommends && (
+                <Recommends jobTitle={props.job.title} onClose={() => setViewRecommends(false)} />
             )}
-            {!props.job && (
-                <h1>
-                    Hãy chọn một tin tuyển dụng trong danh sách bên cạnh, hoặc tạo tin tuyển dụng
-                    mới!
-                </h1>
-            )}
-        </Card>
+            <Card>
+                {props.job && (
+                    <>
+                        <div className="row" style={{ height: "55%" }}>
+                            <RecruiterJobImage className="col-2" imageUrl={props.job.imageUrl} />
+                            <RecruiterJobInfo
+                                key={props.job.id}
+                                className="col"
+                                job={props.job}
+                                onUpdated={props.reloadJobs}
+                            />
+                        </div>
+                        <div className="row" style={{ height: "45%" }}>
+                            <SpaceBetweenRow style={{ marginTop: "1rem" }}>
+                                <label>Danh sách đơn ứng tuyển</label>
+                                <RecommendedUsers onClick={() => setViewRecommends(true)}>
+                                    Các ứng viên tiềm năng
+                                </RecommendedUsers>
+                            </SpaceBetweenRow>
+                            <CandidateList
+                                jobApplications={candidates}
+                                reloadCandidates={reloadCandidates}
+                            />
+                        </div>
+                    </>
+                )}
+                {!props.job && (
+                    <CenterColumn>
+                        <h4>
+                            Hãy chọn một tin tuyển dụng trong danh sách bên cạnh, hoặc tạo tin tuyển
+                            dụng mới!
+                        </h4>
+                    </CenterColumn>
+                )}
+            </Card>
+        </>
     );
 };
 
 export default RecruiterJobDetails;
-
-// Helpers
-const SAMPLE_APPLICATIONS = [
-    {
-        id: 1,
-        candidateName: "Trần Bảo Anh",
-        candidateLevel: "Intern",
-        applyTime: new Date("2011-11-11"),
-        applyStatus: 1,
-    },
-    {
-        id: 2,
-        candidateName: "Trần Bảo Anh",
-        applyTime: new Date("2011-11-11"),
-        applyStatus: 2,
-    },
-    {
-        id: 3,
-        candidateName: "Trần Bảo Anh",
-        candidateLevel: "Intern",
-        applyTime: new Date("2011-11-11"),
-        applyStatus: 3,
-    },
-];
 
 // Styled Components
 const Card = styled(MyCard)`
@@ -102,23 +87,23 @@ const Card = styled(MyCard)`
     margin: auto;
 `;
 
-const VerticalHalf = styled.div`
-    height: 50%;
-`;
+const RecommendedUsers = styled.a`
+    color: #0d6efd;
+    text-decoration: underline;
 
-const ButtonContainer = styled.div`
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-`;
-
-const Button = styled.button`
-    border-radius: 30px;
-    padding-inline: 2rem;
-    height: fit-content;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const SpaceBetweenRow = styled.div`
     display: flex;
     justify-content: space-between;
+`;
+
+const CenterColumn = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;

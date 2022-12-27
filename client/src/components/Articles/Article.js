@@ -28,9 +28,7 @@ const Article = (props) => {
 
     return (
         <MyCard style={{ marginBottom: "2rem", background: "#242526" }}>
-            <div
-                className="row justify-content-between"
-                style={{ width: "41rem", height: "50px" }}>
+            <div className="row justify-content-between" style={{ width: "41rem", height: "50px" }}>
                 <ArticleAuthor
                     className="col-md-auto"
                     authorName={props.article.authorName}
@@ -39,9 +37,7 @@ const Article = (props) => {
                 />
                 {props.mode === "allPosts" && (
                     <div className="col-sm-auto">
-                        <button
-                            className="btn btn-danger"
-                            style={{ borderRadius: "30px" }}>
+                        <button className="btn btn-danger" style={{ borderRadius: "30px" }}>
                             Bỏ theo dõi
                         </button>
                     </div>
@@ -67,11 +63,11 @@ const Article = (props) => {
                 )}
             </div>
             <div className="row" style={{ marginTop: "0.5rem" }}>
-                <ArticleMediaContent
-                    contentURL={props.article.mediaContentURL}
-                />
+                <ArticleMediaContent contentURL={props.article.mediaContentURL} />
             </div>
-            {props.mode === "allPosts" && <ArticleLikeCommentShareReport numLikes={props.article.numLikes}/>}
+            {props.mode === "allPosts" && (
+                <ArticleLikeCommentShareReport numLikes={props.article.numLikes} />
+            )}
             {props.mode === "myPosts" && <ArticleEditDelete />}
         </MyCard>
     );

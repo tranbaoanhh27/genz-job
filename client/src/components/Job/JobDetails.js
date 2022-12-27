@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DarkTheme } from "../../../assets/themes";
-import JobList from "../../Job/JobList";
-import MyCard from "../../UI/MyCard";
+import { DarkTheme } from "../../assets/themes";
+import JobList from "./JobList";
+import MyCard from "../UI/MyCard";
 import JobDetailsInfo from "./JobDetailsInfo";
 import { useNavigate, useParams } from "react-router-dom";
 import JobShareModal from "./JobShareModal";
-import AuthApi from "../../../api/AuthApi";
-import { API_BASE_URL } from "../../../Data/apiConstants";
+import AuthApi from "../../api/AuthApi";
+import { API_BASE_URL } from "../../Data/apiConstants";
 import axios from "axios";
 
 const startJobDetailPage = (jobId) => {
@@ -53,10 +53,17 @@ export const JobDetails = (props) => {
         if (user) user = user.data;
         else return;
         const URL = `${API_BASE_URL}/jobapplication/create?userId=${user.id}&jobId=${params.jobId}`;
-        axios.post(URL).then((res) => {
-            if (res.status === 200) alert("Ứng tuyển thành công!");
-            else alert("Ứng tuyển thất bại, thử lại sau nhé!");
-        });
+        axios
+            .post(URL)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200) alert("Ứng tuyển thành công!");
+                else alert("Ứng tuyển thất bại, thử lại sau nhé!");
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Ứng tuyển thất bại! " + err.response.data.message);
+            });
     };
 
     // Call API to get related jobs
@@ -64,7 +71,7 @@ export const JobDetails = (props) => {
         if (relatedJobs === undefined) {
             setRelatedJobs(
                 res.data.map((job) => {
-                    return { ...job, createdDate: job.datePosted };
+                    return { ...job, createdDate: new Date(job.datePosted) };
                 })
             );
         }

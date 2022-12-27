@@ -14,7 +14,7 @@ const Card = styled.div`
 
 const MyCard = (props) => {
     return (
-        <Card className={props.className} style={props.style}>
+        <Card className={props.className} style={props.style} onClick={props.onClick}>
             {props.children}
         </Card>
     );
