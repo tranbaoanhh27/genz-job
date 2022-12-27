@@ -30,9 +30,6 @@ const CardJob = ({ job, listJob, setListJob }) => {
                     //return { ...v, isBookmarked: v.isBookmarked === true ? false : true}
                     if (isBookmarked === true) setIsBookmarked(false); else setIsBookmarked(true);
                 }
-                else {
-                    return v;
-                }
             }));
             setAlert( {show: true, classAlert: "alert-success", info: "Lưu bài đăng tuyển dụng thành công"} )
         }
