@@ -10,16 +10,32 @@ const router = express.Router();
 
 //Create a bookmark
 router.post("/create", async(req, res, next) => {
-	db.Bookmark.create({
-		UserId: req.query.userId,
-		JobId: req.query.jobId
-	})
-	.then(bookmark => {
-		res.send({ message: "Successfully bookmarked"});
-	})
-	.catch(err => {
-		res.status(500).send({ message: err.message });
-	});
+	const userId = req.query.userId;
+	const jobId = req.query.jobId;
+	
+	if (userId && jobId) {
+		let user = await db.User.findByPk(userId);
+		let job = await db.Job.findByPk(jobId);
+
+		if (user && job) {
+			db.Bookmark.create({
+				UserId: req.query.userId,
+				JobId: req.query.jobId
+			})
+			.then(bookmark => {
+				res.send({ message: "Successfully bookmarked"});
+			})
+			.catch(err => {
+				res.status(500).send({ message: err.message });
+			});
+		}
+		else {
+			return res.status(500).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(500).send({message: "Invalidate value"});
+	}
 });
 
 //Get bookmarks
