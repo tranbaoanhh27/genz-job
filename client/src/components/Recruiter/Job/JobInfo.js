@@ -38,7 +38,7 @@ const RecruiterJobInfo = (props) => {
 
     const salaryChangeHandler = (event) => {
         console.log(event.target.value);
-        setSalary(event.targe.value);
+        setSalary(event.target.value);
     };
 
     const closeDateChangeHandler = (event) => {
