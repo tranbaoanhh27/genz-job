@@ -4,6 +4,7 @@ import moment from "moment";
 import AuthApi from "../../../api/AuthApi";
 import axios from "axios";
 import { API_BASE_URL } from "../../../Data/apiConstants";
+import YesNoDialog from "../../UI/YesNoDialog";
 
 const RecruiterJobInfo = (props) => {
     const [title, setTitle] = useState(undefined);
@@ -11,6 +12,7 @@ const RecruiterJobInfo = (props) => {
     const [description, setDescription] = useState(undefined);
     const [salary, setSalary] = useState(undefined);
     const [closeDate, setCloseDate] = useState(undefined);
+    const [isRemovingJob, setIsRemovingJob] = useState(false);
 
     console.log("RecruiterJobInfo property job: ", props.job);
 
@@ -77,8 +79,35 @@ const RecruiterJobInfo = (props) => {
             });
     };
 
+    const removeThisJob = () => {
+        // Call API to remove this job
+        const URL = `${API_BASE_URL}/job/delete?jobId=${props.job.id}`;
+        axios
+            .delete(URL)
+            .then((res) => {
+                console.log("Remove job response: ", res);
+                if (res.status === 200) {
+                    alert(`Đã xóa tin tuyển dụng ${title} thành công!`);
+                    setIsRemovingJob(false);
+                    props.onUpdated();
+                }
+            })
+            .catch((err) => {
+                console.log("Remove job error: ", err);
+                alert(`Xóa tin tuyển dụng ${title} không thành công!\nHãy thử lại sau`);
+            });
+    };
+
     return (
         <>
+            {isRemovingJob && (
+                <YesNoDialog
+                    title="Xác nhận xóa tin tuyển dụng"
+                    message={`Bạn có chắc chắn bạn muốn xóa tin tuyển dụng ${title}`}
+                    onNo={() => setIsRemovingJob(false)}
+                    onYes={removeThisJob}
+                />
+            )}
             <FlexColumn className={`${props.className}`}>
                 <div className="row">
                     <JobInfoLabel className="col-3">Tiêu đề:</JobInfoLabel>
@@ -129,7 +158,8 @@ const RecruiterJobInfo = (props) => {
                 <Button
                     type="button"
                     className="btn btn-danger"
-                    style={{ marginInlineEnd: "2rem" }}>
+                    style={{ marginInlineEnd: "2rem" }}
+                    onClick={() => setIsRemovingJob(true)}>
                     Xóa tin tuyển dụng này
                 </Button>
                 <Button type="button" className="btn btn-success" onClick={updateInfo}>
