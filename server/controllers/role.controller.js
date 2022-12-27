@@ -87,4 +87,38 @@ router.delete('/delete/:id', RoleHelper.GetRoleById, RoleHelper.ValidateRole, as
 router.post('/assign', UserHelper.GetUserById, UserHelper.ValidateUser, RoleHelper.GetRoleById, RoleHelper.ValidateRole, RoleHelper.AssignRoleToUser);
 router.post('/unassign', UserHelper.GetUserById, UserHelper.ValidateUser, RoleHelper.GetRoleById, RoleHelper.ValidateRole, RoleHelper.UnassignRoleForUser);
 
+// Find all users of roleId
+router.get('/all', async(req, res, next) => {
+    const roleName = req.query.roleName;
+    if (roleName) {
+        let role = await db.Role.findOne({
+            where: {
+                title: roleName
+            }
+        });
+
+        if (role) {
+            await db.UserRole.findAll({
+                include: {
+                    model: db.User
+                },
+                where: {
+                    RoleId: role['id']
+                }
+            })
+            .then(userRole => {
+                return res.send({data: userRole});
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            });
+        }
+        else {
+            return res.status(404).send({message: "Invalidate value"});
+        }
+    }
+    else {
+        return res.status(404).send({message: "Invalidate value"});
+    }
+});
 module.exports = router;

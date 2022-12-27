@@ -24,13 +24,14 @@ class JobHelper {
 
     static EditJob = async (req, res, next) => {
         if (!req.user) return false;
-        await db.Job.create({
+        await db.Job.update({
             title: req.body.title,
             description: req.body.description,
+            company: req.body.company,
             salary: req.body.salary,
             datePosted: new Date(req.body.datePosted),
-            closingDate: new Date(req.body.closingDate),
-        }, {
+            closingDate: new Date(req.body.closingDate)}, 
+        {
             where: {
                 [Op.and]: [
                     { id: req.body.id },

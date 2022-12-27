@@ -1,32 +1,31 @@
 'use strict'
-module.exports = (sequelize, DateTypes) => {
+module.exports = (sequelize, DataTypes) => {
     var ArticleComment = sequelize.define('ArticleComment', {
         id: {
-            type: DateTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true
         },
         articleId: {
-            type: DateTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         commentorId: {
-            type: DateTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         comment: {
-            type: DateTypes.STRING,
-            allowNull: false
-        },
-        dateCommented: {
-            type: DateTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false
         }
-    }, {});
+    }, {
+        timestamps: true
+    });
 
     ArticleComment.associate = function(models) {
-
+        ArticleComment.belongsTo(models.User, {foreignKey: 'commentorId', targetKey: 'id'});
+        ArticleComment.belongsTo(models.Article, {foreignKey: 'articleId', targetKey: 'id'});
     };
     return ArticleComment;
 };

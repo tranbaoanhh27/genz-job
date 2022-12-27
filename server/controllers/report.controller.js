@@ -43,4 +43,70 @@ router.get('/', async(req, res, next) => {
     res.send(JSON.stringify(reports, null, 2));
 })
 
+router.get('/all/user/:reporterId', async(req, res, next) => {
+    const ReporterId = req.params.reporterId;
+    if (ReporterId) {
+        await db.Report.findAll({
+            where: {
+                reporterId: ReporterId
+            }
+        })
+        .then(report => {
+            return res.send({data: report});
+        })
+        .catch(err => {
+            return res.status(404).send({message: err.message});
+        })
+    }
+    else {
+        return res.status(404).send({message: "Invalidate value"});
+    }
+});
+
+router.get('/all/article/:articleId', async(req, res, next) => {
+    const ArticleId = req.params.articleId;
+    if (ArticleId) {
+        await db.Report.findAll({
+            where: {
+                articleId: ArticleId
+            }
+        })
+        .then(report => {
+            return res.send({data: report});
+        })
+        .catch(err => {
+            return res.status(404).send({message: err.message});
+        })
+    }
+    else {
+        return res.status(404).send({message: "Invalidate value"});
+    }
+});
+
+router.delete('/delete', async(req, res, next) => {
+    const articleId = req.query.articleId;
+    if (articleId) {
+        let article = await db.Article.findByPk(articleId);
+        if (article) {
+            await db.Report.destroy({
+                where: {
+                    articleId: articleId
+                }
+            })
+            .then(report => {
+                return res.send({message: "Done successfully"});
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            })
+        }
+        else {
+            return res.status(404).send({message: "Invalidate value"});
+        }
+    } 
+    else {
+        return res.status(404).send({message: "Invalidate value"});
+    }
+});
+
 module.exports = router;

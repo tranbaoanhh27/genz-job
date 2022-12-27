@@ -43,7 +43,7 @@ router.get("/", async(req, res, next) => {
 	res.send(JSON.stringify(notifications, null, 2));
 });
 
-router.post('/mark', async (req, res, next) => {
+router.put('/mark', async (req, res, next) => {
 	const status = req.body.status;
 	const notifcationId = req.body.notificationId;
 	if (status && notifcationId) {
@@ -62,7 +62,7 @@ router.post('/mark', async (req, res, next) => {
 	}
 });
 
-router.post('/mark/all', async (req, res, next) => {
+router.put('/mark/all', async (req, res, next) => {
 	const status = req.body.status;
 	const userId = req.body.userId;
 	if (status && userId) {
@@ -78,6 +78,41 @@ router.post('/mark/all', async (req, res, next) => {
 	}
 	else {
 		return res.status(404).send({message: "Can found userId or Status"});
+	}
+})
+
+router.delete('/delete', async(req, res, next) => {
+	const senderId = req.query.senderId;
+
+	if (senderId) {
+		let notification = await db.Notification.findOne({
+			where: {
+				SenderId: senderId
+			}
+		})
+		.catch(err =>{
+			return res.status(404).send({message: err.message})
+		})
+
+		if (notification) {
+			await db.Notification.destroy({
+				where: {
+					SenderId: senderId
+				}
+			})
+			.then(notification => {
+				return res.send({message: "Done successfully"});
+			})
+			.catch(err => {
+				return res.status(404).send({message: err.message});
+			});
+		}
+		else {
+			return res.status(404).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(404).send({message: "Invalidate value"});
 	}
 })
 
