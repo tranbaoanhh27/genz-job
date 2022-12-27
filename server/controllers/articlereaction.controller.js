@@ -46,4 +46,42 @@ router.get("/", async(req, res, next) => {
 	res.send(JSON.stringify(reactions, null, 2));
 });
 
+// Delete reactions
+router.delete('/delete', async(req, res, next) => {
+	const articleId = req.query.articleId;
+	const reactorId = req.query.userId;
+
+	if (articleId && reactorId) {
+		let article = await db.Article.findByPk(articleId);
+		let user = await db.Article.findByPk(reactorId);
+		let reaction = await db.ArticleReaction.findOne({
+			where: {
+				ReactorId: reactorId,
+				ArticleId: articleId
+			}
+		})
+
+		if (article && user && reaction) {
+			await db.ArticleReaction.destroy({
+				where: {
+					ReactorId: reactorId,
+					ArticleId: articleId
+				}
+			})
+			.then(articleReaction => {
+				return res.send({message: "Done succesfully"});
+			})
+			.catch(err => {
+				return res.send({message: err.message});
+			})
+		}
+		else {
+			return res.status(404).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(404).send({message: "Invalidate value"});
+	}
+})
+
 module.exports = router;

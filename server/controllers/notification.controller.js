@@ -81,4 +81,39 @@ router.put('/mark/all', async (req, res, next) => {
 	}
 })
 
+router.delete('/delete', async(req, res, next) => {
+	const senderId = req.query.senderId;
+
+	if (senderId) {
+		let notification = await db.Notification.findOne({
+			where: {
+				SenderId: senderId
+			}
+		})
+		.catch(err =>{
+			return res.status(404).send({message: err.message})
+		})
+
+		if (notification) {
+			await db.Notification.destroy({
+				where: {
+					SenderId: senderId
+				}
+			})
+			.then(notification => {
+				return res.send({message: "Done successfully"});
+			})
+			.catch(err => {
+				return res.status(404).send({message: err.message});
+			});
+		}
+		else {
+			return res.status(404).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(404).send({message: "Invalidate value"});
+	}
+})
+
 module.exports = router;

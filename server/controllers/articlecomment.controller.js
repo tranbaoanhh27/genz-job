@@ -11,15 +11,14 @@ router.post('/create', async(req, res, next) => {
     const ArticleId = req.body.articleId;
 
     if (CommentorId && ArticleId) {
-        let comment = await db.User.findByPk(CommentorId);
+        let user = await db.User.findByPk(CommentorId);
         let article = await db.Article.findByPk(ArticleId);
 
-        if (comment && article) {
+        if (user && article) {
             await db.ArticleComment.create({
                 commentorId: CommentorId,
                 articleId: ArticleId,
-                comment: req.body.comment,
-                dateCommented: Date.now()
+                comment: req.body.comment
             })
             .then(articleComment => {
                 return res.send({message: "Done successfully"});
@@ -74,6 +73,34 @@ router.get('/all/article/:articleId', async(req, res, next) => {
     }
     else {
         return res.status(404).send({message: "Invalide value"});
+    }
+});
+
+router.delete('/delete', async(req, res, next) => {
+    const id = req.query.id;
+    
+    if (id) {
+        let comment = await db.ArticleComment.findByPk(id);
+        
+        if (comment) {
+            await db.ArticleComment.destroy({
+                where: {
+                    id: id
+                }
+            })
+            .then(articleComment => {
+                return res.send({message: "Done successfully"});
+            })
+            .catch(err => {
+                return res.status(404).send({message: err.message});
+            })
+        }
+        else {
+            return res.status(404).send({message: "Invalidate value"});
+        }
+    }
+    else {
+        return res.status(404).send({message: "Invalidate value"});
     }
 });
 

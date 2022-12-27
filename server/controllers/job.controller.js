@@ -6,6 +6,7 @@ const JobHelper = require("../utils/JobHelper");
 const UserHelper = require("../utils/UserHelper");
 const AuthencationHelper = require("../utils/AuthencationHelper");
 const { Op } = require("sequelize");
+const { response } = require("express");
 
 const router = express.Router();
 
@@ -137,6 +138,58 @@ router.get('/find', async (req, res, next) => {
 	}
 	else {
 		res.status(404).send({message: "No job founded"})
+	}
+});
+
+router.delete("/delete", async(req, res, next) => {
+	const jobId = req.query.jobId;
+	if (jobId) {
+		let job = await db.Job.findByPk(jobId);
+		if (job) {
+
+			// delete application
+			await db.JobApplication.destroy({
+				where: {
+					JobId: jobId
+				}
+			})
+			.catch(err => {
+				return res.status(404).send({message: err.message});
+			})
+
+			// delete jobProperty
+			await db.JobProperty.destroy({
+				where: {
+					jobId: jobId
+				}
+			})
+
+			// delete BookMark
+			await db.Bookmark.destroy({
+				where: {
+					JobId: jobId
+				}
+			})
+
+			// delete job
+			await db.Job.destroy({
+				where: {
+					id: jobId
+				}
+			})
+			.then(job => {
+				return res.send({message: "Done successfully"});
+			})
+			.catch(err => {
+				return res.status(404).send({message: err.message});
+			})
+		}
+		else {
+			return res.status(404).send({message: "Invalidate value"});
+		}
+	}
+	else {
+		return res.status(404).send({message: "Invalidate value"});
 	}
 });
 
