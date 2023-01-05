@@ -5,25 +5,20 @@ import { createBookmark, checkIsBookmarked } from "./../../api/Bookmark";
 import { Alert } from "./Alert";
 import AuthApi from "../../api/AuthApi";
 
-const CardJob = ({ job, listJob, setListJob }) => {
+export function CardJob({ job, listJob, setListJob }) {
     const [alert, setAlert] = useState({ show: false });
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [userId, setUserId] = useState(undefined);
 
-    // let userId = -1;
-    // if (AuthApi.GetCurrentUser() !== null) userId = useRef( AuthApi.GetCurrentUser().data.id );
-
     useEffect(() => {
         const resolve = (result) => {
-            console.log(result);
             setIsBookmarked(result);
         };
         checkIsBookmarked(userId, job.id, resolve);
     }, []);
 
     let user = AuthApi.GetCurrentUser();
-    if (!user) return;
-    if (userId === undefined) setUserId(user.data.id);
+    if (user) setUserId(user.data.id);
 
     const handleBookmarkClick = () => {
         const resolve = () => {
@@ -45,8 +40,6 @@ const CardJob = ({ job, listJob, setListJob }) => {
 
         createBookmark(userId, job.id, resolve, reject);
     };
-
-    const handleJobCardClick = () => {};
 
     return (
         <div className="card card-job" style={{ height: "17em" }}>
@@ -106,5 +99,3 @@ const CardJob = ({ job, listJob, setListJob }) => {
         </div>
     );
 };
-
-export { CardJob };

@@ -8,7 +8,6 @@ const SearchBar = React.memo( ( { setGroupJob } ) => {
     const onSeachHandler = () => {
 
         let text = inputElement.current.value;
-        console.log(text);
         if (text === "") {
             setGroupJob(defaultGroupJobsHomepage); 
             return;
