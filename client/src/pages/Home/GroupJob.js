@@ -30,14 +30,11 @@ export function GroupJob( { groupJob: { nameGroup, searchText, listFilter }} ) {
     const [listJob, setListJob] = useState([]);
     const [numShowedJob, setNumShowedJob] = useState(3);
 
-    const isSearchText = (searchText) => {
-        
-        return function(object) {
-            let searchText = searchText.toLowerCase();
-            if ( Object.values(object).some( x => x.includes(searchText))) return true; 
-            if ( Object.keys(object).some( x => x.includes(searchText))) return true;
-            return false;
-        }
+    function isSearchText(searchText, job) {
+        searchText = searchText.toLowerCase();
+        if ( Object.values(job).some( x => x.includes(searchText))) return true; 
+        if ( Object.keys(job).some( x => x.includes(searchText))) return true;
+        return false;
     }
 
     useEffect( () => {
@@ -46,7 +43,7 @@ export function GroupJob( { groupJob: { nameGroup, searchText, listFilter }} ) {
             setListJob([...listJob, ...jobs]);
 
             // Search job
-            if (searchText !== null) setListJob( listJob.filter( isSearchText(searchText) ))
+            if (searchText !== null) setListJob( listJob.filter( isSearchText.bind(null, searchText) ))
         }
         getListAllJob(resolve);
     }, [])
