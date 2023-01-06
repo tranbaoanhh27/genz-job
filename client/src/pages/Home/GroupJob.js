@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CardJob } from './CardJob';
-import { getListAllJob } from '../../api/Job';
+import { useGetJobList } from './CustomHook';
 
 function GetMoreJobs(num, listPrevJobs) {
 
@@ -27,25 +27,12 @@ function GetMoreJobs(num, listPrevJobs) {
 
 export function GroupJob( { groupJob: { nameGroup, searchText, listFilter }} ) {
     
-    const [listJob, setListJob] = useState([]);
+    const [listJob, searchJob] = useGetJobList();
     const [numShowedJob, setNumShowedJob] = useState(3);
 
-    function isSearchText(searchText, job) {
-        searchText = searchText.toLowerCase();
-        if ( Object.values(job).some( x => x.includes(searchText))) return true; 
-        if ( Object.keys(job).some( x => x.includes(searchText))) return true;
-        return false;
-    }
-
+    // Retrieve all job in the database when mount (first rendering)
     useEffect( () => {
-
-        const resolve = (jobs) => {
-            setListJob([...listJob, ...jobs]);
-
-            // Search job
-            if (searchText !== null) setListJob( listJob.filter( isSearchText.bind(null, searchText) ))
-        }
-        getListAllJob(resolve);
+        searchJob(searchText);
     }, [])
 
     const loadMoreJob = () => {
@@ -69,7 +56,7 @@ export function GroupJob( { groupJob: { nameGroup, searchText, listFilter }} ) {
                     {listJob.slice(0, numShowedJob).map( (value, id) => {
                         return (
                             <div className='col-sm-6 mt-3' style={{height: "17em"}}>
-                                <CardJob job={value} listJob={listJob} setListJob={setListJob}/>
+                                <CardJob job={value} listJob={listJob} />
                             </div>
                         )
                     })}
