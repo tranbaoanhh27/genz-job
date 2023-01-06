@@ -20,7 +20,7 @@ export function HomePage() {
 
                     <div className="row">
                         <div className="col-9">
-                            { groupJob.map( (value, id) => <GroupJob groupJob={value} />) }
+                            { groupJob.map( (value, id) => <GroupJob groupJob={value} key={value.nameGroup} /> )}
                         </div>
                         <div className="col-3">
                             <div className="row">

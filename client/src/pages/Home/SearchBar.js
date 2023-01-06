@@ -2,7 +2,7 @@ import React, { useState, useRef, memo } from "react";
 
 import { defaultGroupJobsHomepage } from "../../Data/Homepage";
 
-const SearchBar = React.memo( ( { setGroupJob } ) => {
+export function SearchBar({ setGroupJob }) {
 
     const inputElement = useRef();
     const onSeachHandler = () => {
@@ -30,6 +30,4 @@ const SearchBar = React.memo( ( { setGroupJob } ) => {
             </button>
         </div>
     );
-})
-
-export { SearchBar }
+}
