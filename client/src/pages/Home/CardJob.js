@@ -18,7 +18,7 @@ export function CardJob({ job, listJob, setListJob }) {
     }, []);
 
     let user = AuthApi.GetCurrentUser();
-    if (user === undefined) setUserId(user.data.id);
+    if (user !== null && userId === undefined) setUserId(user.data.id);
 
     const handleBookmarkClick = () => {
         const resolve = () => {
