@@ -37,14 +37,14 @@ function AddJobExp() {
         <div className='row'>
             <div className="col-sm-12 text-center text-primary">
                 <p className='mb-0' style={{cursor: "pointer"}}>
-                    <a href='#' data-bs-toggle="modal" data-bs-target="#modalAddJobExp" style={{textDecoration: "none"}}>Thêm công việc đang bạn đang làm</a>
+                    <a href='#' data-bs-toggle="modal" data-bs-target="#modalAddJobExp" style={{textDecoration: "none"}}>Thêm công việc bạn đang làm</a>
                 </p>
             </div>
         </div>
     )
 }
 
-function JobExperience() {
+function JobExperience({ viewedUser, user }) {
     
     const [listJobExp, setListJobExp] = useState([]);
 
@@ -55,7 +55,7 @@ function JobExperience() {
     if (listJobExp.length === 0) return (
         <div>
             <p>Loading...</p>
-            <AddJobExp />
+            {user && user.id === viewedUser.id && <AddJobExp />}
         </div>
     )
     else
@@ -74,7 +74,7 @@ function JobExperience() {
                                 </div>
                             </div>
                             <hr />
-                            <AddJobExp />
+                            {user && user.id === viewedUser.id && <AddJobExp />}
                         </div>
                     )
                 })}
@@ -87,7 +87,6 @@ export function TabPersonalInformation({ viewedUser, user }) {
     const [listTextField, setListTextField] = useState([]);
 
     useEffect(() => {
-        console.log("user id = " + user.id + " viewed user id = " + viewedUser.id);
         var personalInformation = viewedUser.UserProperties.map((property) => {
             return {
                 key: property.Title,
@@ -101,7 +100,7 @@ export function TabPersonalInformation({ viewedUser, user }) {
 
     // if (listTextField.length === 0) return <p>Không có dữ liệu</p>; else
 
-    let editable = user.id === viewedUser.id
+    let editable = user && (user.id === viewedUser.id)
 
     console.log(listTextField);
     return (
@@ -132,7 +131,7 @@ export function TabPersonalInformation({ viewedUser, user }) {
             <div className="card mb-4">
                 <div className="card-body">
                     <h5 className='card-title text-center'>Kinh nghiệm công việc</h5>
-                    <JobExperience />
+                    <JobExperience viewedUser={viewedUser} user={user}/>
                 </div>
             </div>
             <div className="card mb-4">

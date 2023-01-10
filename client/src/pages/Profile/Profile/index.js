@@ -53,7 +53,7 @@ function MainProfile({ user, viewedUser }) {
                                 <h5 className="my-3">{viewedUser.UserName}</h5>
                                 {/* <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">District 5, Ho Chi Minh City, Viet Nam</p> */}
-                                {user.id !== viewedUser.id && (
+                                {user && user.id !== viewedUser.id && (
                                     <div className="d-flex justify-content-center mb-2">
                                         <button
                                             type="button"
@@ -90,14 +90,14 @@ function MainProfile({ user, viewedUser }) {
                                     Thông tin cá nhân
                                 </a>
                             </li>
-                            {user.id === viewedUser.id && (
+                            {user && user.id === viewedUser.id && (
                                 <li className="nav-item">
                                     <a className="nav-link" data-bs-toggle="tab" href="#listFollow">
                                         Đang theo dõi ...
                                     </a>
                                 </li>
                             )}
-                            {user.id === viewedUser.id && (
+                            {user && user.id === viewedUser.id && (
                                 <li className="nav-item">
                                     <a className="nav-link" data-bs-toggle="tab" href="#listJob">
                                         Tin đã lưu
@@ -110,8 +110,8 @@ function MainProfile({ user, viewedUser }) {
                             <div className="tab-pane active mt-2" id="personalInfo">
                                 <TabPersonalInformation viewedUser={viewedUser} user={user} />
                             </div>
-                            {user.id === viewedUser.id && <ListJobStatus user={user} />}
-                            {user.id === viewedUser.id && (
+                            {user && user.id === viewedUser.id && <ListJobStatus user={user} />}
+                            {user && user.id === viewedUser.id && (
                                 <ListAccountFollow viewedUser={viewedUser} user={user} />
                             )}
                         </div>
@@ -126,8 +126,8 @@ export default function Profile({ user }) {
     const [viewedUser, setViewedUser] = useState(undefined);
 
     let { username } = useParams();
-    console.log("username: " + username);
-    console.log("current user: " + user.UserName);
+    //console.log("username: " + username);
+    //console.log("current user: " + user.UserName);
 
     useEffect(() => {
         axios

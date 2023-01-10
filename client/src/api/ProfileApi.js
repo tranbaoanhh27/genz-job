@@ -37,7 +37,13 @@ class ProfileApi {
     }
 
     static IsFollowing(user, follower) {
-        return axios.get(this.followingApiUrl + "?userId=" + user.id + "&followerId=" + follower.id);
+        let userId = "";
+        let followerId = "";
+        if (user) 
+            userId = user.id;    
+        if (follower) 
+            followerId = follower.id;        
+        return axios.get(this.followingApiUrl + "?userId=" + userId + "&followerId=" + followerId);
     }
 
     static Follow(user, follower) {
