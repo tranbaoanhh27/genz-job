@@ -30,13 +30,14 @@ export const JobDetails = (props) => {
     const nav = useNavigate();
 
     // Call API to get Job's details
-    axios.get(API_BASE_URL + `/job/detail/${params.jobId}`).then((response) => {
-        if (response.status === 200) {
-            console.log(response.data);
-            if (job === undefined)
+    if (job === undefined) {
+        axios.get(API_BASE_URL + `/job/detail/${params.jobId}`).then((response) => {
+            if (response.status === 200) {
+                console.log(response.data);
                 setJob({ ...response.data, createdDate: response.data.createdAt });
-        }
-    });
+            }
+        });
+    }
 
     const selectJob = (jobId) => {
         startJobDetailPage(jobId);
@@ -84,6 +85,10 @@ export const JobDetails = (props) => {
         else jobStatus = "closed";
     }
 
+    let userId = undefined;
+    let user = AuthApi.GetCurrentUser();
+    if (user) userId = user.data.id;
+
     return (
         <div style={{ color: DarkTheme.text, fontSize: "90%" }}>
             {isSharingJob && (
@@ -108,7 +113,11 @@ export const JobDetails = (props) => {
                             <Button
                                 className="btn btn-success"
                                 onClick={applyJob}
-                                disabled={jobStatus !== "opening"}>
+                                disabled={
+                                    jobStatus !== "opening" ||
+                                    !userId ||
+                                    (userId && job && userId === job.authorId)
+                                }>
                                 Ứng tuyển ngay
                             </Button>
                             <Button className="btn btn-primary" onClick={showJobShareModal}>
