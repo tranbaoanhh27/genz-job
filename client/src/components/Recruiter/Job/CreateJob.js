@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useImperativeHandle, useRef } from "react";
+import React, { useImperativeHandle, useRef, useState } from "react";
 import styled from "styled-components";
 import { API_BASE_URL } from "../../../Data/apiConstants";
 import { DarkTheme } from "../../../assets/themes";
@@ -15,6 +15,13 @@ const CreateJob = (props) => {
     const startDateRef = useRef();
     const endDateRef = useRef();
 
+    const [validTitle, setValidTitle] = useState(true);
+    const [validDescription, setValidDescription] = useState(true);
+    const [validSalary, setValidSalary] = useState(true);
+    const [validCompany, setValidCompany] = useState(true);
+    const [validStartDate, setValidStartDate] = useState(true);
+    const [validEndDate, setValidEndDate] = useState(true);
+
     const createJob = (event) => {
         event.preventDefault();
 
@@ -28,7 +35,8 @@ const CreateJob = (props) => {
             closingDate: endDateRef.current.returnValue(),
         };
 
-        // Check valid input?
+        // Check valid input
+        if (!isValidInput(enteredJob)) return;
 
         // Get access token and user id
         let user = AuthApi.GetCurrentUser();
@@ -40,6 +48,8 @@ const CreateJob = (props) => {
         axios.post(URL, enteredJob, { headers: { "x-access-token": token } }).then((response) => {
             console.log(response);
 
+            if (response.status === 200) alert("Tạo tin tuyển dụng thành công!");
+
             // Reload jobs
             props.onCreateComplete();
         });
@@ -48,23 +58,116 @@ const CreateJob = (props) => {
         props.onCancel();
     };
 
+    const isValidInput = (enteredJob) => {
+        let isValid = true;
+        let message = "";
+        console.log(enteredJob);
+
+        if (!enteredJob) {
+            alert("Đã xảy ra lỗi, hãy thử lại!");
+            return false;
+        }
+
+        if (!enteredJob.title || enteredJob.title.trim().length === 0) {
+            setValidTitle(false);
+            isValid = false;
+            message += "Tiêu đề không được để trống!\n";
+        } else setValidTitle(true);
+
+        if (!enteredJob.description || enteredJob.description.trim().length === 0) {
+            setValidDescription(false);
+            isValid = false;
+            message += "Mô tả công việc không được để trống!\n";
+        } else setValidDescription(true);
+
+        if (!enteredJob.salary || enteredJob.salary.trim().length === 0) {
+            setValidSalary(false);
+            isValid = false;
+            message += "Mức lương không được để trống!\n";
+        } else setValidSalary(true);
+
+        if (enteredJob.salary && enteredJob.salary.trim().length > 0) {
+            let salaryNumber = Number.parseInt(enteredJob.salary);
+            if (salaryNumber < 0) {
+                setValidSalary(false);
+                isValid = false;
+                message += "Mức lương phải lớn hơn 0\n";
+            } else setValidSalary(true);
+        }
+
+        if (!enteredJob.company || enteredJob.company.trim().length === 0) {
+            setValidCompany(false);
+            isValid = false;
+            message += "Tên công ty không được để trống!\n";
+        } else setValidCompany(true);
+
+        if (!enteredJob.datePosted || enteredJob.datePosted.trim().length === 0) {
+            setValidStartDate(false);
+            isValid = false;
+            message += "Ngày bắt đầu tuyển dụng không được để trống!\n";
+        } else setValidStartDate(true);
+
+        if (!enteredJob.closingDate || enteredJob.closingDate.trim().length === 0) {
+            setValidEndDate(false);
+            isValid = false;
+            message += "Ngày kết thúc tuyển dụng không được để trống!\n";
+        } else setValidEndDate(true);
+
+        if (
+            enteredJob.datePosted &&
+            enteredJob.closingDate &&
+            enteredJob.datePosted.trim().length > 0 &&
+            enteredJob.closingDate.trim().length > 0
+        ) {
+            let startDate = new Date(enteredJob.datePosted);
+            let endDate = new Date(enteredJob.closingDate);
+            if (startDate > endDate) {
+                setValidEndDate(false);
+                setValidStartDate(false);
+                isValid = false;
+                message += "Ngày bắt đầu tuyển dụng phải nhỏ hơn ngày kết thúc tuyển dụng!\n";
+            } else {
+                setValidStartDate(true);
+                setValidEndDate(true);
+            }
+        }
+
+        if (message.trim().length > 0) alert(message);
+        return isValid;
+    };
+
     return (
         <Card>
             <CenterRow>
                 <RecruiterJobImage imageUrl={DEFAULT_IMAGE_URL} />
             </CenterRow>
-            <SmallInputField label="Tên công việc:" type="text" ref={titleRef} />
-            <SmallInputField label="Tên công ty:" type="text" ref={companyRef} />
-            <LargeInputField label="Mô tả công việc:" ref={descriptionRef} />
             <SmallInputField
+                isValid={validTitle}
+                label="Tên công việc:"
+                type="text"
+                ref={titleRef}
+            />
+            <SmallInputField
+                isValid={validCompany}
+                label="Tên công ty:"
+                type="text"
+                ref={companyRef}
+            />
+            <LargeInputField
+                isValid={validDescription}
+                label="Mô tả công việc:"
+                ref={descriptionRef}
+            />
+            <SmallInputField
+                isValid={validSalary}
                 label="Mức lương (USD):"
                 type="number"
                 ref={salaryRef}
                 options={{ min: 0, step: 1 }}
             />
             <SpaceBetweenRow style={{ marginTop: "1rem" }}>
-                <DateSelect label="Ngày bắt đầu:" ref={startDateRef} />
-                <DateSelect label="Ngày kết thúc:" ref={endDateRef} />
+                <DateSelect isValid={validStartDate} label="Ngày bắt đầu:" ref={startDateRef} />
+                <DateSelect isValid={validEndDate} label="Ngày kết thúc:" ref={endDateRef} />
             </SpaceBetweenRow>
             <FlexEndRow
                 style={{
@@ -99,7 +202,13 @@ const SmallInputField = React.forwardRef((props, ref) => {
                 <label>{props.label}</label>
             </div>
             <div className="col-10" style={{ display: "flex" }}>
-                <NormalInput type={props.type} ref={input} {...props.options} style={{ flex: 1 }} />
+                <NormalInput
+                    isValid={props.isValid}
+                    type={props.type}
+                    ref={input}
+                    {...props.options}
+                    style={{ flex: 1 }}
+                />
             </div>
         </div>
     );
@@ -118,7 +227,7 @@ const LargeInputField = React.forwardRef((props, ref) => {
                 <label>{props.label}</label>
             </div>
             <div className="col-10" style={{ display: "flex" }}>
-                <TextAreaInput ref={input} style={{ flex: 1 }} />
+                <TextAreaInput isValid={props.isValid} ref={input} style={{ flex: 1 }} />
             </div>
         </div>
     );
@@ -134,7 +243,7 @@ const DateSelect = React.forwardRef((props, ref) => {
     return (
         <div style={{ display: "flex", width: "fit-content" }}>
             <label style={{ marginInlineEnd: "4rem" }}>{props.label}</label>
-            <NormalInput type="datetime-local" ref={input} />
+            <NormalInput isValid={props.isValid} type="datetime-local" ref={input} />
         </div>
     );
 });
@@ -154,7 +263,7 @@ const NormalInput = styled.input`
     padding-inline: 1rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    border: none;
+    border: ${(props) => (props.isValid ? "0px" : "2px solid red")};
     border-radius: 10px;
 `;
 
@@ -164,7 +273,7 @@ const TextAreaInput = styled.textarea`
     padding-inline: 1rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    border: none;
+    border: ${(props) => (props.isValid ? "0px" : "2px solid red")};
     border-radius: 10px;
     min-height: 5rem;
     max-height: 5rem;
