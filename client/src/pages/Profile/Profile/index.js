@@ -146,7 +146,7 @@ export default function Profile({ user }) {
     }, [username]);
 
     return (
-        <div classNameName="Profile">
+        <div className="Profile">
             <MainProfile user={user} viewedUser={viewedUser} />
         </div>
     );

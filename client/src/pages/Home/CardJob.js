@@ -82,14 +82,14 @@ export function CardJob({ job, listJob, setListJob }) {
                                 <span className="fa-li">
                                     <i className="fa-solid fa-pen-to-square"></i>
                                 </span>
-                                {job.updatedAt}
+                                {(new Date(job.updatedAt)).toLocaleString("vi-VN")}
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="card-text mt-4">
                     <i className="fa-solid fa-clock" style={{ marginRight: "0.5em" }}></i>
-                    {job.closingDate}
+                    {(new Date(job.closingDate)).toLocaleString("vi-VN")}
                 </div>
 
                 <a href={`/job/detail/${job.id}`} className="stretched-link"></a>
