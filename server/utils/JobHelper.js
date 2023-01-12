@@ -35,7 +35,7 @@ class JobHelper {
             where: {
                 [Op.and]: [
                     { id: req.body.id },
-                    { authorId: req.body.id }
+                    { authorId: req.body.authorId }
                 ]
             }
         })
