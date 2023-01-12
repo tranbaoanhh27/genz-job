@@ -1,10 +1,10 @@
 #chat-container {
   display: grid;
   grid:
-      'new-message-container chat-title' 55px
-      'conversation-list chat-message-list' 1fr
-      'conversation-list chat-form' 60px;
-  grid-template-columns: 1fr 3fr;
+      'chat-title new-message-container' 55px
+      'chat-message-list conversation-list' 1fr
+      'chat-form conversation-list' 60px;
+  grid-template-columns: 3fr 1fr;
   position: absolute;
   top: 9%; bottom: 0;
   background: #FFF;
