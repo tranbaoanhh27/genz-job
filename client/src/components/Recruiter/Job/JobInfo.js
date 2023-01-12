@@ -20,7 +20,7 @@ const RecruiterJobInfo = (props) => {
     if (title === undefined) setTitle(props.job.title);
     if (company === undefined) setCompany(props.job.company);
     if (description === undefined) setDescription(props.job.description);
-    if (salary === undefined) setSalary(props.job.salary);
+    if (salary === undefined) setSalary(props.job.salary.toString());
     if (closeDate === undefined) setCloseDate(new Date(props.job.closingDate));
 
     const jobTitleChangeHandler = (event) => {
@@ -64,6 +64,9 @@ const RecruiterJobInfo = (props) => {
             closingDate: closeDate,
         };
 
+        // Check if data is valid
+        if (!isValidData(body)) return;
+
         // Call API
         const URL = API_BASE_URL + "/job/edit";
         axios
@@ -77,6 +80,57 @@ const RecruiterJobInfo = (props) => {
                 console.log("Update job info err: ", err);
                 alert("Cập nhật thông tin thất bại, hãy thử lại sau");
             });
+    };
+
+    const isValidData = (job) => {
+        console.log(job);
+        if (!job) return false;
+
+        if (!job.title || job.title.trim().length === 0) {
+            alert("Không được để trống tiêu đề tin tuyển dụng!");
+            return false;
+        }
+
+        if (!job.company || job.company.trim().length === 0) {
+            alert("Không được để trống tên công ty!");
+            return false;
+        }
+
+        if (!job.salary || job.salary.trim().length === 0) {
+            alert("Không được để trống mức lương!");
+            return false;
+        } else {
+            let salaryNumber = Number.parseInt(job.salary);
+            if (salaryNumber < 0) {
+                alert("Mức lương không được nhỏ hơn 0");
+                return false;
+            }
+        }
+
+        if (!job.closingDate || job.closingDate.toUTCString().trim() === "Invalid Date") {
+            alert("Không được để trống ngày kết thúc tuyển dụng!");
+            return false;
+        } else {
+            let startDate = new Date(props.job.datePosted);
+            console.log(job.closingDate, startDate);
+            if (job.closingDate < startDate) {
+                alert(
+                    `Tin tuyển dụng này được tạo vào ${startDate.toLocaleString(
+                        "vi-VN"
+                    )}, do đó ngày kết thúc tuyển dụng không được trước ${startDate.toLocaleString(
+                        "vi-VN"
+                    )}`
+                );
+                return false;
+            }
+        }
+
+        if (!job.description || job.description.trim().length === 0) {
+            alert("Không được để trống mô tả công việc!");
+            return false;
+        }
+
+        return true;
     };
 
     const removeThisJob = () => {
