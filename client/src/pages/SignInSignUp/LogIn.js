@@ -21,6 +21,7 @@ export function LogIn({ setComponent, setUser }) {
             .then((response) => {
                 setIsLoading(false);
                 console.log(response.data);
+                alert("Đăng nhập thành công");
                 if (response.data.Roles === "recruiter") {
                     navigate("/");
                     setUser(response.data);
@@ -34,6 +35,7 @@ export function LogIn({ setComponent, setUser }) {
             .catch((error) => {
                 setIsLoading(false);
                 console.log({ message: error.message });
+                alert("Đăng nhập không thành công");
             });
     };
 

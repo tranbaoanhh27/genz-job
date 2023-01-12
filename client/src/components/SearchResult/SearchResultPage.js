@@ -24,6 +24,9 @@ export default function SearchResultPage(props) {
                         return tmp;
                     });
                     setResults(resultsList);
+                    if (resultsList.length === 0) {
+                        alert(`Không tìm thấy người dùng "${props.keyword}"`)
+                    }
                 }
             });
     }, [props.keyword]);
