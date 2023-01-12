@@ -11,7 +11,7 @@ const db = getDatabase(firebase);
 
 export const sendMessage = (senderId, receiverId, senderName, receiverName, message) => {
     const timestamp = Date.now();
-    set(
+    return set(
         ref(
             getDatabase(initializeApp(FirebaseConfig)),
             process.env.REACT_APP_FIREBASE_CHAT_COLLECTION + timestamp
