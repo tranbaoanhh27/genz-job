@@ -59,10 +59,11 @@ const JobApplication = (props) => {
             props.data.candidateName,
             `Xin chào, chúng tôi liên hệ với bạn vì bạn đã ứng tuyển vào vị trí ${
                 jobTitle || "Error"
-            } của công ty chúng tôi`
-        );
-
-        window.location.href = window.location.origin + "/messages";
+            } của công ty chúng tôi\n${window.location.href}`
+        ).then(() => {
+            const destinationURL = window.location.origin + "/messages";
+            window.location.assign(destinationURL);
+        });
     };
 
     // Call API to get job title
