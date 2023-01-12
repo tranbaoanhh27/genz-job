@@ -28,9 +28,10 @@ const RecommendUserDetails = (props) => {
             `Xin chào, chúng tôi liên hệ với bạn vì cảm thấy bạn phù hợp với vị trí ${
                 props.recommendedPosition || "Error"
             } của công ty chúng tôi`
-        );
-
-        window.location.href = window.location.origin + "/messages";
+        ).then(() => {
+            const destinationURL = window.location.origin + "/messages";
+            window.location.assign(destinationURL);
+        });
     };
 
     return (
