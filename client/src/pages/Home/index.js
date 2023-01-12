@@ -18,11 +18,8 @@ export function HomePage() {
                 <div className="column">
                     <SearchBar setGroupJob={setGroupJob} />
 
-                    <div className="row">
-                        <div className="col-9">
-                            { groupJob.map( (value, id) => <GroupJob groupJob={value} key={value.nameGroup} /> )}
-                        </div>
-                        <div className="col-3">
+                    <div className="row mb-5">
+                        <div className="col">
                             <div className="row">
                                 <div className="col d-flex justify-content-center">
                                     <button type="button" className="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterArea">Mở bộ lọc</button>
@@ -35,6 +32,13 @@ export function HomePage() {
                             </div>
                         </div>
                     </div>
+
+                    <div className="row">
+                        <div className="col">
+                            { groupJob.map( (value, id) => <GroupJob groupJob={value} key={value.nameGroup} /> )}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
