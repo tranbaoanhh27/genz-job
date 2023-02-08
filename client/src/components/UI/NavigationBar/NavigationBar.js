@@ -1,7 +1,9 @@
 import React from "react";
-import { DarkTheme, LightTheme } from "../../assets/themes";
+import { DarkTheme, LightTheme } from "../../../assets/themes";
 import NavigationItem from "./NavigationItem";
-import UserSearch from "./UserSearch";
+import UserSearch from "../UserSearch";
+
+import css from "./NavigationBar.module.css";
 
 export default function NavigationBar(props) {
     /*
@@ -15,18 +17,17 @@ export default function NavigationBar(props) {
             ]
         }
     */
-    document.body.style.paddingTop = "5rem";
+    document.body.style.marginTop = "4rem";
     const theme = props.theme === "light" ? LightTheme : DarkTheme;
     return (
-        <nav
-            className="navbar fixed-top navbar-expand-lg"
-            style={{ background: theme.card, height: "4rem" }}>
+        <nav className={`navbar fixed-top navbar-expand-lg ${css.navbar}`}>
             <div className="container-fluid">
                 <a href="/" className="navbar-brand mb-0 h1">
                     <img
                         className="d-inline-block align-top"
-                        src="https://raw.githubusercontent.com/theanhbr01/CSC13002/master/client/src/assets/images/landscape-logo.png"
+                        src="assets/img/landscape-logo.png"
                         height="45px"
+                        alt="Logo"
                     />
                 </a>
                 <UserSearch theme={theme} />

@@ -1,0 +1,5 @@
+.navbar {
+    background: #00000050;
+    backdrop-filter: blur(1000px);
+    height: 4rem;
+}

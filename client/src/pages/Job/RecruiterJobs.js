@@ -3,7 +3,6 @@ import styled from "styled-components";
 import RecruiterJobDetails from "../../components/Recruiter/Job/JobDetails";
 import RecruiterCreateJob from "../../components/Recruiter/Job/CreateJob";
 import RecruiterJobs from "../../components/Recruiter/Job/Jobs";
-import { EMPTY_JOBS } from "../../Data/initialData";
 import { DarkTheme } from "../../assets/themes";
 import axios from "axios";
 import { API_BASE_URL } from "../../Data/apiConstants";
@@ -53,9 +52,7 @@ const RecruiterJobPage = (props) => {
     const reloadJobs = () => setJobs(undefined);
 
     return (
-        <div
-            className="container-flex"
-            style={{ paddingInline: "2rem", color: DarkTheme.text, fontSize: "90%" }}>
+        <div className="container-flex" style={{ paddingInline: "2rem", color: DarkTheme.text, fontSize: "90%" }}>
             <Row className="row">
                 <div className="col">
                     {!isCreatingJob && (
@@ -65,12 +62,7 @@ const RecruiterJobPage = (props) => {
                             reloadJobs={reloadJobs}
                         />
                     )}
-                    {isCreatingJob && (
-                        <RecruiterCreateJob
-                            onCancel={stopCreatingJob}
-                            onCreateComplete={reloadJobs}
-                        />
-                    )}
+                    {isCreatingJob && <RecruiterCreateJob onCancel={stopCreatingJob} onCreateComplete={reloadJobs} />}
                 </div>
                 <RightColumn className="col-3">
                     <Button className="btn btn-primary" onClick={startCreatingJob}>

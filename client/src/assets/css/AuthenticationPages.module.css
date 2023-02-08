@@ -1,0 +1,24 @@
+.page {
+    height: calc(100vh - 4rem);
+    display: flex;
+    justify-content: flex-start;
+}
+
+.leftColumn {
+    align-items: center;
+    width: 35%;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.card {
+    background: #00000060;
+    backdrop-filter: blur(250px);
+    width: 80%;
+    color: white !important;
+}

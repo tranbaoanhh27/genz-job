@@ -5,14 +5,14 @@ export const NAV_GENERAL_ITEMS = [
         linkTo: "",
     },
     {
-        id: "navArticels",
+        id: "navArticles",
         title: "Bài viết",
         linkTo: "articles",
     },
     {
-        id: "navProfile",
-        title: "Đăng nhập/Đăng kí",
-        linkTo: "auth",
+        id: "navLogin",
+        title: "Đăng nhập",
+        linkTo: "login",
     },
 ];
 

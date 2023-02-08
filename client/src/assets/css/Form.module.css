@@ -1,0 +1,53 @@
+.errorText {
+    color: #b40e0e;
+    font-size: 90%;
+    margin-top: 5px !important;
+}
+
+.invalidInput {
+    border: 1px solid #b40e0e;
+    background-color: #fddddd;
+    margin-bottom: 0px !important;
+}
+
+.invalidInput:focus {
+    border-color: #ff8800;
+    background-color: #fbe8d2;
+}
+
+.labelAndInput {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.labelAndInput label {
+    margin-inline-end: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 550;
+}
+
+.labelAndInput input {
+    margin-bottom: 1rem;
+}
+
+.submit {
+    display: grid;
+    place-items: center;
+}
+
+.roleSelect {
+    margin: 1rem auto;
+    width: fit-content;
+    padding-inline: 1rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-radius: 30px !important;
+    border: none;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.form {
+    width: 100%;
+}

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SignInAndSignUp } from "./pages/SignInSignUp/index";
 import RecruiterJobPage from "./pages/Job/RecruiterJobs";
 import { HomePage } from "./pages/Home/index";
 import Article from "./pages/Article/index";
@@ -10,62 +9,42 @@ import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
 import SearchResult from "./pages/SearchResult/index";
 import { Admin } from "./pages/Admin/index";
-import Navbar from "./components/UI/NavigationBar";
+import Navbar from "./components/UI/NavigationBar/NavigationBar";
 import { JobDetails } from "./components/Job/JobDetails";
 import "./assets/css/App.css";
-import {
-    NAV_GENERAL_ITEMS,
-    NAV_RECRUITER_ITEMS,
-    NAV_JOBSEEKER_ITEMS,
-} from "./Data/NavigationItems";
-
+import { NAV_GENERAL_ITEMS, NAV_RECRUITER_ITEMS, NAV_JOBSEEKER_ITEMS } from "./Data/NavigationItems";
 import reportWebVitals from "./reportWebVitals";
-
 import AuthApi from "./api/AuthApi";
 import AuthVerify from "./common/AuthVerify";
-import SecuredRoute, { checkUserPermission } from "./components/SecuredRoute";
-import { data } from "jquery";
+import SecuredRoute from "./components/SecuredRoute";
+import useRender from "./hooks/use-render";
+import AppContext, { AppContextProvider } from "./contexts/app-context";
+import LoginPage from "./pages/Authentication/LoginPage";
+import SignupPage from "./pages/Authentication/SignupPage";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-const Logout = ({ setUser }) => {
-    AuthApi.Logout();
-    setUser(null);
-    return <Navigate to="/" />;
-};
+const App = () => {
+    document.body.style.background = "linear-gradient(to bottom left, black, #313682)";
 
-const SecuredProfile = ({ user }) => {
-    if (user) return <Navigate to={"/p/" + user.UserName} />;
-    else return <Navigate to="/" />;
-};
+    const appContext = useContext(AppContext);
+    const [navItems, setNavItems] = useState(NAV_GENERAL_ITEMS);
 
-function useForceUpdate() {
-    const [value, setValue] = useState(0);
-    return () => setValue((value) => value + 1);
-}
+    useEffect(() => {
+        console.log(appContext.user);
+        if (appContext.user) {
+            const role = appContext.user.Roles;
+            if (role === "recruiter") setNavItems(NAV_RECRUITER_ITEMS);
+            else if (role === "job-seeker") setNavItems(NAV_JOBSEEKER_ITEMS);
+        } else setNavItems(NAV_GENERAL_ITEMS);
+    }, [appContext.user]);
 
-const App = (props) => {
-    var currentUser = AuthApi.GetCurrentUser();
-    if (currentUser) currentUser = currentUser.data;
-    console.log(currentUser);
-    const [user, setUser] = useState(currentUser);
+    const forceRender = useRender();
 
-    console.log(window.location);
-
-    let navigation_items = NAV_GENERAL_ITEMS;
-
-    if (user) {
-        if (user.Roles === "recruiter") navigation_items = NAV_RECRUITER_ITEMS;
-        else if (user.Roles === "job-seeker") navigation_items = NAV_JOBSEEKER_ITEMS;
-    }
-
-    const rerender = useForceUpdate();
     return (
-        <div>
-            {window.location.pathname !== "/auth" && (
-                <Navbar items={navigation_items} rerenderApp={rerender} />
-            )}
+        <>
+            <Navbar items={navItems} rerenderApp={forceRender} />
             <Routes>
                 {/* Homepage */}
                 <Route path="/*" element={<HomePage />} />
@@ -75,16 +54,17 @@ const App = (props) => {
                 <Route path="s/*" element={<SearchResult />} />
 
                 {/* Profile */}
-                <Route path="p/*" element={<Profile user={user} />} />
+                <Route path="p/*" element={<Profile user={appContext.user} />} />
 
-                {/* Login */}
-                <Route path="auth" element={<SignInAndSignUp setUser={setUser} />} />
+                {/* Authentication */}
+                <Route path="login/" element={<LoginPage />} />
+                <Route path="signup" element={<SignupPage />} />
 
                 {/* Job */}
                 <Route
                     path="myjobs/*"
                     element={
-                        <SecuredRoute user={user} permission="route.recruiter" redirectTo="/">
+                        <SecuredRoute user={appContext.user} permission="route.recruiter" redirectTo="/">
                             <RecruiterJobPage />
                         </SecuredRoute>
                     }
@@ -98,7 +78,7 @@ const App = (props) => {
                 <Route
                     path="messages/*"
                     element={
-                        <SecuredRoute user={user} permission="route.authenticated">
+                        <SecuredRoute user={appContext.user} permission="route.authenticated">
                             <Message />
                         </SecuredRoute>
                     }
@@ -108,21 +88,21 @@ const App = (props) => {
                 <Route
                     path="notifications"
                     element={
-                        <SecuredRoute user={user} permission="route.authenticated">
+                        <SecuredRoute user={appContext.user} permission="route.authenticated">
                             <Notification />
                         </SecuredRoute>
                     }
                 />
 
                 {/* Profile */}
-                <Route path="profile" element={<SecuredProfile user={user} />} />
+                <Route path="profile" element={<SecuredProfile user={appContext.user} />} />
 
                 {/* Logout */}
                 <Route
                     path="logout"
                     element={
-                        <SecuredRoute user={user} permission="route.authenticated">
-                            <Logout setUser={setUser} />
+                        <SecuredRoute user={appContext.user} permission="route.authenticated">
+                            <Logout />
                         </SecuredRoute>
                     }
                 />
@@ -130,18 +110,30 @@ const App = (props) => {
                 {/* Admin Control Panel */}
                 <Route path="AdminCP/*" element={<Admin />} />
             </Routes>
-        </div>
+        </>
     );
 };
 
 root.render(
-    <>
+    <AppContextProvider>
         <BrowserRouter>
             <App />
             <AuthVerify />
         </BrowserRouter>
-    </>
+    </AppContextProvider>
 );
+
+const SecuredProfile = ({ user }) => {
+    if (user) return <Navigate to={"/p/" + user.UserName} />;
+    else return <Navigate to="/" />;
+};
+
+const Logout = () => {
+    const appContext = useContext(AppContext);
+    AuthApi.Logout();
+    appContext.setUser(null);
+    return <Navigate to="/" />;
+};
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

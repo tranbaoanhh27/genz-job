@@ -1,0 +1,13 @@
+.errorText {
+    color: #b40e0e;
+}
+
+.invalidInput {
+    border: 1px solid #b40e0e;
+    background-color: #fddddd;
+}
+
+.invalidInput:focus {
+    border-color: #ff8800;
+    background-color: #fbe8d2;
+}

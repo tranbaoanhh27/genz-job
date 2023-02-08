@@ -7,7 +7,7 @@ const Loader = ({ size }) => {
 
 const StyledDiv = styled.div`
     border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border-top: 16px solid #545abe; /* Blue */
     border-radius: 50%;
     width: ${(props) => props.size};
     height: ${(props) => props.size};
