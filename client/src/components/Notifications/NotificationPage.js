@@ -61,7 +61,6 @@ export default function NotificationPage(props) {
     };
 
     const changeReadState = (id, state) => {
-        console.log(id, state);
         setNotifications((prevNotifications) =>
             prevNotifications.map((notification) => {
                 if (notification.id === id) return { ...notification, readState: state };
@@ -78,7 +77,6 @@ export default function NotificationPage(props) {
         setNotifications((prevNotifications) => prevNotifications.filter((notification) => notification.id !== id));
     };
 
-    document.body.style.background = theme.background;
     return (
         <div>
             <NotificationFilter

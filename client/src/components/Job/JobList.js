@@ -36,6 +36,7 @@ const JobList = (props) => {
                 overflowX: "hidden",
                 overflowY: "scroll",
                 borderRadius: "15px",
+                height: "calc(50vh)",
             }}>
             {props.jobs.map((job) => (
                 <JobListItem

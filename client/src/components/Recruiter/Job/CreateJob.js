@@ -46,8 +46,6 @@ const CreateJob = (props) => {
         // Call API
         const URL = API_BASE_URL + `/job/${userId}/create`;
         axios.post(URL, enteredJob, { headers: { "x-access-token": token } }).then((response) => {
-            console.log(response);
-
             if (response.status === 200) alert("Tạo tin tuyển dụng thành công!");
 
             // Reload jobs
@@ -61,7 +59,6 @@ const CreateJob = (props) => {
     const isValidInput = (enteredJob) => {
         let isValid = true;
         let message = "";
-        console.log(enteredJob);
 
         if (!enteredJob) {
             alert("Đã xảy ra lỗi, hãy thử lại!");
@@ -141,23 +138,9 @@ const CreateJob = (props) => {
             <CenterRow>
                 <RecruiterJobImage imageUrl={DEFAULT_IMAGE_URL} />
             </CenterRow>
-            <SmallInputField
-                isValid={validTitle}
-                label="Tên công việc:"
-                type="text"
-                ref={titleRef}
-            />
-            <SmallInputField
-                isValid={validCompany}
-                label="Tên công ty:"
-                type="text"
-                ref={companyRef}
-            />
-            <LargeInputField
-                isValid={validDescription}
-                label="Mô tả công việc:"
-                ref={descriptionRef}
-            />
+            <SmallInputField isValid={validTitle} label="Tên công việc:" type="text" ref={titleRef} />
+            <SmallInputField isValid={validCompany} label="Tên công ty:" type="text" ref={companyRef} />
+            <LargeInputField isValid={validDescription} label="Mô tả công việc:" ref={descriptionRef} />
             <SmallInputField
                 isValid={validSalary}
                 label="Mức lương (USD):"

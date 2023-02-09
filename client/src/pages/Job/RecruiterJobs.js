@@ -10,8 +10,6 @@ import AuthApi from "../../api/AuthApi";
 import Loader from "../../components/UI/Loader";
 
 const RecruiterJobPage = (props) => {
-    document.body.style.background = DarkTheme.background;
-
     const [jobs, setJobs] = useState(undefined);
     const [currentJob, setCurrenJob] = useState(undefined);
     const [isCreatingJob, setIsCreatingJob] = useState(false);
@@ -21,7 +19,7 @@ const RecruiterJobPage = (props) => {
         const userId = AuthApi.GetCurrentUser().data.id;
         const URL = API_BASE_URL + `/job/${userId}/getJobs`;
         axios.get(URL).then((response) => {
-            console.log(response);
+            // console.log(response);
             const data = [...response.data].map((job) => ({
                 ...job,
                 id: job.id,
@@ -87,7 +85,7 @@ const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    height: calc(100vh - 6rem);
+    height: calc(100vh - 5rem);
 `;
 
 const Button = styled.button`

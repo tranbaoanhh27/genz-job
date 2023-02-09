@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RecruiterJobPage from "./pages/Job/RecruiterJobs";
 import { HomePage } from "./pages/Home/index";
-import Article from "./pages/Article/index";
+import ArticlePage from "./pages/Article/ArticlePage";
 import Message from "./pages/Message/index";
 import Notification from "./pages/Notification/index";
 import Profile from "./pages/Profile/index";
@@ -22,17 +22,16 @@ import AppContext, { AppContextProvider } from "./contexts/app-context";
 import LoginPage from "./pages/Authentication/LoginPage";
 import SignupPage from "./pages/Authentication/SignupPage";
 
+import "./App.css";
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 
 const App = () => {
-    document.body.style.background = "linear-gradient(to bottom left, black, #313682)";
-
     const appContext = useContext(AppContext);
     const [navItems, setNavItems] = useState(NAV_GENERAL_ITEMS);
 
     useEffect(() => {
-        console.log(appContext.user);
         if (appContext.user) {
             const role = appContext.user.Roles;
             if (role === "recruiter") setNavItems(NAV_RECRUITER_ITEMS);
@@ -72,7 +71,7 @@ const App = () => {
                 <Route path="job/detail/:jobId" element={<JobDetails />} />
 
                 {/* Article */}
-                <Route path="articles" element={<Article />} />
+                <Route path="articles/*" element={<ArticlePage />} />
 
                 {/* Messages */}
                 <Route
@@ -86,7 +85,7 @@ const App = () => {
 
                 {/* Notifications */}
                 <Route
-                    path="notifications"
+                    path="notifications/*"
                     element={
                         <SecuredRoute user={appContext.user} permission="route.authenticated">
                             <Notification />

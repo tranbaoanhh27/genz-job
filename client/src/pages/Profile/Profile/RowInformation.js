@@ -4,14 +4,7 @@ import { ModalAddJobExp } from "./ModalJobExp";
 import ProfileApi from "../../../api/ProfileApi";
 import { ProfileLocationPrint } from "./../../../Data/Profile";
 
-function RowTextInformation({
-    field,
-    editable,
-    index,
-    viewedUser,
-    setListTextField,
-    listTextField,
-}) {
+function RowTextInformation({ field, editable, index, viewedUser, setListTextField, listTextField }) {
     const [title, setTitle] = useState(field.key);
     const [value, setValue] = useState(field.value);
 
@@ -40,7 +33,7 @@ function RowTextInformation({
     };
 
     const DeleteHandler = () => {
-        console.log(title);
+        // console.log(title);
         ProfileApi.DeleteUserProperty(viewedUser, title)
             .then((response) => {
                 var newListTextField = listTextField.filter((field, id) => id !== index);
@@ -48,7 +41,7 @@ function RowTextInformation({
                 alert("Xóa trường thông tin thành công");
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
                 alert("Không thành công");
             });
     };
@@ -61,7 +54,7 @@ function RowTextInformation({
         setListTextField(newListTextField);
     };
 
-    console.log(editable);
+    // console.log(editable);
 
     if (field.status && field.status === "new") {
         return (
@@ -85,10 +78,7 @@ function RowTextInformation({
                     </div>
                     {editable && (
                         <div className="col-sm-2">
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={AddNewHandler}>
+                            <button type="button" className="btn btn-primary" onClick={AddNewHandler}>
                                 Thêm
                             </button>
                         </div>
@@ -113,10 +103,7 @@ function RowTextInformation({
                     </div>
                     {editable && (
                         <div className="col-sm-2">
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={UpdateHandler}>
+                            <button type="button" className="btn btn-primary" onClick={UpdateHandler}>
                                 Cập nhật
                             </button>
                         </div>
@@ -143,10 +130,7 @@ function RowTextInformation({
                     )}
                     {editable && (
                         <div className="col-sm-1">
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={DeleteHandler}>
+                            <button type="button" className="btn btn-primary" onClick={DeleteHandler}>
                                 Xóa
                             </button>
                         </div>

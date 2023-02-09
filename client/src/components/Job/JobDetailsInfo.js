@@ -10,9 +10,7 @@ const JobDetailsInfo = (props) => {
     // Call API to get Job's details
     axios.get(API_BASE_URL + `/job/detail/${props.jobId}`).then((response) => {
         if (response.status === 200) {
-            console.log(response.data);
-            if (job === undefined)
-                setJobs({ ...response.data, createdDate: response.data.createdAt });
+            if (job === undefined) setJobs({ ...response.data, createdDate: response.data.createdAt });
         }
     });
 
@@ -30,23 +28,14 @@ const JobDetailsInfo = (props) => {
                 <SpaceBetweenColumn style={{ flex: 1 }}>
                     <JobStatus label="Trạng thái:" status={status || "unknown"} />
                     <SmallInfo label="Tên công việc:" content={(job && job.title) || "Không rõ"} />
-                    <SmallInfo
-                        label="Mức lương:"
-                        content={"$" + (job && job.salary) || "Không rõ"}
-                    />
+                    <SmallInfo label="Mức lương:" content={"$" + (job && job.salary) || "Không rõ"} />
                     <SmallInfo label="Công ty:" content={(job && job.company) || "Không rõ"} />
                 </SpaceBetweenColumn>
             </SpaceBetweenRow>
-            <JobDescription
-                label="Mô tả công việc:"
-                content={(job && job.description) || "Không rõ"}
-            />
+            <JobDescription label="Mô tả công việc:" content={(job && job.description) || "Không rõ"} />
             <Review label="Đánh giá:" />
             <AlignEndRow>
-                <button
-                    type="button"
-                    className="btn btn-secondary"
-                    style={{ borderRadius: "30px" }}>
+                <button type="button" className="btn btn-secondary" style={{ borderRadius: "30px" }}>
                     Đăng đánh giá
                 </button>
             </AlignEndRow>

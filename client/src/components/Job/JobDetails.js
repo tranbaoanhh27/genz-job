@@ -21,8 +21,6 @@ export default startJobDetailPage;
  * @returns JSXElement displaying details of this job and list of related jobs
  */
 export const JobDetails = (props) => {
-    document.body.style.background = DarkTheme.background;
-
     const params = useParams();
     const [isSharingJob, setIsSharingJob] = useState(false);
     const [relatedJobs, setRelatedJobs] = useState(undefined);
@@ -33,7 +31,6 @@ export const JobDetails = (props) => {
     if (job === undefined) {
         axios.get(API_BASE_URL + `/job/detail/${params.jobId}`).then((response) => {
             if (response.status === 200) {
-                console.log(response.data);
                 setJob({ ...response.data, createdDate: response.data.createdAt });
             }
         });
@@ -57,12 +54,10 @@ export const JobDetails = (props) => {
         axios
             .post(URL)
             .then((res) => {
-                console.log(res);
                 if (res.status === 200) alert("Ứng tuyển thành công!");
                 else alert("Ứng tuyển thất bại, thử lại sau nhé!");
             })
             .catch((err) => {
-                console.log(err);
                 alert("Ứng tuyển thất bại! " + err.response.data.message);
             });
     };
@@ -91,12 +86,7 @@ export const JobDetails = (props) => {
 
     return (
         <div style={{ color: DarkTheme.text, fontSize: "90%" }}>
-            {isSharingJob && (
-                <JobShareModal
-                    title="Chia sẻ tin tuyển dụng"
-                    onClose={() => setIsSharingJob(false)}
-                />
-            )}
+            {isSharingJob && <JobShareModal title="Chia sẻ tin tuyển dụng" onClose={() => setIsSharingJob(false)} />}
             <div className="container-fluid">
                 <div className="row">
                     <LeftColumn className="col-9">
@@ -114,9 +104,7 @@ export const JobDetails = (props) => {
                                 className="btn btn-success"
                                 onClick={applyJob}
                                 disabled={
-                                    jobStatus !== "opening" ||
-                                    !userId ||
-                                    (userId && job && userId === job.authorId)
+                                    jobStatus !== "opening" || !userId || (userId && job && userId === job.authorId)
                                 }>
                                 Ứng tuyển ngay
                             </Button>

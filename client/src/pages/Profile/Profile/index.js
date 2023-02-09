@@ -7,8 +7,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ProfileApi from "../../../api/ProfileApi";
 
-import { ProfileLocationPrint } from "./../../../Data/Profile";
-
 function MainProfile({ user, viewedUser }) {
     const [followed, setFollowed] = useState(false);
 
@@ -21,7 +19,7 @@ function MainProfile({ user, viewedUser }) {
             if (response.data) setFollowed(true);
             else setFollowed(false);
         });
-    }, [viewedUserId]);
+    }, [viewedUser, user]);
 
     if (!viewedUser) return <div>404 Not Found</div>;
 
@@ -83,10 +81,7 @@ function MainProfile({ user, viewedUser }) {
                     <div className="col-lg-8">
                         <ul className="nav nav-tabs" role="tablist">
                             <li className="nav-item">
-                                <a
-                                    className="nav-link active"
-                                    data-bs-toggle="tab"
-                                    href="#personalInfo">
+                                <a className="nav-link active" data-bs-toggle="tab" href="#personalInfo">
                                     Thông tin cá nhân
                                 </a>
                             </li>
@@ -135,13 +130,13 @@ export default function Profile({ user }) {
             .then((response) => {
                 if (response.status === 200) {
                     var viewedUser = response.data[0];
-                    console.log("Get viewed user");
-                    console.log(viewedUser);
+                    // console.log("Get viewed user");
+                    // console.log(viewedUser);
                     setViewedUser(viewedUser);
                 }
             })
             .catch((error) => {
-                console.log(error.message);
+                // console.log(error.message);
             });
     }, [username]);
 

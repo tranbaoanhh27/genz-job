@@ -17,7 +17,6 @@ export default function NavigationBar(props) {
             ]
         }
     */
-    document.body.style.marginTop = "4rem";
     const theme = props.theme === "light" ? LightTheme : DarkTheme;
     return (
         <nav className={`navbar fixed-top navbar-expand-lg ${css.navbar}`}>

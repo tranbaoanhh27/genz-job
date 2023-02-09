@@ -1,0 +1,74 @@
+.form {
+    padding-top: 1rem;
+}
+
+.form textarea {
+    padding: 1rem;
+    border-radius: 15px;
+    width: 100%;
+    background: #00000090;
+    border: 1px solid #00000099;
+    color: white;
+}
+
+.form button {
+    border-radius: 30px;
+    padding-inline: 2rem;
+    color: white;
+    border: none;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-inline: 2rem;
+}
+
+.attachments {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.attachments button {
+    background: #545abe80;
+}
+
+.attachments button:hover {
+    background: #545abe;
+}
+
+.submit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.submit button {
+    margin-inline-start: 1rem;
+}
+
+.submit .cancel {
+    background: #dc354599;
+}
+
+.submit .cancel:hover {
+    background: #dc3545;
+}
+
+.submit .confirm {
+    background: #19875499;
+}
+
+.submit .confirm:hover {
+    background: #198754;
+}
+
+.submit .confirm:disabled {
+    background: #00000050;
+    color: #55555550;
+}
+
+.submit .confirm:disabled .confirm:hover {
+    background: #00000050;
+    color: #55555550;
+    cursor: not-allowed;
+}

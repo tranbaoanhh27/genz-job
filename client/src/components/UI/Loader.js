@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Loader = ({ size }) => {
-    return <StyledDiv size={size} />;
+const Loader = (props) => {
+    return <StyledDiv size={props.size} />;
 };
 
 const StyledDiv = styled.div`

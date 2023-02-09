@@ -28,7 +28,6 @@ const LogIn = () => {
         setIsLoading(true);
         try {
             const response = await AuthAPI.Login(username, password);
-            console.log("Login response data: ", response.data);
             appContext.setUser(response.data);
             alert(strings.LOGIN_SUCCESSFULLY);
             navigate("/");

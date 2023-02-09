@@ -7,8 +7,6 @@ import { FilterArea } from "./Filter";
 import { defaultGroupJobsHomepage } from "../../Data/Homepage";
 
 export function HomePage() {
-    document.body.style.background = "linear-gradient(to bottom left, black, #313682)";
-
     const [groupJob, setGroupJob] = useState(defaultGroupJobsHomepage);
 
     return (

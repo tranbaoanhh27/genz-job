@@ -5,7 +5,6 @@ import AuthApi from "../../api/AuthApi";
 import { LightTheme } from "../../assets/themes";
 
 export default function Message() {
-    document.body.style.background = LightTheme.background;
     var user = AuthApi.GetCurrentUser();
     return (
         <div style={{ fontSize: "90%" }}>

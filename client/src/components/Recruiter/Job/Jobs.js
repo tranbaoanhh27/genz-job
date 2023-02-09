@@ -22,17 +22,13 @@ const RecruiterJobs = (props) => {
     // Filter jobs by keyword
     let filteredJobs = [...sortedJobs];
     if (keyword !== undefined)
-        filteredJobs = filteredJobs.filter((job) =>
-            job.title.toLowerCase().includes(keyword.toLowerCase())
-        );
+        filteredJobs = filteredJobs.filter((job) => job.title.toLowerCase().includes(keyword.toLowerCase()));
 
     return (
         <Column>
             <RecruiterJobSearch onChangeKeyword={(keyword) => setKeyword(keyword)} />
             <RecruiterJobFilter onChangeSortMode={(sortMode) => setSortMode(sortMode)} />
-            {filteredJobs && filteredJobs.length > 0 && (
-                <JobList jobs={filteredJobs} onSelectJob={props.onSelectJob} />
-            )}
+            {filteredJobs && filteredJobs.length > 0 && <JobList jobs={filteredJobs} onSelectJob={props.onSelectJob} />}
         </Column>
     );
 };
@@ -41,5 +37,8 @@ export default RecruiterJobs;
 
 const Column = styled.div`
     padding-top: 1rem;
-    height: 90%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 `;

@@ -1,0 +1,23 @@
+.card {
+    margin-bottom: 2rem;
+    background: #00000080;
+    color: white;
+    width: 60%;
+}
+
+.card button {
+    border-radius: 30px;
+    border: none;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-inline: 1.5rem;
+}
+
+.card .danger-button {
+    background: #dc354599;
+    color: white;
+}
+
+.card .danger-button:hover {
+    background: #dc3545;
+}

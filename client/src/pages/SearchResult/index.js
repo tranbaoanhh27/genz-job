@@ -1,6 +1,5 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { LightTheme } from "../../assets/themes";
 import SearchResultPage from "../../components/SearchResult/SearchResultPage";
 
 function useQuery() {
@@ -10,10 +9,9 @@ function useQuery() {
 }
 
 export default function SearchResult() {
-    document.body.style.background = LightTheme.background;
     let query = useQuery();
     let keywordInput = query.get("search");
-    console.log("Keyword input: " + keywordInput);
+    // console.log("Keyword input: " + keywordInput);
 
     return (
         <div>

@@ -19,12 +19,10 @@ const Recommends = (props) => {
             .get(URL)
             .then((res) => {
                 if (loading) setLoading(false);
-                console.log("Get all job seeker response: ", res);
                 if (res.status === 200) setRecommendedUsers(res.data.data.map((item) => item.User));
             })
             .catch((err) => {
                 if (loading) setLoading(false);
-                console.log("Get all job seeker error: ", err);
             });
     }
 

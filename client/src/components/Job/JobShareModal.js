@@ -28,16 +28,12 @@ const JobShareModal = (props) => {
                         Đóng
                     </Button>
                     {!isShareViaMessage && (
-                        <Button
-                            className="btn btn-primary"
-                            onClick={() => setIsShareViaMessage(true)}>
+                        <Button className="btn btn-primary" onClick={() => setIsShareViaMessage(true)}>
                             Chia sẻ qua tin nhắn
                         </Button>
                     )}
                     {isShareViaMessage && (
-                        <Button
-                            className="btn btn-primary"
-                            onClick={() => setIsShareViaMessage(false)}>
+                        <Button className="btn btn-primary" onClick={() => setIsShareViaMessage(false)}>
                             Sao chép đường dẫn
                         </Button>
                     )}
@@ -60,12 +56,7 @@ const LinkCopyGroup = (props) => {
 
     return (
         <div className="input-group">
-            <input
-                type="text"
-                className="form-control"
-                value={window.location.href}
-                readOnly={true}
-            />
+            <input type="text" className="form-control" value={window.location.href} readOnly={true} />
             <button className="btn btn-success" type="button" onClick={copyLinkHandler}>
                 Sao chép
             </button>
@@ -96,15 +87,10 @@ const ShareViaMessage = (props) => {
         setIsShared(false);
         setReceiverId(Number(event.target.value));
         const name = users.filter((user) => +user.id === +event.target.value)[0].UserName;
-        console.log(name);
         setReceiverName(name);
     };
 
     const shareViaMessage = () => {
-        // Now I just log the result, later I will call to Message component
-        console.log(receiverId);
-        console.log(window.location.href);
-
         // Prepare data
         let sender = AuthApi.GetCurrentUser();
         if (sender) sender = sender.data;
@@ -114,7 +100,6 @@ const ShareViaMessage = (props) => {
         const message = "Có thể bạn sẽ thích công việc này đấy!";
 
         // Send message if inputs are valid
-        console.log(senderId, receiverId, senderName, receiverName, message);
         if (receiverId !== undefined && receiverName !== undefined) {
             sendMessage(senderId, receiverId, senderName, receiverName, message);
             sendMessage(senderId, receiverId, senderName, receiverName, window.location.href);
@@ -127,10 +112,7 @@ const ShareViaMessage = (props) => {
         <>
             <label>Bạn muốn chia sẻ tin tuyển dụng đến cho ai?</label>
             <div className="input-group">
-                <select
-                    className="form-control"
-                    value={receiverId}
-                    onChange={receiverChangeHandler}>
+                <select className="form-control" value={receiverId} onChange={receiverChangeHandler}>
                     {users.map((user) => (
                         <option key={user.id} value={user.id}>
                             {user.UserName}

@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    margin: 1rem auto;
+    width: 60%;
+    justify-content: space-between;
+}
+
+.container select {
+    background: #00000080 !important;
+    border-radius: 15px;
+    padding-inline: 1rem;
+    color: white !important;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}

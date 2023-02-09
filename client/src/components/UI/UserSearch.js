@@ -6,7 +6,7 @@ const UserSearch = (props) => {
     let navigate = useNavigate();
 
     const search = () => {
-        console.log("Keyword by search: " + keywordInput);
+        // console.log("Keyword by search: " + keywordInput);
         navigate("/s?search=" + keywordInput);
     };
 

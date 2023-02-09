@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import './New-Conversation.css';
+import "./New-Conversation.css";
 import styled from "styled-components";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Button = styled.button`
@@ -12,13 +12,11 @@ const Button = styled.button`
 `;
 
 function NewConversation({ userId, username, setSelectedConversation }) {
-    const [usernameInput, setUsernameInput] = useState('');
+    const [usernameInput, setUsernameInput] = useState("");
 
     const searchUser = () => {
-        if (usernameInput.toLowerCase() === username.toLowerCase())
-            return;
-        axios.get(process.env.REACT_APP_API_URL + '/user/uname/' + usernameInput)
-        .then(response => {
+        if (usernameInput.toLowerCase() === username.toLowerCase()) return;
+        axios.get(process.env.REACT_APP_API_URL + "/user/uname/" + usernameInput).then((response) => {
             if (response.status === 200) {
                 var newConversation = {};
                 newConversation.senderId = userId;
@@ -26,7 +24,6 @@ function NewConversation({ userId, username, setSelectedConversation }) {
                 newConversation.title = response.data[0].UserName;
                 newConversation.senderName = username;
                 newConversation.receiverName = response.data[0].UserName;
-                console.log(response.data[0]);
                 setSelectedConversation(newConversation);
             }
         });
@@ -39,10 +36,12 @@ function NewConversation({ userId, username, setSelectedConversation }) {
                 type="search"
                 placeholder="Tìm kiếm người dùng..."
                 aria-label="Search"
-                style={{ border: "0px", height: "30px"}}
-                onChange={e => setUsernameInput(e.target.value)}
+                style={{ border: "0px", height: "30px" }}
+                onChange={(e) => setUsernameInput(e.target.value)}
             />
-            <Button className="btn btn-primary" onClick={searchUser}>+</Button>
+            <Button className="btn btn-primary" onClick={searchUser}>
+                +
+            </Button>
         </div>
     );
 }

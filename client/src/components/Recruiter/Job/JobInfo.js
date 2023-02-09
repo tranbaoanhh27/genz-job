@@ -14,8 +14,6 @@ const RecruiterJobInfo = (props) => {
     const [closeDate, setCloseDate] = useState(undefined);
     const [isRemovingJob, setIsRemovingJob] = useState(false);
 
-    console.log("RecruiterJobInfo property job: ", props.job);
-
     if (!props.job) return;
     if (title === undefined) setTitle(props.job.title);
     if (company === undefined) setCompany(props.job.company);
@@ -24,27 +22,22 @@ const RecruiterJobInfo = (props) => {
     if (closeDate === undefined) setCloseDate(new Date(props.job.closingDate));
 
     const jobTitleChangeHandler = (event) => {
-        console.log(event.target.value);
         setTitle(event.target.value);
     };
 
     const jobCompanyChangeHandler = (event) => {
-        console.log(event.target.value);
         setCompany(event.target.value);
     };
 
     const jobDescriptionChangeHandler = (event) => {
-        console.log(event.target.value);
         setDescription(event.target.value);
     };
 
     const salaryChangeHandler = (event) => {
-        console.log(event.target.value);
         setSalary(event.target.value);
     };
 
     const closeDateChangeHandler = (event) => {
-        console.log(event.target.value);
         setCloseDate(new Date(event.target.value));
     };
 
@@ -72,18 +65,15 @@ const RecruiterJobInfo = (props) => {
         axios
             .put(URL, body, { headers: { "x-access-token": accessToken } })
             .then((res) => {
-                console.log("Update job info response: ", res);
                 alert("Cập nhật thông tin thành công!");
                 props.onUpdated();
             })
             .catch((err) => {
-                console.log("Update job info err: ", err);
                 alert("Cập nhật thông tin thất bại, hãy thử lại sau");
             });
     };
 
     const isValidData = (job) => {
-        console.log(job);
         if (!job) return false;
 
         if (!job.title || job.title.trim().length === 0) {
@@ -112,14 +102,11 @@ const RecruiterJobInfo = (props) => {
             return false;
         } else {
             let startDate = new Date(props.job.datePosted);
-            console.log(job.closingDate, startDate);
             if (job.closingDate < startDate) {
                 alert(
                     `Tin tuyển dụng này được tạo vào ${startDate.toLocaleString(
                         "vi-VN"
-                    )}, do đó ngày kết thúc tuyển dụng không được trước ${startDate.toLocaleString(
-                        "vi-VN"
-                    )}`
+                    )}, do đó ngày kết thúc tuyển dụng không được trước ${startDate.toLocaleString("vi-VN")}`
                 );
                 return false;
             }
@@ -139,7 +126,6 @@ const RecruiterJobInfo = (props) => {
         axios
             .delete(URL)
             .then((res) => {
-                console.log("Remove job response: ", res);
                 if (res.status === 200) {
                     alert(`Đã xóa tin tuyển dụng ${title} thành công!`);
                     setIsRemovingJob(false);
@@ -147,7 +133,6 @@ const RecruiterJobInfo = (props) => {
                 }
             })
             .catch((err) => {
-                console.log("Remove job error: ", err);
                 alert(`Xóa tin tuyển dụng ${title} không thành công!\nHãy thử lại sau`);
             });
     };
@@ -165,30 +150,15 @@ const RecruiterJobInfo = (props) => {
             <FlexColumn className={`${props.className}`}>
                 <div className="row">
                     <JobInfoLabel className="col-3">Tiêu đề:</JobInfoLabel>
-                    <JobInfoInput
-                        className="col"
-                        type="text"
-                        value={title}
-                        onChange={jobTitleChangeHandler}
-                    />
+                    <JobInfoInput className="col" type="text" value={title} onChange={jobTitleChangeHandler} />
                 </div>
                 <div className="row" style={{ marginTop: "0.75rem" }}>
                     <JobInfoLabel className="col-3">Công ty:</JobInfoLabel>
-                    <JobInfoInput
-                        className="col"
-                        type="text"
-                        value={company}
-                        onChange={jobCompanyChangeHandler}
-                    />
+                    <JobInfoInput className="col" type="text" value={company} onChange={jobCompanyChangeHandler} />
                 </div>
                 <div className="row" style={{ marginTop: "0.75rem" }}>
                     <JobInfoLabel className="col-3">{"Mức lương ($):"}</JobInfoLabel>
-                    <JobInfoInput
-                        className="col"
-                        type="number"
-                        value={salary}
-                        onChange={salaryChangeHandler}
-                    />
+                    <JobInfoInput className="col" type="number" value={salary} onChange={salaryChangeHandler} />
                 </div>
                 <div className="row" style={{ marginTop: "0.75rem" }}>
                     <JobInfoLabel className="col-3">Ngày kết thúc:</JobInfoLabel>
@@ -201,11 +171,7 @@ const RecruiterJobInfo = (props) => {
                 </div>
                 <div className="row" style={{ marginTop: "0.75rem", flex: "1" }}>
                     <JobInfoLabel className="col-3">Mô tả công việc:</JobInfoLabel>
-                    <JobInfoTextArea
-                        className="col"
-                        value={description}
-                        onChange={jobDescriptionChangeHandler}
-                    />
+                    <JobInfoTextArea className="col" value={description} onChange={jobDescriptionChangeHandler} />
                 </div>
             </FlexColumn>
             <ButtonContainer>

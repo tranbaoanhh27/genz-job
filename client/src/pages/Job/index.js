@@ -7,10 +7,9 @@ import SecuredRoute, { checkUserPermission } from "../../components/SecuredRoute
 import startJobDetailPage from "../../components/JobSeeker/Job/JobDetails";
 
 export default function Job() {
-    document.body.style.background = "#18191a";
     var user = AuthApi.GetCurrentUser();
     if (user) user = user.data;
-    console.log(user);
+    // console.log(user);
     // if (user) {
     //     user = user.data;
     //     // Job seeker
@@ -32,12 +31,8 @@ export default function Job() {
                     element={
                         <div>
                             <p>Job List</p>
-                            <button onClick={() => startJobDetailPage(1)}>
-                                Test go to Job details Page jobId=1
-                            </button>
-                            <button onClick={() => startJobDetailPage(3)}>
-                                Test go to Job details Page jobId=3
-                            </button>
+                            <button onClick={() => startJobDetailPage(1)}>Test go to Job details Page jobId=1</button>
+                            <button onClick={() => startJobDetailPage(3)}>Test go to Job details Page jobId=3</button>
                         </div>
                     }
                 />

@@ -23,7 +23,7 @@ const ResultItem = (props) => {
 
     const goToProfile = (username) => {
         navigate("/p/" + username);
-        console.log("Navigate to " + username);
+        // console.log("Navigate to " + username);
     };
 
     return (

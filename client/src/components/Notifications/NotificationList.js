@@ -14,24 +14,19 @@ const NotificationList = (props) => {
     }
 */
 
-    console.log(props.notifications);
-
     let filteredList = [...props.notifications];
 
     if (props.unreadOnly === true) {
-        filteredList = filteredList.filter(
-            (notification) => notification.readState === "unread"
-        );
+        filteredList = filteredList.filter((notification) => notification.readState === "unread");
     }
 
     const changeReadStateHandler = (id, newState) => {
-        console.log(id, newState);
         props.onChangeItemReadState(id, newState);
-    }
+    };
 
     const removeItemHandler = (id) => {
         props.onRemoveItem(id);
-    }
+    };
 
     return (
         <div>

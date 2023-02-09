@@ -4,7 +4,6 @@ const RecruiterJobFilter = (props) => {
     const [sortMode, setSortMode] = useState("sortByTitle");
 
     const changeFilter = (event) => {
-        console.log(event.target.value);
         props.onChangeSortMode(event.target.value);
         setSortMode(event.target.value);
     };

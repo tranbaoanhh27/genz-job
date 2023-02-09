@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const ArticleAuthor = (props) => {
-    // props = { authorName, createDate, avatarURL }
+    let avatarUrl = "/assets/profiles/baoanh.png";
+    if (props.avatarURL) avatarUrl = props.avatarURL;
     return (
         <div className={`row ${props.className}`}>
             <div className="col-sm-auto">
-                <Avatar src={props.avatarURL} />
+                <Avatar src={avatarUrl} />
             </div>
             <NameAndDate className="col-md-auto">
                 <label className="row">{props.authorName}</label>

@@ -11,7 +11,6 @@ import JobApplication from "../JobApplication/JobApplication";
  * @returns {JSXElement} A JSX Element representing a CandidateItem in CandidateList
  */
 const CandidateItem = (props) => {
-    console.log(props.jobApplication);
     const [showJobApplication, setShowJobApplication] = useState(false);
     return (
         <>
@@ -22,9 +21,7 @@ const CandidateItem = (props) => {
                     onUpdateStatus={props.reloadCandidates}
                 />
             )}
-            <Card
-                className="list-group-item list-group-item-action"
-                onClick={() => setShowJobApplication(true)}>
+            <Card className="list-group-item list-group-item-action" onClick={() => setShowJobApplication(true)}>
                 <SpaceBetweenRow>
                     <h5>{props.jobApplication.candidateName}</h5>
                     <StatusBadge className="badge" status={props.jobApplication.applyStatus}>
@@ -32,9 +29,7 @@ const CandidateItem = (props) => {
                     </StatusBadge>
                 </SpaceBetweenRow>
                 <SpaceBetweenRow>
-                    <p>{`Ngày ứng tuyển: ${props.jobApplication.applyTime.toLocaleString(
-                        "vi-VN"
-                    )}`}</p>
+                    <p>{`Ngày ứng tuyển: ${props.jobApplication.applyTime.toLocaleString("vi-VN")}`}</p>
                 </SpaceBetweenRow>
             </Card>
         </>

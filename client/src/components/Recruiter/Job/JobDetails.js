@@ -16,7 +16,6 @@ const RecruiterJobDetails = (props) => {
     if (candidates === undefined && props.job) {
         const URL = `${API_BASE_URL}/jobapplication/all/${props.job.id}`;
         axios.get(URL).then((res) => {
-            console.log(res);
             if (res.status === 200) {
                 setCandidates(
                     res.data.map((jobApplication) => ({
@@ -35,9 +34,7 @@ const RecruiterJobDetails = (props) => {
 
     return (
         <>
-            {viewRecommends && (
-                <Recommends jobTitle={props.job.title} onClose={() => setViewRecommends(false)} />
-            )}
+            {viewRecommends && <Recommends jobTitle={props.job.title} onClose={() => setViewRecommends(false)} />}
             <Card>
                 {props.job && (
                     <>
@@ -57,19 +54,13 @@ const RecruiterJobDetails = (props) => {
                                     Các ứng viên tiềm năng
                                 </RecommendedUsers>
                             </SpaceBetweenRow>
-                            <CandidateList
-                                jobApplications={candidates}
-                                reloadCandidates={reloadCandidates}
-                            />
+                            <CandidateList jobApplications={candidates} reloadCandidates={reloadCandidates} />
                         </div>
                     </>
                 )}
                 {!props.job && (
                     <CenterColumn>
-                        <h4>
-                            Hãy chọn một tin tuyển dụng trong danh sách bên cạnh, hoặc tạo tin tuyển
-                            dụng mới!
-                        </h4>
+                        <h4>Hãy chọn một tin tuyển dụng trong danh sách bên cạnh, hoặc tạo tin tuyển dụng mới!</h4>
                     </CenterColumn>
                 )}
             </Card>

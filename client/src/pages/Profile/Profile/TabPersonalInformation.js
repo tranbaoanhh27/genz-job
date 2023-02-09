@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { ModalAddJobExp } from './ModalJobExp';
+import { ModalAddJobExp } from "./ModalJobExp";
 
 import { ProfileLocationPrint } from "./../../../Data/Profile";
-import RowTextInformation from "./RowInformation"
+import RowTextInformation from "./RowInformation";
 
 function AddMainTextField({ setListTextField }) {
     const addTextField = () => {
         let newField = {
             key: "Tiêu đề thông tin",
-            value: "Giá trị thông tin", 
+            value: "Giá trị thông tin",
             canEdit: "all",
             location: ProfileLocationPrint.MainText,
-            status: "new"
+            status: "new",
         };
-        setListTextField( (prev) => [...prev, newField]);
-    }
+        setListTextField((prev) => [...prev, newField]);
+    };
 
     return (
         <div>
@@ -32,58 +32,61 @@ function AddMainTextField({ setListTextField }) {
 }
 
 function AddJobExp() {
-
     return (
-        <div className='row'>
+        <div className="row">
             <div className="col-sm-12 text-center text-primary">
-                <p className='mb-0' style={{cursor: "pointer"}}>
-                    <a href='#' data-bs-toggle="modal" data-bs-target="#modalAddJobExp" style={{textDecoration: "none"}}>Thêm công việc bạn đang làm</a>
+                <p className="mb-0" style={{ cursor: "pointer" }}>
+                    <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalAddJobExp"
+                        style={{ textDecoration: "none" }}>
+                        Thêm công việc bạn đang làm
+                    </a>
                 </p>
             </div>
         </div>
-    )
+    );
 }
 
 function JobExperience({ viewedUser, user }) {
-    
     const [listJobExp, setListJobExp] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         setListJobExp([]);
     }, []);
 
-    if (listJobExp.length === 0) return (
-        <div>
-            <p>Loading...</p>
-            {user && user.id === viewedUser.id && <AddJobExp />}
-        </div>
-    )
+    if (listJobExp.length === 0)
+        return (
+            <div>
+                <p>Loading...</p>
+                {user && user.id === viewedUser.id && <AddJobExp />}
+            </div>
+        );
     else
-
-    return (
-        <div>
-                { listJobExp.map( (value, id) => {
+        return (
+            <div>
+                {listJobExp.map((value, id) => {
                     return (
                         <div>
-                            <div className='row' key={value.value}>
+                            <div className="row" key={value.value}>
                                 <div className="col-sm-9">
-                                    <p className='mb-0'>{value.company}</p>
+                                    <p className="mb-0">{value.company}</p>
                                 </div>
-                                <div className='col-sm-3'>
-                                    <p className='mb-0'>{value.time}</p>
+                                <div className="col-sm-3">
+                                    <p className="mb-0">{value.time}</p>
                                 </div>
                             </div>
                             <hr />
                             {user && user.id === viewedUser.id && <AddJobExp />}
                         </div>
-                    )
+                    );
                 })}
-        </div>
-    )
+            </div>
+        );
 }
 
 export function TabPersonalInformation({ viewedUser, user }) {
-
     const [listTextField, setListTextField] = useState([]);
 
     useEffect(() => {
@@ -100,20 +103,22 @@ export function TabPersonalInformation({ viewedUser, user }) {
 
     // if (listTextField.length === 0) return <p>Không có dữ liệu</p>; else
 
-    let editable = user && (user.id === viewedUser.id)
+    let editable = user && user.id === viewedUser.id;
 
-    console.log(listTextField);
+    // console.log(listTextField);
     return (
         <div>
             {/* { setTitleProfile( listTextField.find(x => x.key === "Title").value) } */}
             <div className="card mb-4">
                 <div className="card-body">
-                    {
-                        listTextField.map((field, id) => (
-                        <RowTextInformation field={field} index={id} viewedUser={viewedUser} 
-                                            listTextField={listTextField}
-                                            editable={editable}
-                                            setListTextField={setListTextField}></RowTextInformation>
+                    {listTextField.map((field, id) => (
+                        <RowTextInformation
+                            field={field}
+                            index={id}
+                            viewedUser={viewedUser}
+                            listTextField={listTextField}
+                            editable={editable}
+                            setListTextField={setListTextField}></RowTextInformation>
                     ))}
                     {editable && <AddMainTextField setListTextField={setListTextField} />}
                 </div>
@@ -130,13 +135,13 @@ export function TabPersonalInformation({ viewedUser, user }) {
             </div> */}
             <div className="card mb-4">
                 <div className="card-body">
-                    <h5 className='card-title text-center'>Kinh nghiệm công việc</h5>
-                    <JobExperience viewedUser={viewedUser} user={user}/>
+                    <h5 className="card-title text-center">Kinh nghiệm công việc</h5>
+                    <JobExperience viewedUser={viewedUser} user={user} />
                 </div>
             </div>
             <div className="card mb-4">
                 <div className="card-body">
-                    <h5 className='card-title text-center'>Kĩ năng</h5>
+                    <h5 className="card-title text-center">Kĩ năng</h5>
                 </div>
             </div>
 
