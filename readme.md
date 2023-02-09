@@ -1,5 +1,9 @@
 # Job Search Website Application
 
+## Screenshots
+![image](https://user-images.githubusercontent.com/108526097/217748868-c81c44bf-59a2-412b-bc63-91aa7c897dff.png)
+![image](https://user-images.githubusercontent.com/108526097/217748972-32bf634e-e0a7-4a7f-b8ba-7b88096236c5.png)
+
 ## Tech
 The project uses a number of open source projects to work properly:
 - [NodeJs](https://nodejs.org/) - Evented I/O for the backend.
