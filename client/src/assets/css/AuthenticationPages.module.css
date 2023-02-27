@@ -1,12 +1,14 @@
 .page {
-    height: calc(100vh - 4rem);
+    height: calc(100vh - var(--navbar-height));
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .leftColumn {
     align-items: center;
     width: 35%;
+    min-width: 500px;
 }
 
 .rightColumn {
@@ -14,6 +16,7 @@
     flex-direction: column;
     justify-content: center;
     flex: 1;
+    min-width: 500px;
 }
 
 .card {

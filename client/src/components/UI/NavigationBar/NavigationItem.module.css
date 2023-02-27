@@ -1,0 +1,38 @@
+.item {
+    display: block;
+    border-radius: 15px;
+    padding: 8px 20px;
+    align-self: center !important;
+}
+
+@keyframes box-appear {
+    from {
+        position: relative;
+        bottom: -10px;
+    }
+    to {
+        position: relative;
+        bottom: 0px;
+    }
+}
+
+.item:hover {
+    background-color: var(--primary-color);
+    animation: box-appear 0.25s linear;
+}
+
+.item > .link {
+    text-decoration: none;
+    font-weight: 450;
+    color: black;
+    font-weight: 450;
+}
+
+.item > .link:hover {
+    color: var(--on-primary-color);
+}
+
+.icon {
+    width: 24px;
+    height: auto;
+}

@@ -1,49 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import Dropdown from "../Dropdown/Dropdown";
+
+import css from "./NavigationItem.module.css";
 
 const NavigationItem = (props) => {
     return (
         <>
             {props.isDropdown !== true && (
-                <li id={props.item.id} className="nav-item ms-3" onClick={props.rerenderApp}>
-                    <Link
-                        to={props.item.linkTo}
-                        className="nav-link"
-                        style={{ color: props.theme.text }}>
-                        {props.item.title}
+                <li className={css.item} id={props.item.id} onClick={props.rerenderApp}>
+                    <Link className={css.link} to={props.item.linkTo}>
+                        {!props.item.icon && props.item.title}
+                        {props.item.icon && (
+                            <img
+                                className={css.icon}
+                                src={props.item.icon}
+                                alt={props.item.title}
+                                title={props.item.title}
+                            />
+                        )}
                     </Link>
                 </li>
             )}
             {props.isDropdown === true && (
-                <li className="nav-item dropdown">
-                    <a
-                        className="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style={{ color: props.theme.text }}>
-                        {props.item.title}
-                    </a>
-                    <ul
-                        className="dropdown-menu dropdown-menu-end"
-                        style={{ background: props.theme.card }}>
+                <li className={css.item}>
+                    <Link className={css.link} to={props.item.linkTo}>
+                        <Dropdown item={props.item} />
+                    </Link>
+                    {/* <p className={css.link}>{props.item.title}</p> */}
+                    {/* <ul>
                         {props.item.children.map((item) => (
-                            <DropdownItem
-                                key={item.id}
-                                id={item.id}
-                                className="nav-item ms-3 dropdown-item"
-                                onClick={props.rerenderApp}>
-                                <Link
-                                    to={item.linkTo}
-                                    className="nav-link"
-                                    style={{ color: "white" }}>
+                            <li key={item.id} id={item.id} onClick={props.rerenderApp}>
+                                <Link to={item.linkTo}>
                                     {item.title}
                                 </Link>
-                            </DropdownItem>
+                            </li>
                         ))}
-                    </ul>
+                    </ul> */}
                 </li>
             )}
         </>
@@ -51,13 +44,3 @@ const NavigationItem = (props) => {
 };
 
 export default NavigationItem;
-
-const DropdownItem = styled.li`
-    color: inherit;
-
-    &:hover {
-        background: inherit;
-        color: inherit;
-        width: fit-content;
-    }
-`;

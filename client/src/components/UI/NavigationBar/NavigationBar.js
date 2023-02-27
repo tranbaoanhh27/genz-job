@@ -1,59 +1,38 @@
 import React from "react";
-import { DarkTheme, LightTheme } from "../../../assets/themes";
+import UserSearch from "../UserSearch/UserSearch";
 import NavigationItem from "./NavigationItem";
-import UserSearch from "../UserSearch";
 
 import css from "./NavigationBar.module.css";
 
-export default function NavigationBar(props) {
-    /*
-        props = {
-            items = [
-                {
-                    id: string
-                    title: string
-                    linkTo: string
-                }
-            ]
-        }
-    */
-    const theme = props.theme === "light" ? LightTheme : DarkTheme;
+const NavigationBar = (props) => {
     return (
-        <nav className={`navbar fixed-top navbar-expand-lg ${css.navbar}`}>
-            <div className="container-fluid">
-                <a href="/" className="navbar-brand mb-0 h1">
-                    <img
-                        className="d-inline-block align-top"
-                        src="assets/img/landscape-logo.png"
-                        height="45px"
-                        alt="Logo"
-                    />
+        <nav className={css.navbar}>
+            <div className={css["logo-container"]}>
+                <a href="/">
+                    <picture>
+                        <source media="(max-width: 799px)" srcset="/assets/img/small-logo.png" />
+                        <source media="(min-width: 800px)" srcset="/assets/img/landscape-logo.png" />
+                        <img className={css.logo} src="/assets/img/landscape-logo.png" alt="Brand Logo" />
+                    </picture>
                 </a>
-                <UserSearch theme={theme} />
-                <button
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    className="navbar-toggler"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Ẩn/Hiện bảng điều hướng">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav ms-auto">
-                        {props.items.map((item) => (
-                            <NavigationItem
-                                key={item.id}
-                                item={item}
-                                theme={theme}
-                                isDropdown={item.isDropdown}
-                                rerenderApp={props.rerenderApp}
-                            />
-                        ))}
-                    </ul>
-                </div>
             </div>
+
+            <div className={css["search-bar-container"]}>
+                <UserSearch />
+            </div>
+
+            <ul className={css["items-container"]}>
+                {props.items.map((item) => (
+                    <NavigationItem
+                        key={item.id}
+                        item={item}
+                        isDropdown={item.isDropdown}
+                        rerenderApp={props.rerenderApp}
+                    />
+                ))}
+            </ul>
         </nav>
     );
 }
+
+export default NavigationBar;

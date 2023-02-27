@@ -1,5 +1,51 @@
 .navbar {
-    background: #00000060;
+    background-color: var(--secondary-color);
     backdrop-filter: blur(10000px);
-    height: 4rem;
+    height: var(--navbar-height) !important;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    z-index: 100;
+}
+
+.logo-container {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.logo-container > a {
+    align-self: center;
+}
+
+.logo {
+    height: 45px;
+    margin-left: 5px;
+    width: auto;
+}
+
+.search-bar-container {
+    height: 100%;
+    width: 15%;
+    display: flex;
+    align-content: center;
+}
+
+.items-container {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    margin: 0px 0px;
+}
+
+@media (min-width: 700px) {
+    .search-bar-container {
+        width: 33%;
+    }
 }

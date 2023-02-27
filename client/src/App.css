@@ -1,5 +1,13 @@
+:root {
+    --primary-color: #545abe;
+    --secondary-color: #ffffff;
+    --secondary-variant: #f0f2f5;
+    --on-primary-color: #ffffff;
+    --background-color: #f0f2f5;
+    --navbar-height: 10vh;
+}
+
 body {
-    background: linear-gradient(to bottom left, black, #313682);
-    padding-top: 5rem;
-    min-height: 100vh;
+    background: var(--background-color);
+    padding-top: var(--navbar-height);
 }

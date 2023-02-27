@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import css from './UserSearch.module.css';
 
-const UserSearch = (props) => {
+const UserSearch = () => {
     const [keywordInput, setKeywordInput] = useState("");
     let navigate = useNavigate();
 
@@ -17,19 +18,15 @@ const UserSearch = (props) => {
     };
 
     return (
-        <div className="d-flex">
+        <div className={css.container}>
             <input
-                className="form-control me-2"
+                className={css.editText}
                 type="text"
                 placeholder="Tìm kiếm người dùng..."
                 value={keywordInput}
-                style={{ background: "#00000050", color: "white", backdropFilter: "blur(100px)", border: "0px" }}
                 onChange={(e) => setKeywordInput(e.target.value)}
                 onKeyDown={handleKeyDown}
             />
-            <button className="btn btn-success" style={{ width: "130px" }} onClick={search}>
-                Tìm kiếm
-            </button>
         </div>
     );
 };
