@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-content: center;
-    z-index: 100;
+    z-index: 50;
 }
 
 .logo-container {
@@ -31,7 +31,7 @@
 
 .search-bar-container {
     height: 100%;
-    width: 15%;
+    width: 33%;
     display: flex;
     align-content: center;
 }
@@ -44,8 +44,8 @@
     margin: 0px 0px;
 }
 
-@media (min-width: 700px) {
+@media (max-width: 700px) {
     .search-bar-container {
-        width: 33%;
+        display: none;
     }
 }

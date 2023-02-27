@@ -6,10 +6,10 @@ import css from "../../assets/css/AuthenticationPages.module.css";
 const LoginPage = () => {
     return (
         <div className={css.page}>
-            <div className={css.leftColumn}>
+            <div className={css.carousel}>
                 <Carousel />
             </div>
-            <div className={css.rightColumn}>
+            <div className={css.form}>
                 <MyCard className={css.card}>
                     <LogIn />
                 </MyCard>

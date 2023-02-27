@@ -10,8 +10,8 @@ const NavigationBar = (props) => {
             <div className={css["logo-container"]}>
                 <a href="/">
                     <picture>
-                        <source media="(max-width: 799px)" srcset="/assets/img/small-logo.png" />
-                        <source media="(min-width: 800px)" srcset="/assets/img/landscape-logo.png" />
+                        <source media="(max-width: 700px)" srcSet="/assets/img/small-logo.png" />
+                        <source media="(min-width: 700px)" srcSet="/assets/img/landscape-logo.png" />
                         <img className={css.logo} src="/assets/img/landscape-logo.png" alt="Brand Logo" />
                     </picture>
                 </a>

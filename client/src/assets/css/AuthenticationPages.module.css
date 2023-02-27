@@ -5,13 +5,14 @@
     flex-wrap: wrap;
 }
 
-.leftColumn {
+.carousel {
     align-items: center;
     width: 35%;
     min-width: 500px;
+    justify-content: center;
 }
 
-.rightColumn {
+.form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,8 +21,28 @@
 }
 
 .card {
-    background: #00000060;
+    background: linear-gradient(45deg, #656bcd, #545abe);
     backdrop-filter: blur(250px);
     width: 80%;
     color: white !important;
+    animation: slide-up linear 0.5s;
+}
+
+@media (max-width: 500px) {
+    .carousel {
+        display: none;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        position: relative;
+        bottom: -5%;
+        opacity: 0;
+    }
+    to {
+        position: relative;
+        bottom: 0;
+        opacity: 1;
+    }
 }

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useCallback } from "react";
 import useFetch from "../hooks/use-fetch";
 import AppContext from "./app-context";
 import { API_BASE_URL } from "../Data/apiConstants";
+import ToastContext from "./toast-context";
 
 const ArticleContext = React.createContext({
     articles: [],
@@ -20,6 +21,7 @@ export default ArticleContext;
 
 export const ArticleContextProvider = (props) => {
     const appContext = useContext(AppContext);
+    const toastContext = useContext(ToastContext);
 
     const userId = appContext.user ? appContext.user.id : undefined;
 
@@ -58,13 +60,21 @@ export const ArticleContextProvider = (props) => {
             setDataEndPoint("");
 
             // Send POST request to create new article
-            await doPostArticle(API_BASE_URL + "/article/create", {
+            const response = await doPostArticle(API_BASE_URL + "/article/create", {
                 method: "POST",
                 body: JSON.stringify(requestBody),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
+
+            if (response && response.message && response.message === "Article created") {
+                toastContext.addMessage({
+                    type: "success",
+                    title: "Đăng bài thành công!",
+                    content: "Bài viết của bạn đã được đăng thành công!",
+                })
+            }
 
             showAllPosts();
         },
@@ -87,8 +97,20 @@ export const ArticleContextProvider = (props) => {
     }, [dataEndpoint, getArticles]);
 
     useEffect(() => {
-        if (getArticleError) alert(getArticleError);
-        if (postArticleError) alert(postArticleError);
+        if (getArticleError) {
+            toastContext.addMessage({
+                type: "error",
+                title: "Oops!",
+                content: `Có lỗi xảy ra khi lấy dữ liệu từ server! ${getArticleError}`
+            })
+        }
+        if (postArticleError) {
+            toastContext.addMessage({
+                type: "error",
+                title: "Oops!",
+                content: `Có lỗi xảy ra khi đăng bài viết! ${postArticleError}`
+            })
+        }
     }, [getArticleError, postArticleError]);
 
     return (

@@ -5,6 +5,7 @@ import AuthAPI from "../../../api/AuthApi";
 import RoleApi from "../../../api/RoleApi";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../../contexts/app-context";
+import ToastContext from "../../../contexts/toast-context";
 import useInput from "../../../hooks/use-input";
 import Loader from "../../UI/Loader";
 
@@ -26,7 +27,7 @@ const SignUp = () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const appContext = useContext(AppContext);
+    const toastContext = useContext(ToastContext);
 
     const roleChangeHandler = (event) => setRole(event.target.value);
 
@@ -39,14 +40,19 @@ const SignUp = () => {
 
             const userId = signupData.data.id;
             await RoleApi.assign(userId, role);
-            alert("Signed up successfully!");
+            toastContext.addMessage({
+                type: "success",
+                title: "Đăng ký thành công!",
+                content: "Bạn đã đăng ký tài khoản mới thành công! Đang chuyển hướng đến trang đăng nhập!",
+            })
 
-            const loginResponse = await AuthAPI.Login(username, password);
-            const loginResponseData = loginResponse.data;
-            appContext.setUser(loginResponseData);
-            navigate("/profile");
+            navigate("/login");
         } catch (error) {
-            alert(error.message || "Something went wrong!");
+            toastContext.addMessage({
+                type: "error",
+                title: "Đăng ký không thành công!",
+                content: error.message || "Đã có lỗi xảy ra, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+            })
         }
         setLoading(false);
     };

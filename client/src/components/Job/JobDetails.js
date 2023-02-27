@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { DarkTheme } from "../../assets/themes";
 import JobList from "./JobList";
@@ -9,6 +9,7 @@ import JobShareModal from "./JobShareModal";
 import AuthApi from "../../api/AuthApi";
 import { API_BASE_URL } from "../../Data/apiConstants";
 import axios from "axios";
+import ToastContext from "../../contexts/toast-context";
 
 const startJobDetailPage = (jobId) => {
     window.location.href = window.location.origin + "/job/detail/" + jobId;
@@ -26,6 +27,8 @@ export const JobDetails = (props) => {
     const [relatedJobs, setRelatedJobs] = useState(undefined);
     const [job, setJob] = useState(undefined);
     const nav = useNavigate();
+
+    const toastContext = useContext(ToastContext);
 
     // Call API to get Job's details
     if (job === undefined) {
@@ -54,11 +57,27 @@ export const JobDetails = (props) => {
         axios
             .post(URL)
             .then((res) => {
-                if (res.status === 200) alert("Ứng tuyển thành công!");
-                else alert("Ứng tuyển thất bại, thử lại sau nhé!");
+                if (res.status === 200) {
+                    toastContext.addMessage({
+                        type: "success",
+                        title: "Ứng tuyển thành công!",
+                        content: "Bạn đã ứng tuyển thành công vào công việc này, hãy chờ nhà tuyển dụng liên lạc lại nhé!"
+                    })
+                }
+                else {
+                    toastContext.addMessage({
+                        type: "error",
+                        title: "Ứng tuyển thất bại!",
+                        content: "Ứng tuyển không thành công, vui lòng thử lại sau giây lát!"
+                    })
+                }
             })
             .catch((err) => {
-                alert("Ứng tuyển thất bại! " + err.response.data.message);
+                toastContext.addMessage({
+                    type: "error",
+                    title: "Ứng tuyển thất bại!",
+                    content: err.response.data.message
+                })
             });
     };
 

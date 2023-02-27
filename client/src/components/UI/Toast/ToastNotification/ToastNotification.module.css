@@ -1,0 +1,72 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    border: none;
+    padding: 0px 20px;
+    width: 400px;
+    box-shadow: 0 4px 8px 0 #00000050;
+    position: relative;
+    right: 0px;
+    top: 0px;
+    margin: 15px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    animation: card-appear linear 0.5s;
+}
+
+.card--error {
+    border-left: 6px solid #fa415b;
+}
+
+.card--success {
+    border-left: 6px solid #25ae88;
+}
+
+.card--info {
+    border-left: 6px solid #73a9d0;
+}
+
+@keyframes card-appear {
+    from {
+        right: -100%;
+        opacity: 0;
+    }
+    to {
+        right: 2%;
+        opacity: 1;
+    }
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    align-self: center;
+    margin-inline-end: 20px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.text > h4 {
+    margin: 20px 0px 5px 0px;
+}
+
+.text > p {
+    margin: 0px 0px 20px 0px;
+}
+
+.close {
+    width: 25px;
+    height: 25px;
+    align-self: flex-start;
+    margin: 20px 0px 0px 0px;
+}
+
+.close:hover {
+    cursor: pointer;
+    opacity: 0.75;
+}

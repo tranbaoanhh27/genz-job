@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useImperativeHandle, useRef, useState } from "react";
+import React, { useContext, useImperativeHandle, useRef, useState } from "react";
 import styled from "styled-components";
 import { API_BASE_URL } from "../../../Data/apiConstants";
 import { DarkTheme } from "../../../assets/themes";
 import MyCard from "../../UI/MyCard";
 import RecruiterJobImage from "./JobImage";
 import AuthApi from "../../../api/AuthApi";
+import ToastContext from "../../../contexts/toast-context";
 
 const CreateJob = (props) => {
     const titleRef = useRef();
@@ -21,6 +22,8 @@ const CreateJob = (props) => {
     const [validCompany, setValidCompany] = useState(true);
     const [validStartDate, setValidStartDate] = useState(true);
     const [validEndDate, setValidEndDate] = useState(true);
+
+    const toastContext = useContext(ToastContext);
 
     const createJob = (event) => {
         event.preventDefault();
@@ -46,7 +49,13 @@ const CreateJob = (props) => {
         // Call API
         const URL = API_BASE_URL + `/job/${userId}/create`;
         axios.post(URL, enteredJob, { headers: { "x-access-token": token } }).then((response) => {
-            if (response.status === 200) alert("Tạo tin tuyển dụng thành công!");
+            if (response.status === 200) {
+                toastContext.addMessage({
+                    type: "success",
+                    title: "Tạo tin tuyển dụng thành công!",
+                    content: "Bạn đã tạo thành công tin tuyển dụng mới!"
+                })
+            }
 
             // Reload jobs
             props.onCreateComplete();

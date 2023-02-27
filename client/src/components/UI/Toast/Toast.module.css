@@ -1,0 +1,6 @@
+.ToastContainer {
+    position: fixed;
+    right: 32px;
+    top: 32px;
+    z-index: 100;
+}

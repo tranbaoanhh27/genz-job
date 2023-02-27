@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import MyCard from "../../UI/MyCard";
 import { DarkTheme } from "../../../assets/themes";
@@ -6,11 +6,14 @@ import axios from "axios";
 import { API_BASE_URL } from "../../../Data/apiConstants";
 import { sendMessage } from "../../Messages/chat-form/Chat-Form";
 import AuthApi from "../../../api/AuthApi";
+import ToastContext from "../../../contexts/toast-context";
 
 const JobApplication = (props) => {
     const [jobTitle, setJobTitle] = useState(undefined);
     const [status, setStatus] = useState(undefined);
     const [updated, setUpdated] = useState(false);
+
+    const toastContext = useContext(ToastContext);
 
     // console.log(props.data);
     if (!props.data) return;
@@ -33,16 +36,24 @@ const JobApplication = (props) => {
             .put(URL, body)
             .then((res) => {
                 // console.log("Change Job application status result: ", res);
-                if (res.status === 200) alert("Cập nhật trạng thái hồ sơ thành công!");
+                if (res.status === 200) {
+                    toastContext.addMessage({
+                        type: "success",
+                        title: "Cập nhật thành công!",
+                        content: "Bạn đã cập nhật trạng thái hồ sơ thành công!"
+                    })
+                }
                 // Reload component by resetting state variable
                 setStatus(newStatus);
                 setUpdated(true);
             })
             .catch((err) => {
                 // console.log("Change job application status failed: ", err);
-                alert(
-                    "Đã có lỗi xảy ra, cập nhật trạng thái hồ sơ không thành công. Hãy thử tải lại trang và thử lại!"
-                );
+                toastContext.addMessage({
+                    type: "error",
+                    title: "Cập nhật không thành công!",
+                    content: `Không thể cập nhật trạng thái hồ sơ! ${err.message}`,
+                })
             });
     };
 

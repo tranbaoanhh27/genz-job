@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import AuthApi from "../../../api/AuthApi";
 import axios from "axios";
 import { API_BASE_URL } from "../../../Data/apiConstants";
 import YesNoDialog from "../../UI/YesNoDialog";
+import ToastContext from "../../../contexts/toast-context";
 
 const RecruiterJobInfo = (props) => {
     const [title, setTitle] = useState(undefined);
@@ -14,12 +15,15 @@ const RecruiterJobInfo = (props) => {
     const [closeDate, setCloseDate] = useState(undefined);
     const [isRemovingJob, setIsRemovingJob] = useState(false);
 
+    const toastContext = useContext(ToastContext);
+
     if (!props.job) return;
     if (title === undefined) setTitle(props.job.title);
     if (company === undefined) setCompany(props.job.company);
     if (description === undefined) setDescription(props.job.description);
     if (salary === undefined) setSalary(props.job.salary.toString());
     if (closeDate === undefined) setCloseDate(new Date(props.job.closingDate));
+
 
     const jobTitleChangeHandler = (event) => {
         setTitle(event.target.value);
@@ -127,13 +131,21 @@ const RecruiterJobInfo = (props) => {
             .delete(URL)
             .then((res) => {
                 if (res.status === 200) {
-                    alert(`Đã xóa tin tuyển dụng ${title} thành công!`);
+                    toastContext.addMessage({
+                        type: "success",
+                        title: "Xoá tin tuyển dụng thành công!",
+                        content: `Bạn đã xóa tin tuyển dụng ${title} thành công!`
+                    })
                     setIsRemovingJob(false);
                     props.onUpdated();
                 }
             })
             .catch((err) => {
-                alert(`Xóa tin tuyển dụng ${title} không thành công!\nHãy thử lại sau`);
+                toastContext.addMessage({
+                    type: "error",
+                    title: "Xoá tin tuyển dụng không thành công!",
+                    content: `Xóa tin tuyển dụng ${title} không thành công!\nHãy thử lại sau`
+                })
             });
     };
 

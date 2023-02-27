@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ResultList from "./result-list/ResultList";
 import { LightTheme } from "../../assets/themes";
 import axios from "axios";
+import ToastContext from "../../contexts/toast-context";
 
 export default function SearchResultPage(props) {
     const theme = LightTheme;
 
     const [results, setResults] = useState([]);
+    const toastContext = useContext(ToastContext);
 
     // console.log("Received keyword: " + props.keyword);
     useEffect(() => {
@@ -23,7 +25,11 @@ export default function SearchResultPage(props) {
                 });
                 setResults(resultsList);
                 if (resultsList.length === 0) {
-                    alert(`Không tìm thấy người dùng "${props.keyword}"`);
+                    toastContext.addMessage({
+                        type: "info",
+                        title: "Không có kết quả!",
+                        content: `Không tìm thấy người dùng "${props.keyword}"`
+                    })
                 }
             }
         });

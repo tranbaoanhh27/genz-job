@@ -9,6 +9,7 @@ import Loader from "../../UI/Loader";
 
 import css from "../../../assets/css/Form.module.css";
 import strings from "../../../assets/strings";
+import ToastContext from "../../../contexts/toast-context";
 
 const LogIn = () => {
     const validateUsername = (username) => username.trim().length > 0;
@@ -20,6 +21,7 @@ const LogIn = () => {
 
     const navigate = useNavigate();
     const appContext = useContext(AppContext);
+    const toastContext = useContext(ToastContext);
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -29,10 +31,18 @@ const LogIn = () => {
         try {
             const response = await AuthAPI.Login(username, password);
             appContext.setUser(response.data);
-            alert(strings.LOGIN_SUCCESSFULLY);
+            toastContext.addMessage({
+                type: "success",
+                title: "Success!",
+                content: strings.LOGIN_SUCCESSFULLY,
+            });
             navigate("/");
         } catch (error) {
-            alert(error.message || strings.SOMETHING_WENT_WRONG);
+            toastContext.addMessage({
+                type: "error",
+                title: "Oops! Something went wrong!",
+                content: error.message || strings.SOMETHING_WENT_WRONG,
+            });
         }
         setIsLoading(false);
     };

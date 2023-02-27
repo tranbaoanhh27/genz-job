@@ -23,6 +23,8 @@ import LoginPage from "./pages/Authentication/LoginPage";
 import SignupPage from "./pages/Authentication/SignupPage";
 
 import "./App.css";
+import Toast from "./components/UI/Toast/Toast";
+import ToastContext, { ToastContextProvider } from "./contexts/toast-context";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -44,6 +46,7 @@ const App = () => {
     return (
         <>
             <Navbar items={navItems} rerenderApp={forceRender} />
+            <Toast />
             <Routes>
                 {/* Homepage */}
                 <Route path="/*" element={<HomePage />} />
@@ -115,10 +118,12 @@ const App = () => {
 
 root.render(
     <AppContextProvider>
-        <BrowserRouter>
-            <App />
-            <AuthVerify />
-        </BrowserRouter>
+        <ToastContextProvider>
+            <BrowserRouter>
+                <App />
+                <AuthVerify />
+            </BrowserRouter>
+        </ToastContextProvider>
     </AppContextProvider>
 );
 
