@@ -12,7 +12,7 @@
     display: flex;
     justify-content: flex-start;
     align-content: center;
-    animation: card-appear linear 0.5s;
+    animation: card-appear linear 0.5s, card-disappear ease 1.5s 6s;
 }
 
 .card--error {
@@ -35,6 +35,15 @@
     to {
         right: 2%;
         opacity: 1;
+    }
+}
+
+@keyframes card-disappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
 
