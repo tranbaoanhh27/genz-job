@@ -53,8 +53,3 @@ Back-end builds APIs that supports Front-end display UI
 - /models: Model Layer
     * _model_name.model.js_ - model file name must be followed by the principle
 - /ultis: Including middleware function for specify controller
-
-## Screenshots
-![image](https://user-images.githubusercontent.com/108526097/217748868-c81c44bf-59a2-412b-bc63-91aa7c897dff.png)
-![image](https://user-images.githubusercontent.com/108526097/217748972-32bf634e-e0a7-4a7f-b8ba-7b88096236c5.png)
-![image](https://user-images.githubusercontent.com/108526097/217826785-69094573-ee90-4c00-8274-7f8ceec07712.png)
